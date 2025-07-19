@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: a989aac3e2049de499cbf30435034dbb
+timeCreated: 1551152882
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 265931
+  packageName: RPG/FPS Game Assets for PC/Mobile (Set v9.0)
+  packageVersion: 9.0
+  assetPath: Assets/RPG_FPS_game_assets/Models/Industrial/Debris/Debris_v1/Debris_v1_8.prefab
+  uploadId: 616067

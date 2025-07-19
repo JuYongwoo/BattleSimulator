@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: b7dce3bb9f3d40249a5272d989040ef2
+timeCreated: 1524975525
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 265931
+  packageName: RPG/FPS Game Assets for PC/Mobile (Set v9.0)
+  packageVersion: 9.0
+  assetPath: Assets/RPG_FPS_game_assets/Models/Industrial/Buildings/Industrial/Outbuildings/Outbuildings_v1/Outbuildings_v1_1.prefab
+  uploadId: 616067

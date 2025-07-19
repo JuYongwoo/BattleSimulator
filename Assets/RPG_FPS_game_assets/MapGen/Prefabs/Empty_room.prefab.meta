@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 3e8684696eaffd54f942403a4d0733a9
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 265931
+  packageName: RPG/FPS Game Assets for PC/Mobile (Set v9.0)
+  packageVersion: 9.0
+  assetPath: Assets/RPG_FPS_game_assets/MapGen/Prefabs/Empty_room.prefab
+  uploadId: 616067

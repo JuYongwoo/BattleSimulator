@@ -1,0 +1,197 @@
+fileFormatVersion: 2
+guid: df5a155e9fc816d4fb14c4db202c7f66
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: Box003
+    100002: Object003
+    100004: //RootNode
+    100006: Object005
+    100008: Object006
+    100010: Object007
+    100012: Object008
+    100014: Object009
+    100016: Object010
+    100018: Of_Railings_v1_1
+    100020: Of_Railings_v1_2
+    100022: Of_Stairs_v1_1
+    100024: Of_Stairs_v1_2
+    100026: Office_v1_1
+    100028: Office_v1_1dr
+    100030: Office_v1_1gl
+    100032: Office_v1_2
+    100034: Office_v1_3
+    100036: Office_v1_1gl1
+    100038: Office_v1_1gl2
+    100040: Office_v1_1gl3
+    400000: Box003
+    400002: Object003
+    400004: //RootNode
+    400006: Object005
+    400008: Object006
+    400010: Object007
+    400012: Object008
+    400014: Object009
+    400016: Object010
+    400018: Of_Railings_v1_1
+    400020: Of_Railings_v1_2
+    400022: Of_Stairs_v1_1
+    400024: Of_Stairs_v1_2
+    400026: Office_v1_1
+    400028: Office_v1_1dr
+    400030: Office_v1_1gl
+    400032: Office_v1_2
+    400034: Office_v1_3
+    400036: Office_v1_1gl1
+    400038: Office_v1_1gl2
+    400040: Office_v1_1gl3
+    2100000: 'Material #63'
+    2100002: No Name
+    2300000: Box003
+    2300002: Object003
+    2300004: Object005
+    2300006: Object006
+    2300008: Object007
+    2300010: Object008
+    2300012: Object009
+    2300014: Object010
+    2300016: Of_Railings_v1_1
+    2300018: Of_Railings_v1_2
+    2300020: Of_Stairs_v1_1
+    2300022: Of_Stairs_v1_2
+    2300024: Office_v1_1
+    2300026: Office_v1_1dr
+    2300028: Office_v1_1gl
+    2300030: Office_v1_2
+    2300032: Office_v1_3
+    2300034: Office_v1_1gl1
+    2300036: Office_v1_1gl2
+    2300038: Office_v1_1gl3
+    3300000: Box003
+    3300002: Object003
+    3300004: Object005
+    3300006: Object006
+    3300008: Object007
+    3300010: Object008
+    3300012: Object009
+    3300014: Object010
+    3300016: Of_Railings_v1_1
+    3300018: Of_Railings_v1_2
+    3300020: Of_Stairs_v1_1
+    3300022: Of_Stairs_v1_2
+    3300024: Office_v1_1
+    3300026: Office_v1_1dr
+    3300028: Office_v1_1gl
+    3300030: Office_v1_2
+    3300032: Office_v1_3
+    3300034: Office_v1_1gl1
+    3300036: Office_v1_1gl2
+    3300038: Office_v1_1gl3
+    4300000: Box003
+    4300002: Object003
+    4300004: Object005
+    4300006: Object006
+    4300008: Object007
+    4300010: Object008
+    4300012: Object009
+    4300014: Object010
+    4300016: Office_v1_1
+    4300018: Office_v1_1dr
+    4300020: Office_v1_1gl
+    4300022: Of_Railings_v1_1
+    4300024: Of_Stairs_v1_2
+    4300026: Of_Stairs_v1_1
+    4300028: Of_Railings_v1_2
+    4300030: Office_v1_3
+    4300032: Office_v1_2
+    4300034: Office_v1_1gl1
+    4300036: Office_v1_1gl2
+    4300038: Office_v1_1gl3
+  externalObjects: {}
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 1
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 265931
+  packageName: RPG/FPS Game Assets for PC/Mobile (Set v9.0)
+  packageVersion: 9.0
+  assetPath: Assets/RPG_FPS_game_assets/Models/Industrial/Buildings/Industrial/Office/Office_v1/Source/Office_v1.FBX
+  uploadId: 616067
