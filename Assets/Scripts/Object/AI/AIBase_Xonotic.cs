@@ -30,24 +30,24 @@ public class AIBase_Xonotic : ObjectBase_AIBase
         if (mVisibleEnemy != -1) // 적이 보이면
         {
             //마주친 적을 등록하지 않는다.
-            shoot(mVisibleEnemy);
+            Shoot(mVisibleEnemy);
 
         }
 
 
         //움직임
-        if (getHpPercentage() < 0.5 || getAmmoPercentage() < 0.5) //상태가 좋지 않다 "필요한 아이템 탐색"
+        if (GetHpPercentage() < 0.5 || GetAmmoPercentage() < 0.5) //상태가 좋지 않다 "필요한 아이템 탐색"
         {
-            if (getHpPercentage() <= getAmmoPercentage() && mClosestHeal != -1) //체력이 더 부족
+            if (GetHpPercentage() <= GetAmmoPercentage() && mClosestHeal != -1) //체력이 더 부족
             {
-                if (mVisibleEnemy != -1) moveTo(mSafestHeal, true, 0); //적이 보일 땐 반드시 안전한 힐팩으로
-                else moveTo(mClosestHeal, false, 1); // 체력 아이템으로 이동
+                if (mVisibleEnemy != -1) MoveTo(mSafestHeal, true, 0); //적이 보일 땐 반드시 안전한 힐팩으로
+                else MoveTo(mClosestHeal, false, 1); // 체력 아이템으로 이동
 
             }
-            else if (getHpPercentage() > getAmmoPercentage() && mClosestAmmo != -1) //총알이 더 부족
+            else if (GetHpPercentage() > GetAmmoPercentage() && mClosestAmmo != -1) //총알이 더 부족
             {
-                if (mVisibleEnemy != -1) moveTo(mSafestAmmo, true, 2); //적이 보일 땐 반드시 안전한 총알로
-                else moveTo(mClosestAmmo, false, 3); // 총알 아이템으로 이동
+                if (mVisibleEnemy != -1) MoveTo(mSafestAmmo, true, 2); //적이 보일 땐 반드시 안전한 총알로
+                else MoveTo(mClosestAmmo, false, 3); // 총알 아이템으로 이동
             }
             else //상태가 좋지 않지만 아이템이 존재하지 않을 때
             {
@@ -59,12 +59,12 @@ public class AIBase_Xonotic : ObjectBase_AIBase
 
             if (mClosestOccupy != -1)//점령전이면
             {
-                moveTo(mClosestOccupy, false, 4);
+                MoveTo(mClosestOccupy, false, 4);
 
             }
             else if(mClosestEnemy != -1)  //데스매치면
             {
-                moveTo(mClosestEnemy, false, 5);
+                MoveTo(mClosestEnemy, false, 5);
                 /*
                 if (mClosestAmmo != -1 || mClosestHeal != -1) // 아이템이 존재
                 {

@@ -33,21 +33,21 @@ public class AIBase_Modified_AssaultCube : ObjectBase_AIBase
         if (mVisibleEnemy != -1) // 적이 보이면
         {
             mLastEnemy = mVisibleEnemy; // 마주친 적으로 등록
-            shoot(mLastEnemy);
+            Shoot(mLastEnemy);
 
         }
 
         //움직임
-        if (getHpPercentage() < 0.5 || getAmmoPercentage() < 0.5) //상태가 좋지 않다 "필요한 아이템 탐색"
+        if (GetHpPercentage() < 0.5 || GetAmmoPercentage() < 0.5) //상태가 좋지 않다 "필요한 아이템 탐색"
         {
-            if (getHpPercentage() <= getAmmoPercentage() && mClosestHeal != -1) //체력이 더 부족
+            if (GetHpPercentage() <= GetAmmoPercentage() && mClosestHeal != -1) //체력이 더 부족
             {
-                moveTo(mClosestHeal, false, 0); // 가까운 체력 아이템으로 이동
+                MoveTo(mClosestHeal, false, 0); // 가까운 체력 아이템으로 이동
 
             }
-            else if (getHpPercentage() > getAmmoPercentage() && mClosestAmmo != -1) //총알이 더 부족
+            else if (GetHpPercentage() > GetAmmoPercentage() && mClosestAmmo != -1) //총알이 더 부족
             {
-                moveTo(mClosestAmmo, false, 1); // 가까운 총알 아이템으로 이동
+                MoveTo(mClosestAmmo, false, 1); // 가까운 총알 아이템으로 이동
             }
             else //상태가 좋지 않지만 아이템이 존재하지 않을 때
             {
@@ -61,24 +61,24 @@ public class AIBase_Modified_AssaultCube : ObjectBase_AIBase
             {
                 if (Vector3.Distance(this.gameObject.transform.position, GameManager.mAll_Of_Game_Objects[mClosestTeammate].transform.position) > 10) //멀면 팀원에게 이동
                 {
-                    moveTo(mClosestTeammate, false, 2);
+                    MoveTo(mClosestTeammate, false, 2);
                 }
                 else //모였으면
                 {
                     if (mClosestOccupy != -1)//점령전이면
                     {
-                        moveTo(mClosestOccupy, false, 3);
+                        MoveTo(mClosestOccupy, false, 3);
 
                     }
                     else //데스매치면
                     {
                         if (mLastEnemy != -1) //마지막으로 만난 적군에게 이동
                         {
-                            moveTo(mLastEnemy, false, 4);
+                            MoveTo(mLastEnemy, false, 4);
                         }
                         else if (mClosestEnemy != -1)
                         {
-                            moveTo(mClosestEnemy, false, 5);
+                            MoveTo(mClosestEnemy, false, 5);
 
                         }
                     }
@@ -88,18 +88,18 @@ public class AIBase_Modified_AssaultCube : ObjectBase_AIBase
             {
                 if (mClosestOccupy != -1)//점령전이면
                 {
-                    moveTo(mClosestOccupy, false, 8);
+                    MoveTo(mClosestOccupy, false, 8);
 
                 }
                 else //데스매치면
                 {
                     if (mLastEnemy != -1) //마지막으로 만난 적군에게 이동
                     {
-                        moveTo(mLastEnemy, false, 9);
+                        MoveTo(mLastEnemy, false, 9);
                     }
                     else if (mClosestEnemy != -1)
                     {
-                        moveTo(mClosestEnemy, false, 10);
+                        MoveTo(mClosestEnemy, false, 10);
 
                     }
                 }
@@ -116,16 +116,16 @@ public class AIBase_Modified_AssaultCube : ObjectBase_AIBase
     }
 
 
-    public override void respawn()
+    public override void Respawn()
     {
-        base.respawn(); // 기존 respawn수행
+        base.Respawn(); // 기존 respawn수행
         mLastEnemy = -1; // 내가 죽었으면 상대 초기화
 
     }
 
-    public override void killed(int pDeadAIsID)
+    public override void Killed(int pDeadAIsID)
     {
-        base.killed(pDeadAIsID);
+        base.Killed(pDeadAIsID);
         if(pDeadAIsID == mLastEnemy) mLastEnemy = -1; //쫓던 상대를 죽였으면 상대 초기화
     }
 

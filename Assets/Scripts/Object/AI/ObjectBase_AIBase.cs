@@ -1,14 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class ObjectBase_AIBase : ObjectBase
 {
-    // Cached components
-    private NavMeshAgent _agent;
-    private Animator _animator;
-    private Collider _collider;
-
     private int mDestinationItemNumber = -1; //이동 목표 아이템
     private Vector3 mDestinationPositionThen = new Vector3(); //이동하려는 당시의 이동 목표 아이템의 위치 (가까워지면 Destination -1)
 
@@ -30,66 +24,61 @@ public class ObjectBase_AIBase : ObjectBase
     private float mShootTimer;
     private bool mShootisPossible = false;
 
+    // Grid path state
+    private readonly List<Vector3> mCurrentPath = new List<Vector3>();
+    private int mPathIndex = 0;
+    private Vector3 mLastPosition;
+    public float mMoveSpeed = 3.5f; // movement speed units/sec
 
     protected override void Awake()
     {
         base.Awake();
         mObjectType = GameData.ObjectType.AI;
-        // Cache components once
-        _agent = GetComponent<NavMeshAgent>();
-        _animator = GetComponent<Animator>();
-        _collider = GetComponent<Collider>();
     }
-
-
 
     protected override void Start()
     {
         base.Start();
-        respawn(); //게임을 시작하면 리스폰 시킨다 **************
+        Respawn(); //게임을 시작하면 리스폰 시킨다 **************
+        mLastPosition = transform.position;
     }
-
 
     protected override void Update()
     {
         base.Update();
-        if (!gameObject.activeSelf) return;
-
-        checkReachedItem();
-        if (Vector3.Distance(mDestinationPositionThen, transform.position) <= 0.5f) reachedDestination();
-        checkShootDelay();
-        updateMotion();
+        if (this.gameObject.activeSelf == false) return;
+        FollowPath();
+        CheckReachedItem();
+        if (Vector3.Distance(mDestinationPositionThen, this.gameObject.transform.position) <= 0.5f) ReachedDestination();
+        CheckShootDelay();
+        UpdateMotion();
         think();
     }
 
-    public void checkReachedItem() //이동하면서 닿은 아이템들
+    public void CheckReachedItem() //이동하면 서 닿은 아이템들
     {
         foreach (var pair in GameManager.mAll_Of_Game_Objects)
         {
-            var go = pair.Value;
-            if (!go.activeSelf) continue;
-
-            ObjectBase_ItemBase lItem = go.GetComponent<ObjectBase_ItemBase>();
+            ObjectBase_ItemBase lItem = pair.Value.GetComponent<ObjectBase_ItemBase>();
             if (lItem == null) continue;
-            if (Vector3.Distance(go.transform.position, transform.position) >= 0.5f) continue;
+            if (Vector3.Distance(pair.Value.transform.position, this.gameObject.transform.position) >= 0.5f) continue;
+            if (!pair.Value.activeSelf) continue;
 
             lItem.action(mID);
         }
     }
 
-    public void reachedDestination() //이동 목표지점 닿았을 때
+    public void ReachedDestination() //이동 목표지점 닿았을 때
     {
         mDestinationItemNumber = -1;
         mCommandID = -1;
         mIsFixed = false;
+        mCurrentPath.Clear();
+        mPathIndex = 0;
     }
 
-
-    void checkShootDelay()
+    void CheckShootDelay()
     {
-        // 무기가 없으면 쿨타임 체크 불필요
-        if (mUsingWeapon == GameData.Weapon.None) return;
-
         mShootTimer += Time.deltaTime;
         if (!mShootisPossible && GameData.mWeaponDataDictionary[mUsingWeapon].mShootDelay < mShootTimer)
         {
@@ -98,45 +87,72 @@ public class ObjectBase_AIBase : ObjectBase
         }
     }
 
-    public void updateMotion()
+    public void UpdateMotion()
     {
-        if (_agent == null || _animator == null) return;
+        // infer velocity from position delta since we do not use NavMeshAgent anymore
+        Vector3 velocity = (transform.position - mLastPosition) / Mathf.Max(Time.deltaTime, 0.0001f);
+        mLastPosition = transform.position;
 
-        bool isMoving = _agent.velocity.magnitude >= 1f;
-        _animator.SetBool("isMoving", isMoving);
-        _animator.SetBool("isHolding", !isMoving);
+        if (velocity.magnitude < 1f)
+        {
+            this.gameObject.GetComponent<Animator>().SetBool("isMoving", false);
+            this.gameObject.GetComponent<Animator>().SetBool("isHolding", true);
+        }
+        else
+        {
+            this.gameObject.GetComponent<Animator>().SetBool("isMoving", true);
+            this.gameObject.GetComponent<Animator>().SetBool("isHolding", false);
+        }
     }
-
 
     virtual public void think()
     {
-        // 자식 클래스에서 구현
     }
 
+    private void FollowPath()
+    {
+        if (mCurrentPath.Count == 0) return;
+        if (mPathIndex >= mCurrentPath.Count) return;
+
+        Vector3 target = mCurrentPath[mPathIndex];
+        Vector3 to = target - transform.position;
+        to.y = 0f;
+        float dist = to.magnitude;
+        if (dist < 0.05f)
+        {
+            mPathIndex++;
+            if (mPathIndex >= mCurrentPath.Count)
+            {
+                ReachedDestination();
+                return;
+            }
+            target = mCurrentPath[mPathIndex];
+            to = target - transform.position;
+            to.y = 0f;
+        }
+        if (to.sqrMagnitude > 0.0001f)
+        {
+            Vector3 dir = to.normalized;
+            transform.position += dir * mMoveSpeed * Time.deltaTime;
+        }
+    }
 
     #region 탐색
     public virtual bool isVisible(int pItemNumber)
     {
-        if (!_collider) _collider = GetComponent<Collider>();
+        Collider lMyCollider = this.gameObject.GetComponent<Collider>();
+        Collider lTargetCollider = GameManager.mAll_Of_Game_Objects[pItemNumber].GetComponent<Collider>();
 
-        var targetGO = GameManager.mAll_Of_Game_Objects.ContainsKey(pItemNumber)
-            ? GameManager.mAll_Of_Game_Objects[pItemNumber]
-            : null;
-        if (!targetGO) return false;
-
-        Collider lTargetCollider = targetGO.GetComponent<Collider>();
-        if (lTargetCollider == null) return false;
-
-        Vector3 lDirectionToEnemy = (lTargetCollider.bounds.center - _collider.bounds.center).normalized; //pItemNumber 방향으로
+        Vector3 lDirectionToEnemy = (lTargetCollider.bounds.center - lMyCollider.bounds.center).normalized; //pItemNumber 방향으로
 
         if (Vector3.Angle(transform.forward, lDirectionToEnemy) < 90) // 시야각 180도에서 보이면서
         {
             // 레이캐스트로 시야 내의 적과 장애물 여부 확인
             RaycastHit hit;
 
-            if (Physics.Raycast(_collider.bounds.center, lDirectionToEnemy, out hit, 100)) // pItemNumber 방향으로 쏘았을 때 맞았는데
+            if (Physics.Raycast(lMyCollider.bounds.center, lDirectionToEnemy, out hit, 100)) // pItemNumber 방향으로 쏘았을 때 맞았는데
             {
-                if (hit.collider.gameObject == targetGO) //맞은게 pItemNumber면
+                if (hit.collider.gameObject == GameManager.mAll_Of_Game_Objects[pItemNumber]) //맞은게 pItemNumber면
                 {
                     return true;
                 }
@@ -153,179 +169,139 @@ public class ObjectBase_AIBase : ObjectBase
 
         foreach (var pair in GameManager.mAll_Of_Game_Objects)
         {
-            var go = pair.Value;
-            var objBase = go.GetComponent<ObjectBase>();
-            if (!go.activeSelf) continue; // 죽은 애는 찾지 않는다
-            if (objBase == null) continue; // ObjectBase 컴포넌트가 없는 경우 넘어간다.
-            if (objBase.mID == pID) continue;// 자기 자신을 찾았다면 넘어간다.
-            if (objBase.mObjectType != pObjectType) continue;// 찾고자 하는 오브젝트 타입이 아니면 넘어간다.
+            if (!pair.Value.activeSelf) continue; // 죽은 애는 찾지 않는다
+            if (pair.Value.GetComponent<ObjectBase>() == null) continue; // ObjectBase 컴포넌트가 없는 경우 넘어간다.
+            if (pair.Value.GetComponent<ObjectBase>().mID == pID) continue; // 자기 자신을 찾았다면 넘어간다.
+            if (pair.Value.GetComponent<ObjectBase>().mObjectType != pObjectType) continue; // 찾고자 하는 오브젝트 타입이 아니면 넘어간다.
 
             if (pObjectType == GameData.ObjectType.AI) //AI는 팀 구분할 필요가 있음
             {
                 if (pTeamType == GameData.TeamType.Teammate)
                 {
-                    if (go.GetComponent(GetType()) != null)
+                    if (pair.Value.GetComponent(this.GetType()) != null)
                     {
-                        lIsSearchable.Add(objBase);
+                        lIsSearchable.Add(pair.Value.GetComponent<ObjectBase>());
                     }
                 }
                 else if (pTeamType == GameData.TeamType.Enemy)
                 {
-                    if (go.GetComponent(GetType()) == null)
+                    if (pair.Value.GetComponent(this.GetType()) == null)
                     {
-                        lIsSearchable.Add(objBase);
+                        lIsSearchable.Add(pair.Value.GetComponent<ObjectBase>());
                     }
                 }
                 else if (pTeamType == GameData.TeamType.All)
                 {
-                    lIsSearchable.Add(objBase);
+                    lIsSearchable.Add(pair.Value.GetComponent<ObjectBase>());
                 }
             }
             else if (pObjectType == GameData.ObjectType.RespawnPlace) //리스폰 지점은 아군의 지점인지 적의 지점인지 구분할 필요가 있음
             {
-                var place = go.GetComponent<ObjectBase_RespawnPlaceBase>();
-                if (place == null) continue;
-
                 if (pTeamType == GameData.TeamType.Teammate)
                 {
-                    if (place.mPlaceOwner != null && place.mPlaceOwner.GetType() == GetType())
+                    if (pair.Value.GetComponent<ObjectBase_RespawnPlaceBase>().mPlaceOwner.GetType() == this.GetType())
                     {
-                        lIsSearchable.Add(objBase);
+                        lIsSearchable.Add(pair.Value.GetComponent<ObjectBase>());
                     }
                 }
                 else if (pTeamType == GameData.TeamType.Enemy)
                 {
-                    if (place.mPlaceOwner == null || place.mPlaceOwner.GetType() != GetType())
+                    if (pair.Value.GetComponent<ObjectBase_RespawnPlaceBase>().mPlaceOwner.GetType() != this.GetType())
                     {
-                        lIsSearchable.Add(objBase);
+                        lIsSearchable.Add(pair.Value.GetComponent<ObjectBase>());
                     }
                 }
                 else if (pTeamType == GameData.TeamType.All)
                 {
-                    lIsSearchable.Add(objBase);
+                    lIsSearchable.Add(pair.Value.GetComponent<ObjectBase>());
                 }
             }
             else //각종 아이템들
             {
-                lIsSearchable.Add(objBase);
+                lIsSearchable.Add(pair.Value.GetComponent<ObjectBase>());
             }
         }
 
-        ////////////검색
         int lSearchItemNumber = -1;
 
         switch (pSearchType)
         {
             case GameData.SearchType.Visible: // 타입에 맞는 보이는 ObjectBase를 자식으로 가진 GameObject 탐색
+                Collider lMyCollider = GameManager.mAll_Of_Game_Objects[pID].GetComponent<Collider>();
+                RaycastHit hit;
+
+                foreach (var obj in lIsSearchable)
                 {
-                    var myGO = GameManager.mAll_Of_Game_Objects.ContainsKey(pID) ? GameManager.mAll_Of_Game_Objects[pID] : null;
-                    if (myGO == null) break;
-                    Collider lMyCollider = myGO.GetComponent<Collider>();
-                    if (!lMyCollider) break;
+                    ObjectBase lObjectBase = obj;
 
-                    float closest = float.MaxValue;
-                    RaycastHit hit;
+                    Vector3 lDirectionToEnemy = (lObjectBase.gameObject.GetComponent<Collider>().bounds.center - lMyCollider.bounds.center).normalized;
 
-                    foreach (var obj in lIsSearchable)
-                    {
-                        var targetCol = obj.gameObject.GetComponent<Collider>();
-                        if (!targetCol) continue;
+                    if (Vector3.Angle(transform.forward, lDirectionToEnemy) > 90) continue; // 시야각 180도 넘어가면 컨티뉴
+                    if (!Physics.Raycast(lMyCollider.bounds.center, lDirectionToEnemy, out hit, 200)) continue; // 아무것도 안맞았으면 컨티뉴
+                    if (hit.collider.gameObject != GameManager.mAll_Of_Game_Objects[lObjectBase.mID]) continue; //맞은게 목표물이 아니면 컨티뉴
 
-                        Vector3 lDirectionToEnemy = (targetCol.bounds.center - lMyCollider.bounds.center).normalized;
-
-                        if (Vector3.Angle(transform.forward, lDirectionToEnemy) > 90) continue; // 시야각 180도 넘어가면 컨티뉴
-                        if (!Physics.Raycast(lMyCollider.bounds.center, lDirectionToEnemy, out hit, 200)) continue;// 아무것도 안맞았으면 컨티뉴
-                        if (hit.collider.gameObject != GameManager.mAll_Of_Game_Objects[obj.mID]) continue; //맞은게 목표물이 아니면 컨티뉴
-
-                        // 가장 가까운 가시 목표 선택
-                        float d = Vector3.Distance(myGO.transform.position, obj.transform.position);
-                        if (d < closest)
-                        {
-                            closest = d;
-                            lSearchItemNumber = obj.mID;
-                        }
-                    }
+                    lSearchItemNumber = hit.collider.GetComponent<ObjectBase>().mID;
                 }
                 break;
             case GameData.SearchType.Closest: // 타입에 맞는 가까운 ObjectBase를 자식으로 가진 GameObject 탐색
+                float lClosestDistance = float.MaxValue;
+
+                foreach (var obj in lIsSearchable)
                 {
-                    var myGO = GameManager.mAll_Of_Game_Objects.ContainsKey(pID) ? GameManager.mAll_Of_Game_Objects[pID] : null;
-                    if (myGO == null) break;
+                    float distance = Vector3.Distance(GameManager.mAll_Of_Game_Objects[pID].transform.position, obj.gameObject.transform.position);
 
-                    float lClosestDistance = float.MaxValue;
-
-                    foreach (var obj in lIsSearchable)
+                    if (distance < lClosestDistance)
                     {
-                        float distance = Vector3.Distance(myGO.transform.position, obj.gameObject.transform.position);
-
-                        if (distance < lClosestDistance)
-                        {
-                            lSearchItemNumber = obj.mID;
-                            lClosestDistance = distance;
-                        }
+                        lSearchItemNumber = obj.mID;
+                        lClosestDistance = distance;
                     }
                 }
                 break;
 
             case GameData.SearchType.Farthest: //타입에 맞는 멀리있는 ObjectBase를 자식으로 가진 GameObject 탐색
+                float lFarthestDistance = float.MinValue;
+                foreach (var obj in lIsSearchable)
                 {
-                    var myGO = GameManager.mAll_Of_Game_Objects.ContainsKey(pID) ? GameManager.mAll_Of_Game_Objects[pID] : null;
-                    if (myGO == null) break;
+                    float distance = Vector3.Distance(GameManager.mAll_Of_Game_Objects[pID].transform.position, obj.gameObject.transform.position);
 
-                    float lFarthestDistance = float.MinValue;
-                    foreach (var obj in lIsSearchable)
+                    if (distance > lFarthestDistance)
                     {
-                        float distance = Vector3.Distance(myGO.transform.position, obj.gameObject.transform.position);
-
-                        if (distance > lFarthestDistance)
-                        {
-                            lSearchItemNumber = obj.mID;
-                            lFarthestDistance = distance;
-                        }
+                        lSearchItemNumber = obj.mID;
+                        lFarthestDistance = distance;
                     }
                 }
                 break;
 
             case GameData.SearchType.Safe: // 타입에 맞는 적과 멀리 떨어지고 나와 가까운 ObjectBase를 자식으로 가진 GameObject 탐색
+                int lVisibleEnemy = searchItemNumber(pID, GameData.SearchType.Visible, GameData.ObjectType.AI, GameData.TeamType.Enemy);
+                if (lVisibleEnemy == -1) return -1; //내가 볼 수있는 적이 있어야 한다.
+
+                float lSafestDistence = float.MaxValue; //가장 가까우면서 안전한 아이템을 찾아야한다. 최초값은 높이
+
+                foreach (var obj in lIsSearchable)
                 {
-                    int lVisibleEnemy = searchItemNumber(pID, GameData.SearchType.Visible, GameData.ObjectType.AI, GameData.TeamType.Enemy);
-                    if (lVisibleEnemy == -1) return -1; //내가 볼 수있는 적이 있어야 한다.
+                    float lMeToEnemyDistance = Vector3.Distance(GameManager.mAll_Of_Game_Objects[pID].transform.position, GameManager.mAll_Of_Game_Objects[lVisibleEnemy].transform.position);
+                    float lEnemyToItemDistance = Vector3.Distance(GameManager.mAll_Of_Game_Objects[lVisibleEnemy].transform.position, obj.gameObject.transform.position);
+                    float lMeToItemDistance = Vector3.Distance(GameManager.mAll_Of_Game_Objects[pID].transform.position, obj.gameObject.transform.position);
 
-                    var myGO = GameManager.mAll_Of_Game_Objects.ContainsKey(pID) ? GameManager.mAll_Of_Game_Objects[pID] : null;
-                    var enemyGO = GameManager.mAll_Of_Game_Objects.ContainsKey(lVisibleEnemy) ? GameManager.mAll_Of_Game_Objects[lVisibleEnemy] : null;
-                    if (myGO == null || enemyGO == null) break;
-
-                    float lSafestDistence = float.MaxValue; //가장 가까우면서 안전한 아이템을 찾아야한다. 최초값은 높이
-
-                    foreach (var obj in lIsSearchable)
+                    if (lEnemyToItemDistance > lMeToEnemyDistance && lMeToItemDistance < lSafestDistence) //적과의 거리보다 적과 아이템의 거리가 더 멀면 비교적 안전 && 그 중 가까운 아이템
                     {
-                        float lMeToEnemyDistance = Vector3.Distance(myGO.transform.position, enemyGO.transform.position);
-                        float lEnemyToItemDistance = Vector3.Distance(enemyGO.transform.position, obj.gameObject.transform.position);
-                        float lMeToItemDistance = Vector3.Distance(myGO.transform.position, obj.gameObject.transform.position);
-
-                        if (lEnemyToItemDistance > lMeToEnemyDistance && lMeToItemDistance < lSafestDistence) //적과의 거리보다 적과 아이템의 거리가 더 멀면 비교적 안전 && 그 중 가까운 아이템
-                        {
-                            lSearchItemNumber = obj.mID;
-                            lSafestDistence = lMeToItemDistance;
-                        }
+                        lSearchItemNumber = obj.mID;
+                        lSafestDistence = lMeToItemDistance;
                     }
                 }
                 break;
             case GameData.SearchType.Random: // 타입에 맞는 랜덤 ObjectBase를 자식으로 가진 GameObject 탐색
-                {
-                    if (lIsSearchable.Count == 0) break;
-                    lSearchItemNumber = lIsSearchable[UnityEngine.Random.Range(0, lIsSearchable.Count)].mID; //랜덤 인덱스 + 랜덤 마크
-                }
+                if (lIsSearchable.Count == 0) break;
+                lSearchItemNumber = lIsSearchable[UnityEngine.Random.Range(0, lIsSearchable.Count)].mID; //랜덤 인덱스 + 랜덤 마크
                 break;
         }
         return lSearchItemNumber; // 찾지 못했으면 -1을 반환
     }
-
     #endregion
 
-
     #region 무기
-    public void obtainWeapon(GameData.Weapon pWeapon)
+    public void ObtainWeapon(GameData.Weapon pWeapon)
     {
         mUsingWeapon = pWeapon; //먹은 무기를 들게 한다.
 
@@ -333,18 +309,18 @@ public class ObjectBase_AIBase : ObjectBase
         {
             mCurrentAmmo[pWeapon] += GameData.mWeaponDataDictionary[pWeapon].mInitBullets;
         }
-        else  //가지고 있지 않은 무기면 시작 총알 대입한다.
+        else //가지고 있지 않은 무기면 시작 총알 대입한다.
         {
             mCurrentAmmo[pWeapon] = GameData.mWeaponDataDictionary[pWeapon].mInitBullets;
         }
     }
 
-    public bool changeWeapon(GameData.Weapon pWeapon)
+    public bool ChangeWeapon(GameData.Weapon pWeapon)
     {
         if (mCurrentAmmo.ContainsKey(pWeapon)) //가지고 있는 무기면
         {
             mUsingWeapon = pWeapon; //무기 변경
-            return true;//잘 변경되었을 땐 true
+            return true; //잘 변경되었을 땐 true
         }
         else
         {
@@ -352,106 +328,95 @@ public class ObjectBase_AIBase : ObjectBase
         }
     }
 
-    public void resetWeapon()
+    public void ResetWeapon()
     {
         mUsingWeapon = GameData.Weapon.None;
         mCurrentAmmo.Clear();
     }
     #endregion
 
-
     #region 판정
-
-    public float getHpPercentage()
+    public float GetHpPercentage()
     {
         return (float)mCurrentHP / (float)GameData.mMaxHP;
     }
 
-    public float getAmmoPercentage()
+    public float GetAmmoPercentage()
     {
-        if (mUsingWeapon == GameData.Weapon.None) return 0f;
-        int current = mCurrentAmmo.ContainsKey(mUsingWeapon) ? mCurrentAmmo[mUsingWeapon] : 0;
-        return (float)current / (float)GameData.mWeaponDataDictionary[mUsingWeapon].mMaxBullets;
+        return (float)mCurrentAmmo[mUsingWeapon] / (float)GameData.mWeaponDataDictionary[mUsingWeapon].mMaxBullets;
     }
 
-    public void attacked(int pBeShotID) //내가 pID를 공격했을 때
+    public void Attacked(int pBeShotID) //내가 pID를 공격했을 때
     {
-        reachedDestination(); //공격하면 정신차린다
+        ReachedDestination(); //공격하면 정신차린다
     }
 
-    public void beAttackedBy(int pShooterID)
+    public void AttackedBy(int pShooterID)
     {
-        reachedDestination(); //공격 당하면 정신차린다
+        ReachedDestination(); //공격 당하면 정신차린다
 
         ObjectBase_AIBase lShooterAI = GameManager.mAll_Of_Game_Objects[pShooterID].GetComponent<ObjectBase_AIBase>();
-        if (lShooterAI == null) return;
 
-        transform.LookAt(lShooterAI.transform); //나를 공격한 애를 바라본다.
+        this.gameObject.transform.LookAt(lShooterAI.gameObject.transform); //나를 공격한 애를 바라본다.
         mBeAttacked_By_Enemy = pShooterID; //나를 공격한 애는 pShooterID
         mCurrentHP -= GameData.mWeaponDataDictionary[lShooterAI.mUsingWeapon].mDamage; // 적 무기 데미지만큼 체력 깎는다
 
         if (mCurrentHP <= 0) //내가죽었으면
         {
-            lShooterAI.killed(mID);
-            bekilledBy(pShooterID);
+            lShooterAI.Killed(mID);
+            killedBy(pShooterID);
         }
     }
 
-    public virtual void killed(int pDeadID) //내가 누군가를 죽였을 때
+    public virtual void Killed(int pDeadID) //내가 누군가를 죽였을 때
     {
-        reachedDestination();
-
-        GameDataSaver.SaveKillDeathResultsToCSV(gameObject.name, GameManager.mAll_Of_Game_Objects[pDeadID].name);
-        //refreshDestination();// 적을 따라가다가 적이 죽으면 한번 도착했다고 새로고침 해줘야 다른 판단을 한다.
-        //아이템으로 이동하다가 적이 죽어도 판단하에 계속 아이템으로 갈 것
+        ReachedDestination();
+        GameDataSaver.SaveKillDeathResultsToCSV(this.gameObject.name, GameManager.mAll_Of_Game_Objects[pDeadID].name);
     }
 
-    public virtual void bekilledBy(int pKillerID) //내가 죽었을 때
+    public virtual void killedBy(int pKillerID) //내가 죽었을 때
     {
-        reachedDestination();
-        gameObject.SetActive(false);
+        ReachedDestination();
+        this.gameObject.SetActive(false);
     }
 
-
-    public virtual void respawn()
+    public virtual void Respawn()
     {
-        int teammateRespawn = searchItemNumber(mID, GameData.SearchType.Random, GameData.ObjectType.RespawnPlace, GameData.TeamType.Teammate);
-        int anyRespawn = teammateRespawn != -1 ? teammateRespawn : searchItemNumber(mID, GameData.SearchType.Random, GameData.ObjectType.RespawnPlace, GameData.TeamType.All);
-        if (anyRespawn != -1 && GameManager.mAll_Of_Game_Objects.ContainsKey(anyRespawn))
+        if (searchItemNumber(mID, GameData.SearchType.Random, GameData.ObjectType.RespawnPlace, GameData.TeamType.Teammate) != -1) // 내 전용 리스폰 지역이 있는가?
         {
-            transform.position = GameManager.mAll_Of_Game_Objects[anyRespawn].transform.position;
+            this.gameObject.transform.position = GameManager.mAll_Of_Game_Objects[searchItemNumber(mID, GameData.SearchType.Random, GameData.ObjectType.RespawnPlace, GameData.TeamType.Teammate)].transform.position;
+        }
+        else
+        {
+            this.gameObject.transform.position = GameManager.mAll_Of_Game_Objects[searchItemNumber(mID, GameData.SearchType.Random, GameData.ObjectType.RespawnPlace, GameData.TeamType.All)].transform.position;
         }
 
-        gameObject.SetActive(true);
+        this.gameObject.SetActive(true);
 
         mCurrentHP = GameData.mMaxHP;
-        resetWeapon();
-        obtainWeapon(GameData.Weapon.Pistol);
+        ResetWeapon();
+        ObtainWeapon(GameData.Weapon.Pistol);
+
+        mCurrentPath.Clear();
+        mPathIndex = 0;
     }
-
-
     #endregion
 
-    public void shoot(int pID)
+    public void Shoot(int pID)
     {
         if (pID < 0) return; //인덱스
-        if (mUsingWeapon == GameData.Weapon.None) return; //무기 없음
-        if (!GameManager.mAll_Of_Game_Objects.ContainsKey(pID)) return;
-
         transform.LookAt(GameManager.mAll_Of_Game_Objects[pID].transform); //바라보게 한다
 
         if (!mShootisPossible) return; //쿨타임
         mShootisPossible = false;
 
-        int currentAmmo = mCurrentAmmo.ContainsKey(mUsingWeapon) ? mCurrentAmmo[mUsingWeapon] : 0;
-        if (currentAmmo <= 0) return; //총알
-        mCurrentAmmo[mUsingWeapon] = currentAmmo - 1;
+        if (mCurrentAmmo[mUsingWeapon] <= 0) return; //총알
+        mCurrentAmmo[mUsingWeapon]--;
 
-        if (!_collider) _collider = GetComponent<Collider>();
+        Collider lMyCollider = GetComponent<Collider>();
         Collider lTargetCollider = GameManager.mAll_Of_Game_Objects[pID].GetComponent<Collider>();
-        if (!_collider || !lTargetCollider) return;
 
-        Vector3 shotDirection = lTargetCollider.bounds.center - _collider.bounds.center; //정확한 방향
+        Vector3 shotDirection = lTargetCollider.bounds.center - lMyCollider.bounds.center; //정확한 방향
 
         float angleRange = 0.0f;
 
@@ -459,84 +424,70 @@ public class ObjectBase_AIBase : ObjectBase
         Quaternion pitchRotation = Quaternion.AngleAxis(Random.Range(-angleRange, angleRange), Vector3.right); //좌우 랜덤 오차
         Vector3 imprecision = (yawRotation * pitchRotation) * shotDirection.normalized; // 오차 결과 방향
 
-        Ray ray = new Ray(_collider.bounds.center, shotDirection.normalized + imprecision); //방향 + 오차 결과 방향
+        Ray ray = new Ray(lMyCollider.bounds.center, shotDirection.normalized + imprecision); //방향 + 오차 결과 방향
 
         RaycastHit hit;
 
         if (!Physics.Raycast(ray, out hit, 200)) return; //아무것도 안맞았으면 리턴
-        Debug.DrawLine(_collider.bounds.center, hit.point, Color.red, 1f); // 적중 지점을 빨간색 선으로 표시
+        Debug.DrawLine(lMyCollider.bounds.center, hit.point, Color.red, 1f); // 적중 지점을 빨간색 선으로 표시
 
-        ObjectBase_AIBase targetAI = hit.collider.gameObject.GetComponent<ObjectBase_AIBase>();
-        if (targetAI == null) return;//AI가 맞은게 아니면 리턴
-        attacked(targetAI.mID); //hit.ID 를 공격했다
-        targetAI.beAttackedBy(mID); //내 ID로부터 공격당했다
+        if (hit.collider.gameObject.GetComponent<ObjectBase_AIBase>() == null) return; //AI가 맞은게 아니면 리턴
+        Attacked(hit.collider.gameObject.GetComponent<ObjectBase_AIBase>().mID); //hit.ID 를 공격했다
+        hit.collider.gameObject.GetComponent<ObjectBase_AIBase>().AttackedBy(mID); //내 ID로부터 공격당했다
     }
 
-
-    public float calculateNavMeshPathDistance(Vector3 sourcePosition, Vector3 targetPosition)
+    public float CalculateNavMeshPathDistance(Vector3 sourcePosition, Vector3 targetPosition)
     {
-        NavMeshPath path = new NavMeshPath();
-        if (NavMesh.CalculatePath(sourcePosition, targetPosition, NavMesh.AllAreas, path))
+        // Replaced with grid path distance
+        var path = GridPathfinder.FindPath(sourcePosition, targetPosition);
+        if (path == null || path.Count == 0) return 1.0f;
+        float total = 0f;
+        Vector3 prev = sourcePosition;
+        foreach (var p in path)
         {
-            float totalDistance = 0.0f;
-
-            if (path.corners.Length > 1)
-            {
-                for (int i = 0; i < path.corners.Length - 1; i++)
-                {
-                    Vector3 segment = path.corners[i + 1] - path.corners[i];
-                    totalDistance += segment.magnitude;
-                }
-            }
-
-            return totalDistance;
+            total += Vector3.Distance(prev, p);
+            prev = p;
         }
-        else
-        {
-            // 경로를 찾을 수 없는 경우, 양수(예: -1f)로 나타냅니다.
-            return -1.0f;
-        }
+        return total;
     }
 
-    public void changeSpeed(float pAngularSpeed, float pSpeed, float pAcceleration, float pStoppingDistance) //쓰이지 않음
+    public void ChangeSpeed(float pAngularSpeed, float pSpeed, float pAcceleration, float pStoppingDistance) //쓰이지 않음
     {
-        if (_agent == null) _agent = GetComponent<NavMeshAgent>();
-        if (_agent == null) return;
-
-        _agent.angularSpeed = pAngularSpeed; // 회전 속도
-        _agent.speed = pSpeed; // 최대 속도
-        _agent.acceleration = pAcceleration; // 가속도
-        _agent.stoppingDistance = pStoppingDistance; // 멈추는 거리
+        // No NavMeshAgent usage; map to movement speed
+        mMoveSpeed = pSpeed;
     }
 
-    public void moveStop()
+    public void MoveStop()
     {
-        if (_agent == null) _agent = GetComponent<NavMeshAgent>();
-        if (_agent == null) return;
-        _agent.velocity = Vector3.zero;
+        // Stop following path
+        mCurrentPath.Clear();
+        mPathIndex = 0;
     }
 
     public void moveLeftRight()
     {
-        // 좌우 이동 패턴은 필요 시 구현
     }
 
-    public void moveTo(int pID, bool pIsFixed, int pCommandID) //이 함수를 가장 많이 사용하게 해야함
+    public void MoveTo(int pID, bool pIsFixed, int pCommandID) //이 함수를 가장 많이 사용하게 해야함
     {
-        if (_agent == null) _agent = GetComponent<NavMeshAgent>();
-        if (_agent == null) return;
-
-        // 고정 목적지인 경우 도착 전까지 다른 명령 무시
-        if (mIsFixed) return;
+        if (mIsFixed) return; //기존 목적지가 고정으로 설정되었다면 어떤 명령이든 도착하기 전까진 무시한다.
         if (pCommandID == mCommandID) return; //이전 명령ID와 같으면 리턴
+
         if (pID == -1) return; // -1은 못찾은 결과이므로 허용하지 않음
-        if (!GameManager.mAll_Of_Game_Objects.ContainsKey(pID)) return;
 
         mIsFixed = pIsFixed;
         mCommandID = pCommandID;
         mDestinationItemNumber = pID; // pID가 현재 목표, 도착지점이거나 공격하거나 공격받거나 죽거나 죽이면 -1로 변경된다.
         mDestinationPositionThen = GameManager.mAll_Of_Game_Objects[mDestinationItemNumber].transform.position;
-        _agent.SetDestination(mDestinationPositionThen);
+
+        // Compute grid path and start following
+        mCurrentPath.Clear();
+        mPathIndex = 0;
+        var path = GridPathfinder.FindPath(transform.position, mDestinationPositionThen);
+        if (path != null && path.Count > 0)
+        {
+            mCurrentPath.AddRange(path);
+        }
     }
 }
 

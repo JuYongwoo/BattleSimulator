@@ -60,7 +60,7 @@ public class RespawnManager
                 && currentTime >= aiRespawnTimers[obj.Value.GetComponent<ObjectBase>().mID])
             {
                 obj.Value.GetComponent<ObjectBase_AIBase>().mIsRespawning = false;
-                obj.Value.GetComponent<ObjectBase_AIBase>().respawn();
+                obj.Value.GetComponent<ObjectBase_AIBase>().Respawn();
                 aiRespawnTimers.Remove(obj.Value.GetComponent<ObjectBase>().mID);
             }
         }

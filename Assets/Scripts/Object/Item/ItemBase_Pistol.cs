@@ -17,7 +17,7 @@ public class ItemBase_Pistol : ObjectBase_ItemBase
         ObjectBase_AIBase mAIClass = GameManager.mAll_Of_Game_Objects[pReachedAIsIDNumber].GetComponent<ObjectBase_AIBase>();
 
         if (mAIClass == null) return;
-        mAIClass.obtainWeapon(GameData.Weapon.Pistol); //먹은 AI의 obtainWeapon을 이 무기의 종류를 인자로 주고 호출한다
+        mAIClass.ObtainWeapon(GameData.Weapon.Pistol); //먹은 AI의 obtainWeapon을 이 무기의 종류를 인자로 주고 호출한다
 
         this.gameObject.SetActive(false);
 
