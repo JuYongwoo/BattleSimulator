@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 0c57afa11372d564aad59cf02d01cec7
+timeCreated: 1520959259
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 265931
+  packageName: RPG/FPS Game Assets for PC/Mobile (Set v9.0)
+  packageVersion: 9.0
+  assetPath: Assets/RPG_FPS_game_assets/MapGen/Scripts/PA_spawner.cs
+  uploadId: 616067

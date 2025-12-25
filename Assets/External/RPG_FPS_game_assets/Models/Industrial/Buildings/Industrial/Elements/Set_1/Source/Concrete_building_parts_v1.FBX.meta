@@ -1,0 +1,210 @@
+fileFormatVersion: 2
+guid: 4ecadeb6a003a954ab3c823fef4a6be1
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: Concrete_border_v1
+    100002: Concrete_border_v2
+    100004: Concrete_border_v3
+    100006: //RootNode
+    100008: Concrete_column_v1_1
+    100010: Concrete_column_v1_2
+    100012: Concrete_column_v1_3
+    100014: Concrete_column_v2_1
+    100016: Concrete_column_v2_2
+    100018: Concrete_column_v3_1
+    100020: Concrete_column_v3_2
+    100022: Concrete_column_v4_1
+    100024: Concrete_column_v4_2
+    100026: Low_stair_v1_1
+    100028: Low_stair_v1_2
+    100030: Low_stair_v1_3
+    100032: Low_stair_v1_4
+    100034: Outer_bottom_corner_v1
+    100036: Outer_bottom_tile_v1
+    100038: Outer_seam_corner_v1_1
+    100040: Outer_seam_corner_v1_2
+    100042: Outer_seam_tile_v1_1
+    100044: Outer_seam_tile_v1_2
+    100046: Outer_bottom_corner_v2
+    400000: Concrete_border_v1
+    400002: Concrete_border_v2
+    400004: Concrete_border_v3
+    400006: //RootNode
+    400008: Concrete_column_v1_1
+    400010: Concrete_column_v1_2
+    400012: Concrete_column_v1_3
+    400014: Concrete_column_v2_1
+    400016: Concrete_column_v2_2
+    400018: Concrete_column_v3_1
+    400020: Concrete_column_v3_2
+    400022: Concrete_column_v4_1
+    400024: Concrete_column_v4_2
+    400026: Low_stair_v1_1
+    400028: Low_stair_v1_2
+    400030: Low_stair_v1_3
+    400032: Low_stair_v1_4
+    400034: Outer_bottom_corner_v1
+    400036: Outer_bottom_tile_v1
+    400038: Outer_seam_corner_v1_1
+    400040: Outer_seam_corner_v1_2
+    400042: Outer_seam_tile_v1_1
+    400044: Outer_seam_tile_v1_2
+    400046: Outer_bottom_corner_v2
+    2300000: Concrete_border_v1
+    2300002: Concrete_border_v2
+    2300004: Concrete_border_v3
+    2300006: Concrete_column_v1_1
+    2300008: Concrete_column_v1_2
+    2300010: Concrete_column_v1_3
+    2300012: Concrete_column_v2_1
+    2300014: Concrete_column_v2_2
+    2300016: Concrete_column_v3_1
+    2300018: Concrete_column_v3_2
+    2300020: Concrete_column_v4_1
+    2300022: Concrete_column_v4_2
+    2300024: Low_stair_v1_1
+    2300026: Low_stair_v1_2
+    2300028: Low_stair_v1_3
+    2300030: Low_stair_v1_4
+    2300032: Outer_bottom_corner_v1
+    2300034: Outer_bottom_tile_v1
+    2300036: Outer_seam_corner_v1_1
+    2300038: Outer_seam_corner_v1_2
+    2300040: Outer_seam_tile_v1_1
+    2300042: Outer_seam_tile_v1_2
+    2300044: Outer_bottom_corner_v2
+    3300000: Concrete_border_v1
+    3300002: Concrete_border_v2
+    3300004: Concrete_border_v3
+    3300006: Concrete_column_v1_1
+    3300008: Concrete_column_v1_2
+    3300010: Concrete_column_v1_3
+    3300012: Concrete_column_v2_1
+    3300014: Concrete_column_v2_2
+    3300016: Concrete_column_v3_1
+    3300018: Concrete_column_v3_2
+    3300020: Concrete_column_v4_1
+    3300022: Concrete_column_v4_2
+    3300024: Low_stair_v1_1
+    3300026: Low_stair_v1_2
+    3300028: Low_stair_v1_3
+    3300030: Low_stair_v1_4
+    3300032: Outer_bottom_corner_v1
+    3300034: Outer_bottom_tile_v1
+    3300036: Outer_seam_corner_v1_1
+    3300038: Outer_seam_corner_v1_2
+    3300040: Outer_seam_tile_v1_1
+    3300042: Outer_seam_tile_v1_2
+    3300044: Outer_bottom_corner_v2
+    4300000: Concrete_border_v2
+    4300002: Concrete_border_v1
+    4300004: Outer_bottom_corner_v1
+    4300006: Outer_bottom_tile_v1
+    4300008: Outer_seam_tile_v1_2
+    4300010: Outer_seam_tile_v1_1
+    4300012: Outer_seam_corner_v1_2
+    4300014: Outer_seam_corner_v1_1
+    4300016: Low_stair_v1_4
+    4300018: Low_stair_v1_3
+    4300020: Low_stair_v1_2
+    4300022: Low_stair_v1_1
+    4300024: Concrete_column_v1_1
+    4300026: Concrete_column_v3_2
+    4300028: Concrete_column_v2_1
+    4300030: Concrete_column_v4_2
+    4300032: Concrete_border_v3
+    4300034: Concrete_column_v1_2
+    4300036: Concrete_column_v1_3
+    4300038: Concrete_column_v2_2
+    4300040: Concrete_column_v3_1
+    4300042: Concrete_column_v4_1
+    4300044: Outer_bottom_corner_v2
+  externalObjects: {}
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 0
+    importBlendShapes: 1
+    importCameras: 0
+    importLights: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 1
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 0
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 265931
+  packageName: RPG/FPS Game Assets for PC/Mobile (Set v9.0)
+  packageVersion: 9.0
+  assetPath: Assets/RPG_FPS_game_assets/Models/Industrial/Buildings/Industrial/Elements/Set_1/Source/Concrete_building_parts_v1.FBX
+  uploadId: 616067

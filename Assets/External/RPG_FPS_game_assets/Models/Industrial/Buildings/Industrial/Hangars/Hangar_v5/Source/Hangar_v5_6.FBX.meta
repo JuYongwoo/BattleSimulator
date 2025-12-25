@@ -1,0 +1,131 @@
+fileFormatVersion: 2
+guid: 847fa6cc2a927634591757d0b10995c6
+timeCreated: 1525011157
+licenseType: Store
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Hangar_v5_6
+    100002: //RootNode
+    100004: Hangar_v5_6_door1
+    100006: Hangar_v5_6_door2
+    100008: Hangar_v5_6_door3
+    100010: Hangar_v5_6_door4
+    100012: Hangar_v5_6_door5
+    100014: Hangar_v5_6_door6
+    100016: Hangar_v5_6_inside
+    100018: Hangar_v5_6_supports
+    400000: Hangar_v5_6
+    400002: //RootNode
+    400004: Hangar_v5_6_door1
+    400006: Hangar_v5_6_door2
+    400008: Hangar_v5_6_door3
+    400010: Hangar_v5_6_door4
+    400012: Hangar_v5_6_door5
+    400014: Hangar_v5_6_door6
+    400016: Hangar_v5_6_inside
+    400018: Hangar_v5_6_supports
+    2300000: Hangar_v5_6
+    2300002: Hangar_v5_6_door1
+    2300004: Hangar_v5_6_door2
+    2300006: Hangar_v5_6_door3
+    2300008: Hangar_v5_6_door4
+    2300010: Hangar_v5_6_door5
+    2300012: Hangar_v5_6_door6
+    2300014: Hangar_v5_6_inside
+    2300016: Hangar_v5_6_supports
+    3300000: Hangar_v5_6
+    3300002: Hangar_v5_6_door1
+    3300004: Hangar_v5_6_door2
+    3300006: Hangar_v5_6_door3
+    3300008: Hangar_v5_6_door4
+    3300010: Hangar_v5_6_door5
+    3300012: Hangar_v5_6_door6
+    3300014: Hangar_v5_6_inside
+    3300016: Hangar_v5_6_supports
+    4300000: Hangar_v5_6
+    4300002: Hangar_v5_6_inside
+    4300004: Hangar_v5_6_door5
+    4300006: Hangar_v5_6_door3
+    4300008: Hangar_v5_6_door2
+    4300010: Hangar_v5_6_door6
+    4300012: Hangar_v5_6_door1
+    4300014: Hangar_v5_6_door4
+    4300016: Hangar_v5_6_supports
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 1
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 265931
+  packageName: RPG/FPS Game Assets for PC/Mobile (Set v9.0)
+  packageVersion: 9.0
+  assetPath: Assets/RPG_FPS_game_assets/Models/Industrial/Buildings/Industrial/Hangars/Hangar_v5/Source/Hangar_v5_6.FBX
+  uploadId: 616067

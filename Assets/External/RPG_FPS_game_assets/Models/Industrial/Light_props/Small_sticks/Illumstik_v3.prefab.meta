@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: db45630ad1111fa409a48972a7159400
+timeCreated: 1525605858
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 265931
+  packageName: RPG/FPS Game Assets for PC/Mobile (Set v9.0)
+  packageVersion: 9.0
+  assetPath: Assets/RPG_FPS_game_assets/Models/Industrial/Light_props/Small_sticks/Illumstik_v3.prefab
+  uploadId: 616067

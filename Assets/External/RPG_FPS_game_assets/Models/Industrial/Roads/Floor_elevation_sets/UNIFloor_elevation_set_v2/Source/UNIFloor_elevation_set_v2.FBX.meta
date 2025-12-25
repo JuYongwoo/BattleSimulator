@@ -1,0 +1,211 @@
+fileFormatVersion: 2
+guid: 2401543eefafbde4cb482cce707e6ad9
+timeCreated: 1525187738
+licenseType: Store
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Box001
+    100002: Box002
+    100004: Object001
+    100006: Object002
+    100008: Object003
+    100010: //RootNode
+    100012: Object005
+    100014: Object006
+    100016: Object007
+    100018: UNI_FES_v2_BR1
+    100020: UNI_FES_v2_BR2
+    100022: UNI_FES_v2_S1
+    100024: UNI_FES_v2_S2
+    100026: UNI_FES_v2_S3
+    100028: UNI_FES_v2_SUP1
+    100030: UNI_FES_v2_W1
+    100032: UNI_FES_v2_W2
+    100034: UNI_FES_v2_W1C
+    100036: UNI_FES_v2_W2C
+    100038: UNI_FES_v2_S1L
+    100040: UNI_FES_v2_S1R
+    100042: UNI_FES_v2_S2L
+    100044: UNI_FES_v2_S2R
+    100046: UNI_FES_v2_W1DE
+    100048: UNI_FES_v2_W2DE
+    100050: UNI_FES_v2_W1E
+    400000: Box001
+    400002: Box002
+    400004: Object001
+    400006: Object002
+    400008: Object003
+    400010: //RootNode
+    400012: Object005
+    400014: Object006
+    400016: Object007
+    400018: UNI_FES_v2_BR1
+    400020: UNI_FES_v2_BR2
+    400022: UNI_FES_v2_S1
+    400024: UNI_FES_v2_S2
+    400026: UNI_FES_v2_S3
+    400028: UNI_FES_v2_SUP1
+    400030: UNI_FES_v2_W1
+    400032: UNI_FES_v2_W2
+    400034: UNI_FES_v2_W1C
+    400036: UNI_FES_v2_W2C
+    400038: UNI_FES_v2_S1L
+    400040: UNI_FES_v2_S1R
+    400042: UNI_FES_v2_S2L
+    400044: UNI_FES_v2_S2R
+    400046: UNI_FES_v2_W1DE
+    400048: UNI_FES_v2_W2DE
+    400050: UNI_FES_v2_W1E
+    2300000: Box001
+    2300002: Box002
+    2300004: Object001
+    2300006: Object002
+    2300008: Object003
+    2300010: Object005
+    2300012: Object006
+    2300014: Object007
+    2300016: UNI_FES_v2_BR1
+    2300018: UNI_FES_v2_BR2
+    2300020: UNI_FES_v2_S1
+    2300022: UNI_FES_v2_S2
+    2300024: UNI_FES_v2_S3
+    2300026: UNI_FES_v2_SUP1
+    2300028: UNI_FES_v2_W1
+    2300030: UNI_FES_v2_W2
+    2300032: UNI_FES_v2_W1C
+    2300034: UNI_FES_v2_W2C
+    2300036: UNI_FES_v2_S1L
+    2300038: UNI_FES_v2_S1R
+    2300040: UNI_FES_v2_S2L
+    2300042: UNI_FES_v2_S2R
+    2300044: UNI_FES_v2_W1DE
+    2300046: UNI_FES_v2_W2DE
+    2300048: UNI_FES_v2_W1E
+    3300000: Box001
+    3300002: Box002
+    3300004: Object001
+    3300006: Object002
+    3300008: Object003
+    3300010: Object005
+    3300012: Object006
+    3300014: Object007
+    3300016: UNI_FES_v2_BR1
+    3300018: UNI_FES_v2_BR2
+    3300020: UNI_FES_v2_S1
+    3300022: UNI_FES_v2_S2
+    3300024: UNI_FES_v2_S3
+    3300026: UNI_FES_v2_SUP1
+    3300028: UNI_FES_v2_W1
+    3300030: UNI_FES_v2_W2
+    3300032: UNI_FES_v2_W1C
+    3300034: UNI_FES_v2_W2C
+    3300036: UNI_FES_v2_S1L
+    3300038: UNI_FES_v2_S1R
+    3300040: UNI_FES_v2_S2L
+    3300042: UNI_FES_v2_S2R
+    3300044: UNI_FES_v2_W1DE
+    3300046: UNI_FES_v2_W2DE
+    3300048: UNI_FES_v2_W1E
+    4300000: Box001
+    4300002: Box002
+    4300004: Object001
+    4300006: Object002
+    4300008: Object003
+    4300010: Object005
+    4300012: Object006
+    4300014: Object007
+    4300016: UNI_FES_v2_BR1
+    4300018: UNI_FES_v2_W2
+    4300020: UNI_FES_v2_S1
+    4300022: UNI_FES_v2_SUP1
+    4300024: UNI_FES_v2_BR2
+    4300026: UNI_FES_v2_S3
+    4300028: UNI_FES_v2_S2
+    4300030: UNI_FES_v2_W1
+    4300032: UNI_FES_v2_W1C
+    4300034: UNI_FES_v2_W2C
+    4300036: UNI_FES_v2_S1R
+    4300038: UNI_FES_v2_S2R
+    4300040: UNI_FES_v2_S2L
+    4300042: UNI_FES_v2_S1L
+    4300044: UNI_FES_v2_W2DE
+    4300046: UNI_FES_v2_W1DE
+    4300048: UNI_FES_v2_W1E
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 1
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 265931
+  packageName: RPG/FPS Game Assets for PC/Mobile (Set v9.0)
+  packageVersion: 9.0
+  assetPath: Assets/RPG_FPS_game_assets/Models/Industrial/Roads/Floor_elevation_sets/UNIFloor_elevation_set_v2/Source/UNIFloor_elevation_set_v2.FBX
+  uploadId: 616067

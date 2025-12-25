@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 574b113a1431ad2489b46dd20fdf7dc6
+timeCreated: 1521381360
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 265931
+  packageName: RPG/FPS Game Assets for PC/Mobile (Set v9.0)
+  packageVersion: 9.0
+  assetPath: Assets/RPG_FPS_game_assets/MapGen/Scripts/Add_PA.cs
+  uploadId: 616067

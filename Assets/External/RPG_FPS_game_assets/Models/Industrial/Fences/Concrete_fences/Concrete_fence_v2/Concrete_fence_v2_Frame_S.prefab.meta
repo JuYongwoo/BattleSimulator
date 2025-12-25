@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: ebad1da1db54ab5499040f7baa32dc4b
+timeCreated: 1525238761
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 265931
+  packageName: RPG/FPS Game Assets for PC/Mobile (Set v9.0)
+  packageVersion: 9.0
+  assetPath: Assets/RPG_FPS_game_assets/Models/Industrial/Fences/Concrete_fences/Concrete_fence_v2/Concrete_fence_v2_Frame_S.prefab
+  uploadId: 616067

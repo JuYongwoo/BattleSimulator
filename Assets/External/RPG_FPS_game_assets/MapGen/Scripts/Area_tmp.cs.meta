@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 6f96d823d3abbe648b54f8d5bb3f9e75
+timeCreated: 1521132556
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 265931
+  packageName: RPG/FPS Game Assets for PC/Mobile (Set v9.0)
+  packageVersion: 9.0
+  assetPath: Assets/RPG_FPS_game_assets/MapGen/Scripts/Area_tmp.cs
+  uploadId: 616067

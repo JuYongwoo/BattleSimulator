@@ -1,0 +1,133 @@
+fileFormatVersion: 2
+guid: 327a2411d8ad8cc4db325191152463ec
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: Box001
+    100002: //RootNode
+    100004: Sphere001
+    100006: Object005
+    100008: Object006
+    100010: Object007
+    100012: Oil_tank_v3_1
+    100014: OT3_Pipe_v1_1
+    400000: Box001
+    400002: //RootNode
+    400004: Sphere001
+    400006: Object005
+    400008: Object006
+    400010: Object007
+    400012: Oil_tank_v3_1
+    400014: OT3_Pipe_v1_1
+    2100000: No Name
+    2100002: 'Material #367'
+    2100004: 12 - Default
+    2300000: Box001
+    2300002: Sphere001
+    2300004: Object005
+    2300006: Object006
+    2300008: Object007
+    2300010: Oil_tank_v3_1
+    2300012: OT3_Pipe_v1_1
+    3300000: Box001
+    3300002: Sphere001
+    3300004: Object005
+    3300006: Object006
+    3300008: Object007
+    3300010: Oil_tank_v3_1
+    3300012: OT3_Pipe_v1_1
+    4300000: Sphere001
+    4300002: Box001
+    4300004: Object005
+    4300006: Object006
+    4300008: Object007
+    4300010: Oil_tank_v3_1
+    4300012: OT3_Pipe_v1_1
+  externalObjects: {}
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 1
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 265931
+  packageName: RPG/FPS Game Assets for PC/Mobile (Set v9.0)
+  packageVersion: 9.0
+  assetPath: Assets/RPG_FPS_game_assets/Models/Industrial/Oil_tanks/Oil_tank_v3/Source/Oil_tank_v3.FBX
+  uploadId: 616067

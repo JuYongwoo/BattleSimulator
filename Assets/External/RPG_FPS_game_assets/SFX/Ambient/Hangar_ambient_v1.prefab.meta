@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: bc7dd6292d4a456499cf74ee896d480c
+timeCreated: 1526481850
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 265931
+  packageName: RPG/FPS Game Assets for PC/Mobile (Set v9.0)
+  packageVersion: 9.0
+  assetPath: Assets/RPG_FPS_game_assets/SFX/Ambient/Hangar_ambient_v1.prefab
+  uploadId: 616067

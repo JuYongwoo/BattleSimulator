@@ -1,0 +1,157 @@
+fileFormatVersion: 2
+guid: 517b18da62d0e434187b4745306b4938
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Lawn_set1_1b
+    100004: Lawn_set1_1g
+    100006: Lawn_set1_2b
+    100008: Lawn_set1_2g
+    100010: Lawn_set1_3b
+    100012: Lawn_set1_3g
+    100014: Lawn_set1_4b
+    100016: Lawn_set1_4g
+    100018: Lawn_set1_5b
+    100020: Lawn_set1_5g
+    100022: Lawn_set1_6b
+    100024: Lawn_set1_6g
+    400000: //RootNode
+    400002: Lawn_set1_1b
+    400004: Lawn_set1_1g
+    400006: Lawn_set1_2b
+    400008: Lawn_set1_2g
+    400010: Lawn_set1_3b
+    400012: Lawn_set1_3g
+    400014: Lawn_set1_4b
+    400016: Lawn_set1_4g
+    400018: Lawn_set1_5b
+    400020: Lawn_set1_5g
+    400022: Lawn_set1_6b
+    400024: Lawn_set1_6g
+    2100000: 'Material #62'
+    2100002: 'Material #49'
+    2300000: Lawn_set1_1b
+    2300002: Lawn_set1_1g
+    2300004: Lawn_set1_2b
+    2300006: Lawn_set1_2g
+    2300008: Lawn_set1_3b
+    2300010: Lawn_set1_3g
+    2300012: Lawn_set1_4b
+    2300014: Lawn_set1_4g
+    2300016: Lawn_set1_5b
+    2300018: Lawn_set1_5g
+    2300020: Lawn_set1_6b
+    2300022: Lawn_set1_6g
+    3300000: Lawn_set1_1b
+    3300002: Lawn_set1_1g
+    3300004: Lawn_set1_2b
+    3300006: Lawn_set1_2g
+    3300008: Lawn_set1_3b
+    3300010: Lawn_set1_3g
+    3300012: Lawn_set1_4b
+    3300014: Lawn_set1_4g
+    3300016: Lawn_set1_5b
+    3300018: Lawn_set1_5g
+    3300020: Lawn_set1_6b
+    3300022: Lawn_set1_6g
+    4300000: Lawn_set1_1b
+    4300002: Lawn_set1_6b
+    4300004: Lawn_set1_5b
+    4300006: Lawn_set1_4b
+    4300008: Lawn_set1_3b
+    4300010: Lawn_set1_2b
+    4300012: Lawn_set1_1g
+    4300014: Lawn_set1_2g
+    4300016: Lawn_set1_3g
+    4300018: Lawn_set1_4g
+    4300020: Lawn_set1_5g
+    4300022: Lawn_set1_6g
+  externalObjects: {}
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 1
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 265931
+  packageName: RPG/FPS Game Assets for PC/Mobile (Set v9.0)
+  packageVersion: 9.0
+  assetPath: Assets/RPG_FPS_game_assets/Models/Industrial/Lawn/Source/Lawn_set1.FBX
+  uploadId: 616067

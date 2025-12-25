@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 5cf2a5503c1bb32429f9dcf07acc20f8
+timeCreated: 1525234101
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 265931
+  packageName: RPG/FPS Game Assets for PC/Mobile (Set v9.0)
+  packageVersion: 9.0
+  assetPath: Assets/RPG_FPS_game_assets/Models/Industrial/Roads/Floor_elevation_sets/UNIFloor_elevation_set_v2/UNI_FES_v2_BR2.prefab
+  uploadId: 616067

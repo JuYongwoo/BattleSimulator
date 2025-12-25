@@ -1,0 +1,190 @@
+fileFormatVersion: 2
+guid: ffd14148582c4f84f867ad56a7b3dafd
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Cylinder001
+    100004: Cylinder002
+    100006: Cylinder003
+    100008: Barrel_v1_LD1
+    100010: Barrel_v1_LD2
+    100012: Barrel_v1_LD3
+    100014: Barrel_v1_LD1_S1
+    100016: Barrel_v1_LD1_S2
+    100018: Barrel_v1_LD1_S3
+    100020: Barrel_v1_LD1_S4
+    100022: Barrel_v1_LD2_S1
+    100024: Barrel_v1_LD2_S2
+    100026: Barrel_v1_LD2_S3
+    100028: Barrel_v1_LD2_S4
+    100030: Barrel_v1_LD3_S1
+    100032: Barrel_v1_LD3_S2
+    100034: Barrel_v1_LD3_S3
+    100036: Barrel_v1_LD3_S4
+    400000: //RootNode
+    400002: Cylinder001
+    400004: Cylinder002
+    400006: Cylinder003
+    400008: Barrel_v1_LD1
+    400010: Barrel_v1_LD2
+    400012: Barrel_v1_LD3
+    400014: Barrel_v1_LD1_S1
+    400016: Barrel_v1_LD1_S2
+    400018: Barrel_v1_LD1_S3
+    400020: Barrel_v1_LD1_S4
+    400022: Barrel_v1_LD2_S1
+    400024: Barrel_v1_LD2_S2
+    400026: Barrel_v1_LD2_S3
+    400028: Barrel_v1_LD2_S4
+    400030: Barrel_v1_LD3_S1
+    400032: Barrel_v1_LD3_S2
+    400034: Barrel_v1_LD3_S3
+    400036: Barrel_v1_LD3_S4
+    2300000: Cylinder001
+    2300002: Cylinder002
+    2300004: Cylinder003
+    2300006: Barrel_v1_LD1
+    2300008: Barrel_v1_LD2
+    2300010: Barrel_v1_LD3
+    2300012: Barrel_v1_LD1_S1
+    2300014: Barrel_v1_LD1_S2
+    2300016: Barrel_v1_LD1_S3
+    2300018: Barrel_v1_LD1_S4
+    2300020: Barrel_v1_LD2_S1
+    2300022: Barrel_v1_LD2_S2
+    2300024: Barrel_v1_LD2_S3
+    2300026: Barrel_v1_LD2_S4
+    2300028: Barrel_v1_LD3_S1
+    2300030: Barrel_v1_LD3_S2
+    2300032: Barrel_v1_LD3_S3
+    2300034: Barrel_v1_LD3_S4
+    3300000: Cylinder001
+    3300002: Cylinder002
+    3300004: Cylinder003
+    3300006: Barrel_v1_LD1
+    3300008: Barrel_v1_LD2
+    3300010: Barrel_v1_LD3
+    3300012: Barrel_v1_LD1_S1
+    3300014: Barrel_v1_LD1_S2
+    3300016: Barrel_v1_LD1_S3
+    3300018: Barrel_v1_LD1_S4
+    3300020: Barrel_v1_LD2_S1
+    3300022: Barrel_v1_LD2_S2
+    3300024: Barrel_v1_LD2_S3
+    3300026: Barrel_v1_LD2_S4
+    3300028: Barrel_v1_LD3_S1
+    3300030: Barrel_v1_LD3_S2
+    3300032: Barrel_v1_LD3_S3
+    3300034: Barrel_v1_LD3_S4
+    4300000: Cylinder001
+    4300002: Cylinder002
+    4300004: Cylinder003
+    4300006: Barrel_v1_LD2
+    4300008: Barrel_v1_LD3
+    4300010: Barrel_v1_LD1
+    4300012: Barrel_v1_LD1_S1
+    4300014: Barrel_v1_LD1_S2
+    4300016: Barrel_v1_LD1_S4
+    4300018: Barrel_v1_LD1_S3
+    4300020: Barrel_v1_LD2_S1
+    4300022: Barrel_v1_LD2_S2
+    4300024: Barrel_v1_LD2_S3
+    4300026: Barrel_v1_LD2_S4
+    4300028: Barrel_v1_LD3_S2
+    4300030: Barrel_v1_LD3_S1
+    4300032: Barrel_v1_LD3_S3
+    4300034: Barrel_v1_LD3_S4
+  externalObjects: {}
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 0
+    importBlendShapes: 1
+    importCameras: 0
+    importLights: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 1
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 0
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 1
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 265931
+  packageName: RPG/FPS Game Assets for PC/Mobile (Set v9.0)
+  packageVersion: 9.0
+  assetPath: Assets/RPG_FPS_game_assets/Models/Industrial/Barrels/Barrel_v1/Source/Barrel_v1.FBX
+  uploadId: 616067
