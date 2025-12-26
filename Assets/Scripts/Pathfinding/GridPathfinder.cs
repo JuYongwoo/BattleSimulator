@@ -1,9 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// Simple grid-based A* pathfinder.
-// Rounds world positions to integer grid coordinates using: [-0.5, 0.499..] -> 0, [0.5, 1.499..] -> 1
-// Assumes Y is irrelevant for movement (uses XZ plane). Walkability is determined by Physics.OverlapSphere around cell center with layer/tag filters.
+// Simple grid-based A* pathfinder with 8-direction movement.
 public static class GridPathfinder
 {
     public struct Node
@@ -36,16 +34,21 @@ public static class GridPathfinder
         return new Vector3(grid.x, y, grid.y);
     }
 
-    // Heuristic: Manhattan distance
+    // Heuristic: Octile distance for 8-dir movement
     static int Heuristic(Vector2Int a, Vector2Int b)
     {
-        return Mathf.Abs(a.x - b.x) + Mathf.Abs(a.y - b.y);
+        int dx = Mathf.Abs(a.x - b.x);
+        int dy = Mathf.Abs(a.y - b.y);
+        int dMin = Mathf.Min(dx, dy);
+        int dMax = Mathf.Max(dx, dy);
+        // cost: diagonal=14, straight=10 (scaled by 10 to keep ints)
+        return dMin * 14 + (dMax - dMin) * 10;
     }
 
     // Non-alloc collider buffer
-    static Collider[] sOverlapBuffer = new Collider[8];
+    static Collider[] sOverlapBuffer = new Collider[16];
 
-    // Check if a grid cell is walkable. You can customize by layers/tags.
+    // Check if a grid cell is walkable. Only blocks Obstacles; allows multiple AIs to share a cell.
     public static bool IsWalkable(Vector2Int cell, float y, float cellRadius = 0.45f)
     {
         Vector3 center = GridToWorld(cell, y);
@@ -61,28 +64,65 @@ public static class GridPathfinder
         return true;
     }
 
-    static readonly Vector2Int[] Neighbors4 = new Vector2Int[]
+    static readonly Vector2Int[] Neighbors8 = new Vector2Int[]
     {
         new Vector2Int(1, 0),
         new Vector2Int(-1, 0),
         new Vector2Int(0, 1),
         new Vector2Int(0, -1),
+        new Vector2Int(1, 1),
+        new Vector2Int(1, -1),
+        new Vector2Int(-1, 1),
+        new Vector2Int(-1, -1),
     };
 
-    public static List<Vector3> FindPath(Vector3 startWorld, Vector3 goalWorld, int searchRadius = 64, int maxIterations = 10000)
+    // Find nearest walkable cell around origin (including origin). Expands in rings up to maxRadius.
+    static Vector2Int FindNearestWalkable(Vector2Int origin, float y, int maxRadius)
+    {
+        if (IsWalkable(origin, y)) return origin;
+        for (int r = 1; r <= maxRadius; r++)
+        {
+            for (int dx = -r; dx <= r; dx++)
+            {
+                int dy1 = r;
+                int dy2 = -r;
+                var p1 = new Vector2Int(origin.x + dx, origin.y + dy1);
+                var p2 = new Vector2Int(origin.x + dx, origin.y + dy2);
+                if (IsWalkable(p1, y)) return p1;
+                if (IsWalkable(p2, y)) return p2;
+            }
+            for (int dy = -r + 1; dy <= r - 1; dy++)
+            {
+                int dx1 = r;
+                int dx2 = -r;
+                var p1 = new Vector2Int(origin.x + dx1, origin.y + dy);
+                var p2 = new Vector2Int(origin.x + dx2, origin.y + dy);
+                if (IsWalkable(p1, y)) return p1;
+                if (IsWalkable(p2, y)) return p2;
+            }
+        }
+        return origin; // fallback (may be unwalkable)
+    }
+
+    public static List<Vector3> FindPath(Vector3 startWorld, Vector3 goalWorld, int searchRadius = 64, int maxIterations = 20000)
     {
         float y = startWorld.y;
         Vector2Int start = WorldToGrid(startWorld);
         Vector2Int goal = WorldToGrid(goalWorld);
+
+        // Snap start/goal to nearest walkable to avoid immediate failure when spawned on blocked cells
+        start = FindNearestWalkable(start, y, 8);
+        goal = FindNearestWalkable(goal, y, 8);
 
         if (start == goal)
         {
             return new List<Vector3> { GridToWorld(goal, y) };
         }
 
-        // Adapt search radius to distance
+        // Adapt search radius to distance (scaled for octile)
         int dist = Heuristic(start, goal);
-        int adaptiveRadius = Mathf.Clamp(dist + 16, 32, Mathf.Max(searchRadius, 256));
+        int approxCells = dist / 10; // convert to approx straight steps
+        int adaptiveRadius = Mathf.Clamp(approxCells + 16, 32, Mathf.Max(searchRadius, 256));
 
         // Use parent-aware implementation directly
         return FindPathWithParents(start, goal, y, adaptiveRadius, maxIterations);
@@ -174,52 +214,45 @@ public static class GridPathfinder
         openMap[start] = startNode;
 
         int iterations = 0;
+        Node bestNode = startNode; // closest to goal seen so far
         while (openHeap.Count > 0)
         {
             iterations++;
             if (iterations > maxIterations)
             {
-                // abort to prevent freezing
                 break;
             }
 
             var current = openHeap.Pop();
             if (!openMap.TryGetValue(current.Pos, out var curCheck))
             {
-                // already processed with better cost
                 continue;
             }
             openMap.Remove(current.Pos);
             closed.Add(current.Pos);
 
-            if (current.Pos == goal)
+            // track best node by heuristic
+            if (current.H < bestNode.H)
             {
-                // reconstruct
-                var pathCells = new List<Vector2Int>();
-                var c = current.Pos;
-                pathCells.Add(c);
-                while (parents.TryGetValue(c, out var par))
-                {
-                    c = par;
-                    pathCells.Add(c);
-                }
-                pathCells.Reverse();
-                var pathWorld = new List<Vector3>(pathCells.Count);
-                foreach (var cell in pathCells)
-                {
-                    pathWorld.Add(GridToWorld(cell, y));
-                }
-                return pathWorld;
+                bestNode = current;
             }
 
-            foreach (var d in Neighbors4)
+            if (current.Pos == goal)
+            {
+                // reconstruct full path
+                return ReconstructPath(current.Pos, parents, y);
+            }
+
+            foreach (var d in Neighbors8)
             {
                 var npos = current.Pos + d;
                 if (!InBounds(npos, minX, maxX, minY, maxY)) continue;
                 if (closed.Contains(npos)) continue;
+
                 if (!IsWalkable(npos, y)) continue;
 
-                int tentativeG = current.G + 1;
+                int stepCost = (d.x != 0 && d.y != 0) ? 14 : 10;
+                int tentativeG = current.G + stepCost;
                 if (openMap.TryGetValue(npos, out var existing))
                 {
                     if (tentativeG < existing.G)
@@ -247,7 +280,26 @@ public static class GridPathfinder
             }
         }
 
-        // no path or aborted
-        return new List<Vector3>();
+        // No path to goal; return best-effort partial path toward goal
+        return ReconstructPath(bestNode.Pos, parents, y);
+    }
+
+    static List<Vector3> ReconstructPath(Vector2Int endPos, Dictionary<Vector2Int, Vector2Int> parents, float y)
+    {
+        var pathCells = new List<Vector2Int>();
+        var c = endPos;
+        pathCells.Add(c);
+        while (parents.TryGetValue(c, out var par))
+        {
+            c = par;
+            pathCells.Add(c);
+        }
+        pathCells.Reverse();
+        var pathWorld = new List<Vector3>(pathCells.Count);
+        foreach (var cell in pathCells)
+        {
+            pathWorld.Add(GridToWorld(cell, y));
+        }
+        return pathWorld;
     }
 }

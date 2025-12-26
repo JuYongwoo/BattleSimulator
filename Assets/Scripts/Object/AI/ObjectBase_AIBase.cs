@@ -49,7 +49,7 @@ public class ObjectBase_AIBase : ObjectBase
         if (this.gameObject.activeSelf == false) return;
         FollowPath();
         CheckReachedItem();
-        if (Vector3.Distance(mDestinationPositionThen, this.gameObject.transform.position) <= 0.5f) ReachedDestination();
+        if (Vector3.Distance(mDestinationPositionThen, this.gameObject.transform.position) <= 0.6f) ReachedDestination(); // 약간 완화
         CheckShootDelay();
         UpdateMotion();
         think();
@@ -61,7 +61,7 @@ public class ObjectBase_AIBase : ObjectBase
         {
             ObjectBase_ItemBase lItem = pair.Value.GetComponent<ObjectBase_ItemBase>();
             if (lItem == null) continue;
-            if (Vector3.Distance(pair.Value.transform.position, this.gameObject.transform.position) >= 0.5f) continue;
+            if (Vector3.Distance(pair.Value.transform.position, this.gameObject.transform.position) >= 0.6f) continue; // 약간 완화
             if (!pair.Value.activeSelf) continue;
 
             lItem.action(mID);
@@ -111,8 +111,39 @@ public class ObjectBase_AIBase : ObjectBase
 
     private void FollowPath()
     {
-        if (mCurrentPath.Count == 0) return;
-        if (mPathIndex >= mCurrentPath.Count) return;
+        if (mDestinationItemNumber != -1 && mCurrentPath.Count == 0)
+        {
+            // 경로가 비었으면 목적지로 직접 미세 조정 이동
+            Vector3 toDest = mDestinationPositionThen - transform.position;
+            toDest.y = 0f;
+            if (toDest.sqrMagnitude > 0.0001f)
+            {
+                Vector3 dir = toDest.normalized;
+                transform.position += dir * mMoveSpeed * Time.deltaTime;
+            }
+            return;
+        }
+
+        if (mPathIndex >= mCurrentPath.Count)
+        {
+            // 경로 끝에 도달: 목적지에 충분히 가깝지 않으면 목적지로 직접 접근
+            Vector3 toDest = mDestinationPositionThen - transform.position;
+            toDest.y = 0f;
+            if (toDest.magnitude <= 0.6f)
+            {
+                ReachedDestination();
+                return;
+            }
+            else
+            {
+                if (toDest.sqrMagnitude > 0.0001f)
+                {
+                    Vector3 dir = toDest.normalized;
+                    transform.position += dir * mMoveSpeed * Time.deltaTime;
+                }
+                return;
+            }
+        }
 
         Vector3 target = mCurrentPath[mPathIndex];
         Vector3 to = target - transform.position;
@@ -123,7 +154,7 @@ public class ObjectBase_AIBase : ObjectBase
             mPathIndex++;
             if (mPathIndex >= mCurrentPath.Count)
             {
-                ReachedDestination();
+                // 마지막 웨이포인트에 도달했지만 목적지까지 남아있을 수 있음
                 return;
             }
             target = mCurrentPath[mPathIndex];
@@ -487,6 +518,8 @@ public class ObjectBase_AIBase : ObjectBase
         if (path != null && path.Count > 0)
         {
             mCurrentPath.AddRange(path);
+            // 마지막에 실제 목적지 좌표를 웨이포인트로 추가해 반 셀 위치도 정확히 접근
+            mCurrentPath.Add(mDestinationPositionThen);
         }
     }
 }
