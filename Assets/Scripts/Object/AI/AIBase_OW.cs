@@ -43,7 +43,7 @@ public class AIBase_OW : ObjectBase_AIBase
             }
             else //상태가 좋지 않지만 아이템이 존재하지 않을 때
             {
-                if (mClosestTeammate != -1 && GridPathfinder.GridManhattanDistance(this.gameObject.transform.position, GameManager.mAll_Of_Game_Objects[mClosestTeammate].transform.position) > 10) //팀원이 있는데 멀면
+                if (mClosestTeammate != -1 && GridPathfinder.GridManhattanDistance(this.gameObject.transform.position, ObjectManager.mAll_Of_Game_Objects[mClosestTeammate].transform.position) > 10) //팀원이 있는데 멀면
                 {
                     MoveTo(mClosestTeammate, false, 2);
                 }
@@ -54,7 +54,7 @@ public class AIBase_OW : ObjectBase_AIBase
         {
             if (mClosestTeammate != -1)  //팀원이 존재하면
             {
-                if(GridPathfinder.GridManhattanDistance(this.gameObject.transform.position, GameManager.mAll_Of_Game_Objects[mClosestTeammate].transform.position) > 10) //멀면 팀원에게 이동
+                if(GridPathfinder.GridManhattanDistance(this.gameObject.transform.position, ObjectManager.mAll_Of_Game_Objects[mClosestTeammate].transform.position) > 10) //멀면 팀원에게 이동
                 {
                     MoveTo(mClosestTeammate, false, 3);
                 }

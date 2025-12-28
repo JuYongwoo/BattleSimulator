@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class CameraManager
+public class CameraManager : Singleton<CameraManager>
 {
     public UIBase_CameraNameUI mUIBase_CameraNameUI = null;
 
@@ -12,8 +12,9 @@ public class CameraManager
     private List<int> cameraOwnerIndex = new List<int>();
     private int currentCameraIndex = -1;
 
-    public void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         mUIBase_CameraNameUI = GameObject.FindFirstObjectByType<UIBase_CameraNameUI>(); //첫번째 GamaManager 스크립트를 가진 오브젝트를 찾는다. //GameManager는 하나만 존재한다
 
     }
@@ -21,7 +22,7 @@ public class CameraManager
 
     public void Start()
     {
-        foreach (var obj in GameManager.mAll_Of_Game_Objects)
+        foreach (var obj in ObjectManager.mAll_Of_Game_Objects)
         {
 
             if (obj.Value.GetComponent<ObjectBase>().mObjectType == GameData.ObjectType.AI)
@@ -61,7 +62,7 @@ public class CameraManager
         if (currentCameraIndex != -1)
         {
             mUIBase_CameraNameUI.GetComponent<Text>().text = "";
-            mUIBase_CameraNameUI.GetComponent<Text>().text += GameManager.mAll_Of_Game_Objects[cameraOwnerIndex[currentCameraIndex]].name;
+            mUIBase_CameraNameUI.GetComponent<Text>().text += ObjectManager.mAll_Of_Game_Objects[cameraOwnerIndex[currentCameraIndex]].name;
         }
 
 

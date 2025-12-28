@@ -1,32 +1,17 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Threading;
 using UnityEngine;
-using UnityEngine.AI;
-using UnityEngine.UI;
 
-public class RespawnManager
+public class RespawnManager : Singleton<RespawnManager>
 {
     private Dictionary<int, float> itemRespawnTimers = new Dictionary<int, float>();
     private Dictionary<int, float> aiRespawnTimers = new Dictionary<int, float>();
 
-
-    public void Awake()
-    {
-
-    }
-    public void Start()
-    {
-
-    }
     public void Update()
     {
         var currentTime = Time.time;
 
         // Handle item respawning
-        foreach (var obj in GameManager.mAll_Of_Game_Objects)
+        foreach (var obj in ObjectManager.mAll_Of_Game_Objects)
         {
             if (obj.Value.GetComponent<ObjectBase_ItemBase>() == null) continue;
 
@@ -46,7 +31,7 @@ public class RespawnManager
         }
 
         // Handle AI respawning
-        foreach (var obj in GameManager.mAll_Of_Game_Objects)
+        foreach (var obj in ObjectManager.mAll_Of_Game_Objects)
         {
             if (obj.Value.GetComponent<ObjectBase_AIBase>() == null) continue;
 

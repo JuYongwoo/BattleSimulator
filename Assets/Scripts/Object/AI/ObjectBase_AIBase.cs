@@ -36,16 +36,14 @@ public class ObjectBase_AIBase : ObjectBase
         mObjectType = GameData.ObjectType.AI;
     }
 
-    protected override void Start()
+    protected void Start()
     {
-        base.Start();
         Respawn(); //게임을 시작하면 리스폰 시킨다 **************
         mLastPosition = transform.position;
     }
 
-    protected override void Update()
+    protected void Update()
     {
-        base.Update();
         if (this.gameObject.activeSelf == false) return;
         FollowPath();
         CheckReachedItem();
@@ -57,7 +55,7 @@ public class ObjectBase_AIBase : ObjectBase
 
     public void CheckReachedItem() //이동하면 서 닿은 아이템들
     {
-        foreach (var pair in GameManager.mAll_Of_Game_Objects)
+        foreach (var pair in ObjectManager.mAll_Of_Game_Objects)
         {
             ObjectBase_ItemBase lItem = pair.Value.GetComponent<ObjectBase_ItemBase>();
             if (lItem == null) continue;
@@ -172,7 +170,7 @@ public class ObjectBase_AIBase : ObjectBase
     public virtual bool isVisible(int pItemNumber)
     {
         Collider lMyCollider = this.gameObject.GetComponent<Collider>();
-        Collider lTargetCollider = GameManager.mAll_Of_Game_Objects[pItemNumber].GetComponent<Collider>();
+        Collider lTargetCollider = ObjectManager.mAll_Of_Game_Objects[pItemNumber].GetComponent<Collider>();
 
         Vector3 lDirectionToEnemy = (lTargetCollider.bounds.center - lMyCollider.bounds.center).normalized; //pItemNumber 방향으로
 
@@ -183,7 +181,7 @@ public class ObjectBase_AIBase : ObjectBase
 
             if (Physics.Raycast(lMyCollider.bounds.center, lDirectionToEnemy, out hit, 100)) // pItemNumber 방향으로 쏘았을 때 맞았는데
             {
-                if (hit.collider.gameObject == GameManager.mAll_Of_Game_Objects[pItemNumber]) //맞은게 pItemNumber면
+                if (hit.collider.gameObject == ObjectManager.mAll_Of_Game_Objects[pItemNumber]) //맞은게 pItemNumber면
                 {
                     return true;
                 }
@@ -198,7 +196,7 @@ public class ObjectBase_AIBase : ObjectBase
         // 검색가능여부 정리
         var lIsSearchable = new List<ObjectBase>();
 
-        foreach (var pair in GameManager.mAll_Of_Game_Objects)
+        foreach (var pair in ObjectManager.mAll_Of_Game_Objects)
         {
             if (!pair.Value.activeSelf) continue; // 죽은 애는 찾지 않는다
             if (pair.Value.GetComponent<ObjectBase>() == null) continue; // ObjectBase 컴포넌트가 없는 경우 넘어간다.
@@ -258,7 +256,7 @@ public class ObjectBase_AIBase : ObjectBase
         switch (pSearchType)
         {
             case GameData.SearchType.Visible: // 타입에 맞는 보이는 ObjectBase를 자식으로 가진 GameObject 탐색
-                Collider lMyCollider = GameManager.mAll_Of_Game_Objects[pID].GetComponent<Collider>();
+                Collider lMyCollider = ObjectManager.mAll_Of_Game_Objects[pID].GetComponent<Collider>();
                 RaycastHit hit;
 
                 foreach (var obj in lIsSearchable)
@@ -269,7 +267,7 @@ public class ObjectBase_AIBase : ObjectBase
 
                     if (Vector3.Angle(transform.forward, lDirectionToEnemy) > 90) continue; // 시야각 180도 넘어가면 컨티뉴
                     if (!Physics.Raycast(lMyCollider.bounds.center, lDirectionToEnemy, out hit, 200)) continue; // 아무것도 안맞았으면 컨티뉴
-                    if (hit.collider.gameObject != GameManager.mAll_Of_Game_Objects[lObjectBase.mID]) continue; //맞은게 목표물이 아니면 컨티뉴
+                    if (hit.collider.gameObject != ObjectManager.mAll_Of_Game_Objects[lObjectBase.mID]) continue; //맞은게 목표물이 아니면 컨티뉴
 
                     lSearchItemNumber = hit.collider.GetComponent<ObjectBase>().mID;
                 }
@@ -279,7 +277,7 @@ public class ObjectBase_AIBase : ObjectBase
 
                 foreach (var obj in lIsSearchable)
                 {
-                    float distance = Vector3.Distance(GameManager.mAll_Of_Game_Objects[pID].transform.position, obj.gameObject.transform.position);
+                    float distance = Vector3.Distance(ObjectManager.mAll_Of_Game_Objects[pID].transform.position, obj.gameObject.transform.position);
 
                     if (distance < lClosestDistance)
                     {
@@ -293,7 +291,7 @@ public class ObjectBase_AIBase : ObjectBase
                 float lFarthestDistance = float.MinValue;
                 foreach (var obj in lIsSearchable)
                 {
-                    float distance = Vector3.Distance(GameManager.mAll_Of_Game_Objects[pID].transform.position, obj.gameObject.transform.position);
+                    float distance = Vector3.Distance(ObjectManager.mAll_Of_Game_Objects[pID].transform.position, obj.gameObject.transform.position);
 
                     if (distance > lFarthestDistance)
                     {
@@ -311,9 +309,9 @@ public class ObjectBase_AIBase : ObjectBase
 
                 foreach (var obj in lIsSearchable)
                 {
-                    float lMeToEnemyDistance = Vector3.Distance(GameManager.mAll_Of_Game_Objects[pID].transform.position, GameManager.mAll_Of_Game_Objects[lVisibleEnemy].transform.position);
-                    float lEnemyToItemDistance = Vector3.Distance(GameManager.mAll_Of_Game_Objects[lVisibleEnemy].transform.position, obj.gameObject.transform.position);
-                    float lMeToItemDistance = Vector3.Distance(GameManager.mAll_Of_Game_Objects[pID].transform.position, obj.gameObject.transform.position);
+                    float lMeToEnemyDistance = Vector3.Distance(ObjectManager.mAll_Of_Game_Objects[pID].transform.position, ObjectManager.mAll_Of_Game_Objects[lVisibleEnemy].transform.position);
+                    float lEnemyToItemDistance = Vector3.Distance(ObjectManager.mAll_Of_Game_Objects[lVisibleEnemy].transform.position, obj.gameObject.transform.position);
+                    float lMeToItemDistance = Vector3.Distance(ObjectManager.mAll_Of_Game_Objects[pID].transform.position, obj.gameObject.transform.position);
 
                     if (lEnemyToItemDistance > lMeToEnemyDistance && lMeToItemDistance < lSafestDistence) //적과의 거리보다 적과 아이템의 거리가 더 멀면 비교적 안전 && 그 중 가까운 아이템
                     {
@@ -386,7 +384,7 @@ public class ObjectBase_AIBase : ObjectBase
     {
         ReachedDestination(); //공격 당하면 정신차린다
 
-        ObjectBase_AIBase lShooterAI = GameManager.mAll_Of_Game_Objects[pShooterID].GetComponent<ObjectBase_AIBase>();
+        ObjectBase_AIBase lShooterAI = ObjectManager.mAll_Of_Game_Objects[pShooterID].GetComponent<ObjectBase_AIBase>();
 
         this.gameObject.transform.LookAt(lShooterAI.gameObject.transform); //나를 공격한 애를 바라본다.
         mBeAttacked_By_Enemy = pShooterID; //나를 공격한 애는 pShooterID
@@ -402,7 +400,7 @@ public class ObjectBase_AIBase : ObjectBase
     public virtual void Killed(int pDeadID) //내가 누군가를 죽였을 때
     {
         ReachedDestination();
-        GameDataSaver.SaveKillDeathResultsToCSV(this.gameObject.name, GameManager.mAll_Of_Game_Objects[pDeadID].name);
+        GameDataSaver.SaveKillDeathResultsToCSV(this.gameObject.name, ObjectManager.mAll_Of_Game_Objects[pDeadID].name);
     }
 
     public virtual void killedBy(int pKillerID) //내가 죽었을 때
@@ -415,11 +413,11 @@ public class ObjectBase_AIBase : ObjectBase
     {
         if (searchItemNumber(mID, GameData.SearchType.Random, GameData.ObjectType.RespawnPlace, GameData.TeamType.Teammate) != -1) // 내 전용 리스폰 지역이 있는가?
         {
-            this.gameObject.transform.position = GameManager.mAll_Of_Game_Objects[searchItemNumber(mID, GameData.SearchType.Random, GameData.ObjectType.RespawnPlace, GameData.TeamType.Teammate)].transform.position;
+            this.gameObject.transform.position = ObjectManager.mAll_Of_Game_Objects[searchItemNumber(mID, GameData.SearchType.Random, GameData.ObjectType.RespawnPlace, GameData.TeamType.Teammate)].transform.position;
         }
         else
         {
-            this.gameObject.transform.position = GameManager.mAll_Of_Game_Objects[searchItemNumber(mID, GameData.SearchType.Random, GameData.ObjectType.RespawnPlace, GameData.TeamType.All)].transform.position;
+            this.gameObject.transform.position = ObjectManager.mAll_Of_Game_Objects[searchItemNumber(mID, GameData.SearchType.Random, GameData.ObjectType.RespawnPlace, GameData.TeamType.All)].transform.position;
         }
 
         this.gameObject.SetActive(true);
@@ -436,7 +434,7 @@ public class ObjectBase_AIBase : ObjectBase
     public void Shoot(int pID)
     {
         if (pID < 0) return; //인덱스
-        transform.LookAt(GameManager.mAll_Of_Game_Objects[pID].transform); //바라보게 한다
+        transform.LookAt(ObjectManager.mAll_Of_Game_Objects[pID].transform); //바라보게 한다
 
         if (!mShootisPossible) return; //쿨타임
         mShootisPossible = false;
@@ -445,7 +443,7 @@ public class ObjectBase_AIBase : ObjectBase
         mCurrentAmmo[mUsingWeapon]--;
 
         Collider lMyCollider = GetComponent<Collider>();
-        Collider lTargetCollider = GameManager.mAll_Of_Game_Objects[pID].GetComponent<Collider>();
+        Collider lTargetCollider = ObjectManager.mAll_Of_Game_Objects[pID].GetComponent<Collider>();
 
         Vector3 shotDirection = lTargetCollider.bounds.center - lMyCollider.bounds.center; //정확한 방향
 
@@ -509,7 +507,7 @@ public class ObjectBase_AIBase : ObjectBase
         mIsFixed = pIsFixed;
         mCommandID = pCommandID;
         mDestinationItemNumber = pID; // pID가 현재 목표, 도착지점이거나 공격하거나 공격받거나 죽거나 죽이면 -1로 변경된다.
-        mDestinationPositionThen = GameManager.mAll_Of_Game_Objects[mDestinationItemNumber].transform.position;
+        mDestinationPositionThen = ObjectManager.mAll_Of_Game_Objects[mDestinationItemNumber].transform.position;
 
         // Compute grid path and start following
         mCurrentPath.Clear();

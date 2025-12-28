@@ -15,7 +15,7 @@ public class ItemBase_Heal1 : ObjectBase_ItemBase
     {
         base.action(pReachedAIsIDNumber);
 
-        ObjectBase_AIBase mAIClass = GameManager.mAll_Of_Game_Objects[pReachedAIsIDNumber].GetComponent<ObjectBase_AIBase>();
+        ObjectBase_AIBase mAIClass = ObjectManager.mAll_Of_Game_Objects[pReachedAIsIDNumber].GetComponent<ObjectBase_AIBase>();
 
         mAIClass.mCurrentHP += 30;
         if (mAIClass.mCurrentHP > GameData.mMaxHP)

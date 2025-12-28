@@ -40,7 +40,7 @@ public class AIBase_CS : ObjectBase_AIBase
             }
             else //상태가 좋지 않지만 아이템이 존재하지 않을 때
             {
-                if (mClosestTeammate != -1 && Vector3.Distance(this.gameObject.transform.position, GameManager.mAll_Of_Game_Objects[mClosestTeammate].transform.position) > 10) //팀원이 있는데 멀면
+                if (mClosestTeammate != -1 && Vector3.Distance(this.gameObject.transform.position, ObjectManager.mAll_Of_Game_Objects[mClosestTeammate].transform.position) > 10) //팀원이 있는데 멀면
                 {
                     MoveTo(mClosestTeammate, false, 1);
                 }
@@ -51,7 +51,7 @@ public class AIBase_CS : ObjectBase_AIBase
         {
             if (mClosestTeammate != -1)  //팀원이 존재하면
             {
-                if (Vector3.Distance(this.gameObject.transform.position, GameManager.mAll_Of_Game_Objects[mClosestTeammate].transform.position) > 10) //멀면 팀원에게 이동
+                if (Vector3.Distance(this.gameObject.transform.position, ObjectManager.mAll_Of_Game_Objects[mClosestTeammate].transform.position) > 10) //멀면 팀원에게 이동
                 {
                     MoveTo(mClosestTeammate, false, 2);
                 }

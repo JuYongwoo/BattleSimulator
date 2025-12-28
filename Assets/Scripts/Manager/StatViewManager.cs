@@ -1,15 +1,14 @@
-using System;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
 
-public class StatViewManager
+public class StatViewManager : Singleton<StatViewManager>
 {
     public UIBase_StatUI mScoreUI = null;
 
-    public void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         mScoreUI = GameObject.FindFirstObjectByType<UIBase_StatUI>(); //첫번째 GamaManager 스크립트를 가진 오브젝트를 찾는다. //GameManager는 하나만 존재한다
     }
 
@@ -26,7 +25,7 @@ public class StatViewManager
 
         //좌측 상단 점수판
         mScoreUI.GetComponent<Text>().text = "";
-        foreach(var obj in GameManager.mAll_Of_Game_Objects)
+        foreach(var obj in ObjectManager.mAll_Of_Game_Objects)
         {
             ObjectBase_AIBase lAI = obj.Value.GetComponent<ObjectBase_AIBase>();
             if (lAI == null) continue;

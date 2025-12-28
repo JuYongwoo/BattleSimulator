@@ -15,7 +15,7 @@ public class ItemBase_Ammo1 : ObjectBase_ItemBase
     public override void action(int pReachedAIsIDNumber)
     {
         base.action(pReachedAIsIDNumber);
-        ObjectBase_AIBase mAIClass = GameManager.mAll_Of_Game_Objects[pReachedAIsIDNumber].GetComponent<ObjectBase_AIBase>();
+        ObjectBase_AIBase mAIClass = ObjectManager.mAll_Of_Game_Objects[pReachedAIsIDNumber].GetComponent<ObjectBase_AIBase>();
 
         mAIClass.mCurrentAmmo[mAIClass.mUsingWeapon] += GameData.mWeaponDataDictionary[mAIClass.mUsingWeapon].mInitBullets; //들고 있는 무기 탄창을 무기 종류의 Initbullet만큼 더한다
         if (mAIClass.mCurrentAmmo[mAIClass.mUsingWeapon]

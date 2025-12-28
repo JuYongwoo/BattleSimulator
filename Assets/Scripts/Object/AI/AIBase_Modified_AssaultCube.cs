@@ -59,7 +59,7 @@ public class AIBase_Modified_AssaultCube : ObjectBase_AIBase
 
             if (mClosestTeammate != -1)  //팀원이 존재하면
             {
-                if (Vector3.Distance(this.gameObject.transform.position, GameManager.mAll_Of_Game_Objects[mClosestTeammate].transform.position) > 10) //멀면 팀원에게 이동
+                if (Vector3.Distance(this.gameObject.transform.position, ObjectManager.mAll_Of_Game_Objects[mClosestTeammate].transform.position) > 10) //멀면 팀원에게 이동
                 {
                     MoveTo(mClosestTeammate, false, 2);
                 }
@@ -112,7 +112,7 @@ public class AIBase_Modified_AssaultCube : ObjectBase_AIBase
 
 
 
-        if (mLastEnemy != -1 && !GameManager.mAll_Of_Game_Objects[mLastEnemy].activeSelf) mLastEnemy = -1; //등록한 죽었다면 초기화
+        if (mLastEnemy != -1 && !ObjectManager.mAll_Of_Game_Objects[mLastEnemy].activeSelf) mLastEnemy = -1; //등록한 죽었다면 초기화
     }
 
 

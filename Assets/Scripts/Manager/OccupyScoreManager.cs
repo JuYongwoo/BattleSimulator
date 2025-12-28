@@ -4,22 +4,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class OccupyScoreManager
+public class OccupyScoreManager : Singleton<OccupyScoreManager>
 {
     public GameObject occupyPlace = null; // 점령 장소 오브젝트
     private Dictionary<System.Type, float> teamScores; // 팀별 점수
     public UIBase_OccupyScoreUI mOccupyUI = null;
     float mDataSaveCount = 0.0f;
 
-    public void Awake() {
+    protected override void Awake() {
 
+        base.Awake();
         mOccupyUI = GameObject.FindFirstObjectByType<UIBase_OccupyScoreUI>(); //첫번째 GamaManager 스크립트를 가진 오브젝트를 찾는다. //GameManager는 하나만 존재한다
 
     }
 
     public void Start()
     {
-        foreach(var obj in GameManager.mAll_Of_Game_Objects)
+        foreach(var obj in ObjectManager.mAll_Of_Game_Objects)
         {
             if (obj.Value.GetComponent<ObjectBase_OccupyPlaceBase>() != null)
             {
@@ -54,7 +55,7 @@ public class OccupyScoreManager
         if (occupyPlace == null) return;
 
         // 모든 AI를 순회하면서 점령 범위 안에 있는지 확인
-        foreach (var obj in GameManager.mAll_Of_Game_Objects)
+        foreach (var obj in ObjectManager.mAll_Of_Game_Objects)
         {
             ObjectBase_AIBase aiBase = obj.Value.GetComponent<ObjectBase_AIBase>();
             if (aiBase != null

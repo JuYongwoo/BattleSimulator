@@ -80,7 +80,7 @@ public class AIBase_AssaultCube : ObjectBase_AIBase
 
 
 
-        if (mLastEnemy != -1 && !GameManager.mAll_Of_Game_Objects[mLastEnemy].activeSelf) mLastEnemy = -1; //등록한 죽었다면 초기화
+        if (mLastEnemy != -1 && !ObjectManager.mAll_Of_Game_Objects[mLastEnemy].activeSelf) mLastEnemy = -1; //등록한 죽었다면 초기화
     }
 
 

@@ -61,7 +61,7 @@ public class AIBase_Modified_Xonotic : ObjectBase_AIBase
         {
             if (mClosestTeammate != -1)  //팀원이 존재하면
             {
-                if (Vector3.Distance(this.gameObject.transform.position, GameManager.mAll_Of_Game_Objects[mClosestTeammate].transform.position) > 10) //멀면 팀원에게 이동
+                if (Vector3.Distance(this.gameObject.transform.position, ObjectManager.mAll_Of_Game_Objects[mClosestTeammate].transform.position) > 10) //멀면 팀원에게 이동
                 {
                     MoveTo(mClosestTeammate, false, 4);
                 }
