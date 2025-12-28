@@ -327,6 +327,47 @@ public class ObjectBase_AIBase : ObjectBase
         }
         return lSearchItemNumber; // 찾지 못했으면 -1을 반환
     }
+
+    public int searchItemNumberWithSafetyScore(int pID, GameData.ObjectType pObjectType)
+    {
+        // Collect candidates of given type
+        var candidates = new List<ObjectBase>();
+        foreach (var pair in ObjectManager.mAll_Of_Game_Objects)
+        {
+            if (!pair.Value.activeSelf) continue;
+            var ob = pair.Value.GetComponent<ObjectBase>();
+            if (ob == null) continue;
+            if (ob.mID == pID) continue;
+            if (ob.mObjectType != pObjectType) continue;
+            candidates.Add(ob);
+        }
+
+        if (candidates.Count == 0) return -1;
+
+        // My AI type and position
+        var meGO = ObjectManager.mAll_Of_Game_Objects[pID];
+        var meAI = meGO.GetComponent<ObjectBase_AIBase>();
+        System.Type myType = meAI.GetType();
+        Vector3 myPos = meGO.transform.position;
+
+        int bestID = -1;
+        float bestScore = float.NegativeInfinity;
+        foreach (var obj in candidates)
+        {
+            Vector3 itemPos = obj.gameObject.transform.position;
+            float dist = Vector3.Distance(myPos, itemPos);
+            int safety = SafetyScoreManager.Instance.GetSafetyScore(myType, itemPos);
+            float score = safety - dist; // SafetyScore - distance
+            if (score <= 0f) continue; // 음수(또는 0)면 패스
+            if (score > bestScore)
+            {
+                bestScore = score;
+                bestID = obj.mID;
+            }
+        }
+        // 모든 후보가 음수/0이면 못찾은 것으로 처리
+        return bestScore > 0f ? bestID : -1;
+    }
     #endregion
 
     #region 무기
