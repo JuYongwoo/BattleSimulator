@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// Simple grid-based A* pathfinder with 8-direction movement.
+// Simple grid-based A* pathfinder with 8-direction movement and robust obstacle handling.
 public static class GridPathfinder
 {
     public struct Node
@@ -46,13 +46,26 @@ public static class GridPathfinder
     }
 
     // Non-alloc collider buffer
-    static Collider[] sOverlapBuffer = new Collider[16];
+    static Collider[] sOverlapBuffer = new Collider[24];
 
-    // Check if a grid cell is walkable. Only blocks Obstacles; allows multiple AIs to share a cell.
+    // Checks a cell for solid obstacles using sphere and box overlaps to catch center/edge-aligned walls.
     public static bool IsWalkable(Vector2Int cell, float y, float cellRadius = 0.45f)
     {
         Vector3 center = GridToWorld(cell, y);
+        // Sphere check
         int count = Physics.OverlapSphereNonAlloc(center, cellRadius, sOverlapBuffer);
+        for (int i = 0; i < count; i++)
+        {
+            var c = sOverlapBuffer[i];
+            if (c == null) continue;
+            if (!c.enabled || !c.gameObject.activeInHierarchy) continue;
+            if (c.isTrigger) continue;
+            if (c.gameObject.CompareTag("Obstacle")) return false;
+        }
+        // Box check (to catch thin walls at cell center/edges)
+        Vector3 halfExtents = new Vector3(0.49f, 0.5f, 0.49f);
+        Quaternion orientation = Quaternion.identity;
+        count = Physics.OverlapBoxNonAlloc(center, halfExtents, sOverlapBuffer, orientation);
         for (int i = 0; i < count; i++)
         {
             var c = sOverlapBuffer[i];
@@ -75,6 +88,30 @@ public static class GridPathfinder
         new Vector2Int(-1, 1),
         new Vector2Int(-1, -1),
     };
+
+    // Prevent crossing solid walls between cells by raycasting the step edge
+    static bool IsSegmentBlocked(Vector3 fromWorld, Vector3 toWorld)
+    {
+        Vector3 dir = toWorld - fromWorld;
+        dir.y = 0f;
+        float len = dir.magnitude;
+        if (len < 0.001f) return false;
+        dir /= len;
+        // cast a small box along the movement segment to detect walls between cells
+        Vector3 center = fromWorld + dir * (len * 0.5f);
+        Vector3 halfExtents = new Vector3(0.45f, 0.5f, 0.02f) + new Vector3(Mathf.Abs(dir.x) * 0.02f, 0f, Mathf.Abs(dir.z) * 0.02f);
+        Quaternion rot = Quaternion.LookRotation(dir, Vector3.up);
+        int count = Physics.OverlapBoxNonAlloc(center, halfExtents, sOverlapBuffer, rot);
+        for (int i = 0; i < count; i++)
+        {
+            var c = sOverlapBuffer[i];
+            if (c == null) continue;
+            if (!c.enabled || !c.gameObject.activeInHierarchy) continue;
+            if (c.isTrigger) continue;
+            if (c.gameObject.CompareTag("Obstacle")) return true;
+        }
+        return false;
+    }
 
     // Find nearest walkable cell around origin (including origin). Expands in rings up to maxRadius.
     static Vector2Int FindNearestWalkable(Vector2Int origin, float y, int maxRadius)
@@ -250,6 +287,22 @@ public static class GridPathfinder
                 if (closed.Contains(npos)) continue;
 
                 if (!IsWalkable(npos, y)) continue;
+
+                // Prevent diagonal corner cutting: require both adjacent orthogonals to be walkable
+                if (d.x != 0 && d.y != 0)
+                {
+                    var adj1 = new Vector2Int(current.Pos.x + d.x, current.Pos.y);
+                    var adj2 = new Vector2Int(current.Pos.x, current.Pos.y + d.y);
+                    if (!IsWalkable(adj1, y) || !IsWalkable(adj2, y))
+                    {
+                        continue;
+                    }
+                }
+
+                // Prevent crossing a wall between cells
+                Vector3 fromWorld = GridToWorld(current.Pos, y);
+                Vector3 toWorld = GridToWorld(npos, y);
+                if (IsSegmentBlocked(fromWorld, toWorld)) continue;
 
                 int stepCost = (d.x != 0 && d.y != 0) ? 14 : 10;
                 int tentativeG = current.G + stepCost;
