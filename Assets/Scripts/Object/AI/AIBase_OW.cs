@@ -12,12 +12,12 @@ public class AIBase_OW : ObjectBase_AIBase
     override public void think()
     {
 
-        mVisibleAI = searchItemNumber(mID, GameData.SearchType.Visible, GameData.ObjectType.AI, GameData.TeamType.Enemy);
-        mClosestHeal = searchItemNumber(mID, GameData.SearchType.Closest, GameData.ObjectType.Heal);
-        mClosestAmmo = searchItemNumber(mID, GameData.SearchType.Closest, GameData.ObjectType.Ammo);
-        mClosestTeammate = searchItemNumber(mID, GameData.SearchType.Closest, GameData.ObjectType.AI, GameData.TeamType.Teammate);
-        mClosestOccupy = searchItemNumber(mID, GameData.SearchType.Closest, GameData.ObjectType.OccupyPlace);
-        mClosestEnemy = searchItemNumber(mID, GameData.SearchType.Closest, GameData.ObjectType.AI, GameData.TeamType.Enemy);
+        mVisibleAI = searchItemNumberWithSafetyScore(mID, GameData.SearchType.Visible, GameData.ObjectType.AI, GameData.TeamType.Enemy);
+        mClosestHeal = searchItemNumberWithSafetyScore(mID, GameData.SearchType.Closest, GameData.ObjectType.Heal);
+        mClosestAmmo = searchItemNumberWithSafetyScore(mID, GameData.SearchType.Closest, GameData.ObjectType.Ammo);
+        mClosestTeammate = searchItemNumberWithSafetyScore(mID, GameData.SearchType.Closest, GameData.ObjectType.AI, GameData.TeamType.Teammate);
+        mClosestOccupy = searchItemNumberWithSafetyScore(mID, GameData.SearchType.Closest, GameData.ObjectType.OccupyPlace);
+        mClosestEnemy = searchItemNumberWithSafetyScore(mID, GameData.SearchType.Closest, GameData.ObjectType.AI, GameData.TeamType.Enemy);
 
 
 

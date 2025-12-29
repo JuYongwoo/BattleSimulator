@@ -27,6 +27,9 @@ public class SafetyScoreManager : Singleton<SafetyScoreManager>
     private bool mIsRebuilding = false;
     private const int NODES_PER_FRAME = 2000;
 
+    private int mTotalCachedEntries = 0;
+    public bool IsReady => mTotalCachedEntries >= 50; // threshold can be tuned
+
     public void Update()
     {
         if (mIsRebuilding) return;
@@ -49,20 +52,36 @@ public class SafetyScoreManager : Singleton<SafetyScoreManager>
         }
         int score = ComputeSafetyScoreInternal(aiType, worldPos);
         map[cell] = score;
+        mTotalCachedEntries++;
         return score;
     }
 
     private int ComputeSafetyScoreInternal(Type aiType, Vector3 worldPos)
     {
-        var grid = GridPathfinder.WorldToGrid(worldPos);
-        if (!mSafetyBoards.TryGetValue(aiType, out var board)) return 0;
-        if (board.TryGetValue(grid, out int score)) return score;
-        return 0;
+        // Placeholder: should be replaced by real computation
+        // For now, use a simple distance-from-enemies heuristic if available
+        int baseScore = 50;
+        // If ObjectManager has enemies, boost score by distance to nearest enemy
+        float minEnemyDist = float.MaxValue;
+        foreach (var id in ObjectManager.mAIIds)
+        {
+            var go = ObjectManager.mAll_Of_Game_Objects[id];
+            if (!go.activeSelf) continue;
+            if (go.GetComponent(aiType) != null) continue; // same team
+            float d = Vector3.Distance(go.transform.position, worldPos);
+            if (d < minEnemyDist) minEnemyDist = d;
+        }
+        if (minEnemyDist < float.MaxValue)
+        {
+            baseScore += Mathf.Clamp((int)minEnemyDist, 0, 100);
+        }
+        return Mathf.Clamp(baseScore, 0, 100);
     }
 
     public void ClearCache()
     {
         mCache.Clear();
+        mTotalCachedEntries = 0;
     }
 
     private IEnumerator RebuildAllBoardsIncremental()

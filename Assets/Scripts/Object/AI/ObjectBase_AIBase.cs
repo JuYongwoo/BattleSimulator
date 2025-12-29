@@ -332,66 +332,61 @@ public class ObjectBase_AIBase : ObjectBase
 
     public virtual int searchItemNumberWithSafetyScore(int pID, GameData.SearchType pSearchType, GameData.ObjectType pObjectType, GameData.TeamType pTeamType = GameData.TeamType.All)
     {
-        // 검색가능여부 정리
+        // 검색가능여부 정리 (타입/팀 필터만 수행)
         var lIsSearchable = new List<ObjectBase>();
-
         foreach (var pair in ObjectManager.mAll_Of_Game_Objects)
         {
-            if (!pair.Value.activeSelf) continue; // 죽은 애는 찾지 않는다
-            if (pair.Value.GetComponent<ObjectBase>() == null) continue; // ObjectBase 컴포넌트가 없는 경우 넘어간다.
-            if (pair.Value.GetComponent<ObjectBase>().mID == pID) continue; // 자기 자신을 찾았다면 넘어간다.
-            if (pair.Value.GetComponent<ObjectBase>().mObjectType != pObjectType) continue; // 찾고자 하는 오브젝트 타입이 아니면 넘어간다.
+            if (!pair.Value.activeSelf) continue;
+            var objBase = pair.Value.GetComponent<ObjectBase>();
+            if (objBase == null) continue;
+            if (objBase.mID == pID) continue;
+            if (objBase.mObjectType != pObjectType) continue;
 
-            if (pObjectType == GameData.ObjectType.AI) //AI는 팀 구분할 필요가 있음
+            if (pObjectType == GameData.ObjectType.AI)
             {
                 if (pTeamType == GameData.TeamType.Teammate)
                 {
-                    if (pair.Value.GetComponent(this.GetType()) != null)
-                    {
-                        lIsSearchable.Add(pair.Value.GetComponent<ObjectBase>());
-                    }
+                    if (pair.Value.GetComponent(this.GetType()) != null) lIsSearchable.Add(objBase);
                 }
                 else if (pTeamType == GameData.TeamType.Enemy)
                 {
-                    if (pair.Value.GetComponent(this.GetType()) == null)
-                    {
-                        lIsSearchable.Add(pair.Value.GetComponent<ObjectBase>());
-                    }
+                    if (pair.Value.GetComponent(this.GetType()) == null) lIsSearchable.Add(objBase);
                 }
-                else if (pTeamType == GameData.TeamType.All)
+                else
                 {
-                    lIsSearchable.Add(pair.Value.GetComponent<ObjectBase>());
+                    lIsSearchable.Add(objBase);
                 }
             }
-            else if (pObjectType == GameData.ObjectType.RespawnPlace) //리스폰 지점은 아군의 지점인지 적의 지점인지 구분할 필요가 있음
+            else if (pObjectType == GameData.ObjectType.RespawnPlace)
             {
+                var rp = pair.Value.GetComponent<ObjectBase_RespawnPlaceBase>();
+                if (rp == null) continue;
                 if (pTeamType == GameData.TeamType.Teammate)
                 {
-                    if (pair.Value.GetComponent<ObjectBase_RespawnPlaceBase>().mPlaceOwner.GetType() == this.GetType())
-                    {
-                        lIsSearchable.Add(pair.Value.GetComponent<ObjectBase>());
-                    }
+                    if (rp.mPlaceOwner.GetType() == this.GetType()) lIsSearchable.Add(objBase);
                 }
                 else if (pTeamType == GameData.TeamType.Enemy)
                 {
-                    if (pair.Value.GetComponent<ObjectBase_RespawnPlaceBase>().mPlaceOwner.GetType() != this.GetType())
-                    {
-                        lIsSearchable.Add(pair.Value.GetComponent<ObjectBase>());
-                    }
+                    if (rp.mPlaceOwner.GetType() != this.GetType()) lIsSearchable.Add(objBase);
                 }
-                else if (pTeamType == GameData.TeamType.All)
+                else
                 {
-                    lIsSearchable.Add(pair.Value.GetComponent<ObjectBase>());
+                    lIsSearchable.Add(objBase);
                 }
             }
-            else //각종 아이템들
+            else
             {
-                lIsSearchable.Add(pair.Value.GetComponent<ObjectBase>());
+                lIsSearchable.Add(objBase);
             }
         }
 
+        // SafetyScore 준비가 충분하지 않다면 기존 로직으로 폴백
+        if (!SafetyScoreManager.Instance.IsReady)
+        {
+            return searchItemNumber(pID, pSearchType, pObjectType, pTeamType);
+        }
+
         int lSearchItemNumber = -1;
-        // SafetyScore 기반 선택 로직
         var meGO = ObjectManager.mAll_Of_Game_Objects[pID];
         var meAI = meGO.GetComponent<ObjectBase_AIBase>();
         System.Type myType = meAI.GetType();
@@ -400,79 +395,86 @@ public class ObjectBase_AIBase : ObjectBase
         switch (pSearchType)
         {
             case GameData.SearchType.Safe:
-                {
-                    int bestSafety = int.MinValue;
-                    foreach (var obj in lIsSearchable)
-                    {
-                        int safety = SafetyScoreManager.Instance.GetSafetyScore(myType, obj.gameObject.transform.position);
-                        if (safety > bestSafety)
-                        {
-                            bestSafety = safety;
-                            lSearchItemNumber = obj.mID;
-                        }
-                    }
-                    break;
-                }
             case GameData.SearchType.Closest:
                 {
-                    float lClosestDistance = float.MaxValue;
+                    float bestScore = float.NegativeInfinity;
                     foreach (var obj in lIsSearchable)
                     {
                         int safety = SafetyScoreManager.Instance.GetSafetyScore(myType, obj.gameObject.transform.position);
                         if (safety < SAFETY_THRESHOLD) continue; // 안전도 낮으면 계산 생략
-                        float distance = Vector3.Distance(myPos, obj.gameObject.transform.position);
-                        if (distance < lClosestDistance)
+                        // 실제 경로 기반 거리
+                        var path = GridPathfinder.FindPath(myPos, obj.gameObject.transform.position, 64, 8000);
+                        if (path == null || path.Count == 0) continue;
+                        Vector3 last = path[path.Count - 1];
+                        if (Vector3.Distance(last, obj.gameObject.transform.position) > 0.75f) continue;
+                        float dist = 0f;
+                        Vector3 prev = myPos;
+                        for (int i = 0; i < path.Count; i++)
                         {
+                            dist += Vector3.Distance(prev, path[i]);
+                            prev = path[i];
+                        }
+                        float score = safety - dist;
+                        if (score > bestScore)
+                        {
+                            bestScore = score;
                             lSearchItemNumber = obj.mID;
-                            lClosestDistance = distance;
                         }
                     }
                     break;
                 }
             case GameData.SearchType.Visible:
                 {
-                    // 기존 Visible 로직 그대로 사용 (SafetyScore 미개입)
                     Collider lMyCollider = ObjectManager.mAll_Of_Game_Objects[pID].GetComponent<Collider>();
                     RaycastHit hit;
                     foreach (var obj in lIsSearchable)
                     {
                         ObjectBase lObjectBase = obj;
                         Vector3 lDirectionToEnemy = (lObjectBase.gameObject.GetComponent<Collider>().bounds.center - lMyCollider.bounds.center).normalized;
-                        if (Vector3.Angle(transform.forward, lDirectionToEnemy) > 90) continue; // 시야각 180도 넘어가면 컨티뉴
-                        if (!Physics.Raycast(lMyCollider.bounds.center, lDirectionToEnemy, out hit, 200)) continue; // 아무것도 안맞았으면 컨티뉴
-                        if (hit.collider.gameObject != ObjectManager.mAll_Of_Game_Objects[lObjectBase.mID]) continue; //맞은게 목표물이 아니면 컨티뉴
+                        if (Vector3.Angle(transform.forward, lDirectionToEnemy) > 90) continue;
+                        if (!Physics.Raycast(lMyCollider.bounds.center, lDirectionToEnemy, out hit, 200)) continue;
+                        if (hit.collider.gameObject != ObjectManager.mAll_Of_Game_Objects[lObjectBase.mID]) continue;
                         lSearchItemNumber = hit.collider.GetComponent<ObjectBase>().mID;
                     }
                     break;
                 }
             case GameData.SearchType.Farthest:
                 {
-                    float lFarthestDistance = float.MinValue;
+                    float lFarthestScore = float.NegativeInfinity;
                     foreach (var obj in lIsSearchable)
                     {
                         int safety = SafetyScoreManager.Instance.GetSafetyScore(myType, obj.gameObject.transform.position);
-                        if (safety < SAFETY_THRESHOLD) continue; // 안전도 낮으면 계산 생략
-                        float distance = Vector3.Distance(myPos, obj.gameObject.transform.position);
-                        if (distance > lFarthestDistance)
+                        if (safety < SAFETY_THRESHOLD) continue;
+                        var path = GridPathfinder.FindPath(myPos, obj.gameObject.transform.position, 64, 8000);
+                        if (path == null || path.Count == 0) continue;
+                        Vector3 last = path[path.Count - 1];
+                        if (Vector3.Distance(last, obj.gameObject.transform.position) > 0.75f) continue;
+                        float dist = 0f;
+                        Vector3 prev = myPos;
+                        for (int i = 0; i < path.Count; i++)
                         {
+                            dist += Vector3.Distance(prev, path[i]);
+                            prev = path[i];
+                        }
+                        float score = dist + (safety * 0.01f);
+                        if (score > lFarthestScore)
+                        {
+                            lFarthestScore = score;
                             lSearchItemNumber = obj.mID;
-                            lFarthestDistance = distance;
                         }
                     }
                     break;
-
                 }
             case GameData.SearchType.Random:
                 {
                     if (lIsSearchable.Count == 0) break;
-                    lSearchItemNumber = lIsSearchable[UnityEngine.Random.Range(0, lIsSearchable.Count)].mID; //랜덤 인덱스 + 랜덤 마크
+                    lSearchItemNumber = lIsSearchable[UnityEngine.Random.Range(0, lIsSearchable.Count)].mID;
                     break;
                 }
             default:
                 break;
         }
-        return lSearchItemNumber; // 찾지 못했으면 -1을 반환
-
+        return lSearchItemNumber;
     }
 
     #endregion
