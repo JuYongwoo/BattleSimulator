@@ -48,11 +48,27 @@ public static class GridPathfinder
     // Non-alloc collider buffer
     static Collider[] sOverlapBuffer = new Collider[24];
 
-    // Checks a cell for solid obstacles using sphere and box overlaps to catch center/edge-aligned walls.
+    // Simple per-frame caches to reduce Physics overlap cost
+    static readonly Dictionary<Vector2Int, bool> sWalkableCache = new Dictionary<Vector2Int, bool>(1024);
+    static int sWalkableFrame = -1;
+    static readonly Dictionary<(Vector2Int, Vector2Int), bool> sSegmentBlockedCache = new Dictionary<(Vector2Int, Vector2Int), bool>(1024);
+    static int sSegmentFrame = -1;
+
     public static bool IsWalkable(Vector2Int cell, float y, float cellRadius = 0.45f)
     {
+        // reset cache each frame
+        int frame = Time.frameCount;
+        if (frame != sWalkableFrame)
+        {
+            sWalkableFrame = frame;
+            sWalkableCache.Clear();
+        }
+        if (sWalkableCache.TryGetValue(cell, out bool cached))
+        {
+            return cached;
+        }
+
         Vector3 center = GridToWorld(cell, y);
-        // Sphere check
         int count = Physics.OverlapSphereNonAlloc(center, cellRadius, sOverlapBuffer);
         for (int i = 0; i < count; i++)
         {
@@ -60,9 +76,8 @@ public static class GridPathfinder
             if (c == null) continue;
             if (!c.enabled || !c.gameObject.activeInHierarchy) continue;
             if (c.isTrigger) continue;
-            if (c.gameObject.CompareTag("Obstacle")) return false;
+            if (c.gameObject.CompareTag("Obstacle")) { sWalkableCache[cell] = false; return false; }
         }
-        // Box check (to catch thin walls at cell center/edges)
         Vector3 halfExtents = new Vector3(0.49f, 0.5f, 0.49f);
         Quaternion orientation = Quaternion.identity;
         count = Physics.OverlapBoxNonAlloc(center, halfExtents, sOverlapBuffer, orientation);
@@ -72,8 +87,9 @@ public static class GridPathfinder
             if (c == null) continue;
             if (!c.enabled || !c.gameObject.activeInHierarchy) continue;
             if (c.isTrigger) continue;
-            if (c.gameObject.CompareTag("Obstacle")) return false;
+            if (c.gameObject.CompareTag("Obstacle")) { sWalkableCache[cell] = false; return false; }
         }
+        sWalkableCache[cell] = true;
         return true;
     }
 
@@ -89,13 +105,25 @@ public static class GridPathfinder
         new Vector2Int(-1, -1),
     };
 
-    // Prevent crossing solid walls between cells by raycasting the step edge
     static bool IsSegmentBlocked(Vector3 fromWorld, Vector3 toWorld)
     {
+        // reset cache each frame
+        int frame = Time.frameCount;
+        if (frame != sSegmentFrame)
+        {
+            sSegmentFrame = frame;
+            sSegmentBlockedCache.Clear();
+        }
+        var key = (WorldToGrid(fromWorld), WorldToGrid(toWorld));
+        if (sSegmentBlockedCache.TryGetValue(key, out bool cached))
+        {
+            return cached;
+        }
+
         Vector3 dir = toWorld - fromWorld;
         dir.y = 0f;
         float len = dir.magnitude;
-        if (len < 0.001f) return false;
+        if (len < 0.001f) { sSegmentBlockedCache[key] = false; return false; }
         dir /= len;
         // cast a small box along the movement segment to detect walls between cells
         Vector3 center = fromWorld + dir * (len * 0.5f);
@@ -108,8 +136,9 @@ public static class GridPathfinder
             if (c == null) continue;
             if (!c.enabled || !c.gameObject.activeInHierarchy) continue;
             if (c.isTrigger) continue;
-            if (c.gameObject.CompareTag("Obstacle")) return true;
+            if (c.gameObject.CompareTag("Obstacle")) { sSegmentBlockedCache[key] = true; return true; }
         }
+        sSegmentBlockedCache[key] = false;
         return false;
     }
 
@@ -356,8 +385,65 @@ public static class GridPathfinder
         return pathWorld;
     }
 
+    // Global LRU cache for grid path distances (ga->gb). Avoids re-running A* for repeated queries.
+    class PathDistanceCache
+    {
+        private readonly int mCapacity;
+        private readonly Dictionary<(Vector2Int, Vector2Int), float> mMap = new Dictionary<(Vector2Int, Vector2Int), float>(256);
+        private readonly LinkedList<(Vector2Int, Vector2Int)> mOrder = new LinkedList<(Vector2Int, Vector2Int)>();
+
+        public PathDistanceCache(int capacity)
+        {
+            mCapacity = Mathf.Max(64, capacity);
+        }
+
+        public bool TryGet(Vector2Int a, Vector2Int b, out float dist)
+        {
+            var key = (a, b);
+            if (mMap.TryGetValue(key, out dist))
+            {
+                // move to front (MRU)
+                var node = mOrder.Find(key);
+                if (node != null)
+                {
+                    mOrder.Remove(node);
+                    mOrder.AddFirst(key);
+                }
+                return true;
+            }
+            dist = 0f;
+            return false;
+        }
+
+        public void Put(Vector2Int a, Vector2Int b, float dist)
+        {
+            var key = (a, b);
+            if (mMap.ContainsKey(key))
+            {
+                mMap[key] = dist;
+                var node = mOrder.Find(key);
+                if (node != null)
+                {
+                    mOrder.Remove(node);
+                }
+                mOrder.AddFirst(key);
+                return;
+            }
+            if (mOrder.Count >= mCapacity)
+            {
+                var lru = mOrder.Last.Value;
+                mOrder.RemoveLast();
+                mMap.Remove(lru);
+            }
+            mMap[key] = dist;
+            mOrder.AddFirst(key);
+        }
+    }
+
+    static readonly PathDistanceCache sGlobalCache = new PathDistanceCache(512);
+
     // Compute path distance (A* grid path length) between two world positions.
-    // Heuristic with wall-awareness: Octile distance + penalty if a wall blocks straight segment.
+    // Bounded A*: runs FindPath with an adaptive radius/iteration budget; falls back to heuristic if needed.
     public static float ComputePathDistance(Vector3 sourcePosition, Vector3 targetPosition)
     {
         // Project to XZ plane for grid logic
@@ -365,28 +451,65 @@ public static class GridPathfinder
         Vector3 dst = new Vector3(targetPosition.x, 0f, targetPosition.z);
         if ((src - dst).sqrMagnitude < 0.0001f) return 0f;
 
-        // Convert to grid coordinates
-        var a = WorldToGrid(src);
-        var b = WorldToGrid(dst);
-        int dx = Mathf.Abs(a.x - b.x);
-        int dz = Mathf.Abs(a.y - b.y);
-        int dMin = Mathf.Min(dx, dz);
-        int dMax = Mathf.Max(dx, dz);
+        var ga = WorldToGrid(src);
+        var gb = WorldToGrid(dst);
 
-        // Octile distance in world units (cell size ~1): diagonal cost = sqrt(2), straight cost = 1
-        const float diag = 1.41421356f;
-        float heuristic = dMin * diag + (dMax - dMin) * 1.0f;
-
-        // If the direct segment between src and dst is blocked by an obstacle, inflate cost
-        // to prefer routes not requiring wall crossing.
-        bool blocked = IsSegmentBlocked(src, dst);
-        if (blocked)
+        // Global cache hit
+        if (sGlobalCache.TryGet(ga, gb, out float cached))
         {
-            // Penalty proportional to distance to avoid always picking near but blocked targets
-            float penalty = Mathf.Max(heuristic, 1f) * 2.0f + 5.0f; // tuneable
-            heuristic += penalty;
+            return cached;
         }
 
-        return Mathf.Max(heuristic, 0.001f);
+        // Manhattan steps on grid for budget/heuristic
+        int steps = GridManhattanDistance(src, dst);
+
+        // Very close: avoid A* altogether
+        if (steps <= 1)
+        {
+            float d = Vector3.Distance(src, dst);
+            sGlobalCache.Put(ga, gb, d);
+            return d;
+        }
+
+        // Adaptive bounds to prevent stalls on maze-like maps
+        int radius = Mathf.Clamp(steps + 12, 24, 128);
+        int maxIter = Mathf.Clamp(steps * 80, 1500, 12000);
+
+        try
+        {
+            var path = FindPath(src, dst, radius, maxIter);
+            if (path != null && path.Count > 0)
+            {
+                float total = 0f;
+                Vector3 prev = src;
+                for (int i = 0; i < path.Count; i++)
+                {
+                    total += Vector3.Distance(prev, path[i]);
+                    prev = path[i];
+                }
+                float tail = Vector3.Distance(prev, dst);
+                if (IsSegmentBlocked(prev, dst)) tail *= 1.5f;
+                total += tail;
+                total = Mathf.Max(total, 0.001f);
+                sGlobalCache.Put(ga, gb, total);
+                return total;
+            }
+        }
+        catch
+        {
+            // ignore and fallback
+        }
+
+        // Fallback: octile heuristic with wall-awareness penalty (cache it to avoid repeated work)
+        int dx = Mathf.Abs(ga.x - gb.x);
+        int dz = Mathf.Abs(ga.y - gb.y);
+        int dMin = Mathf.Min(dx, dz);
+        int dMax = Mathf.Max(dx, dz);
+        const float diag = 1.41421356f;
+        float heuristic = dMin * diag + (dMax - dMin) * 1.0f;
+        if (IsSegmentBlocked(src, dst)) heuristic += Mathf.Max(heuristic, 1f) * 2.0f + 5.0f;
+        heuristic = Mathf.Max(heuristic, 0.001f);
+        sGlobalCache.Put(ga, gb, heuristic);
+        return heuristic;
     }
 }

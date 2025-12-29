@@ -7,6 +7,8 @@ public class SafetyScoreManager : Singleton<SafetyScoreManager>
 {
     private readonly Dictionary<Type, Dictionary<Vector2Int, int>> mSafetyBoards = new Dictionary<Type, Dictionary<Vector2Int, int>>();
 
+    private readonly Dictionary<Type, Dictionary<Vector2Int, int>> mCache = new Dictionary<Type, Dictionary<Vector2Int, int>>();
+
     private float mNextUpdateTime = 0f;
     private const float UPDATE_INTERVAL = 10f;
 
@@ -35,10 +37,32 @@ public class SafetyScoreManager : Singleton<SafetyScoreManager>
 
     public int GetSafetyScore(Type aiType, Vector3 worldPos)
     {
+        Vector2Int cell = GridPathfinder.WorldToGrid(worldPos);
+        if (!mCache.TryGetValue(aiType, out var map))
+        {
+            map = new Dictionary<Vector2Int, int>(256);
+            mCache[aiType] = map;
+        }
+        if (map.TryGetValue(cell, out int val))
+        {
+            return val;
+        }
+        int score = ComputeSafetyScoreInternal(aiType, worldPos);
+        map[cell] = score;
+        return score;
+    }
+
+    private int ComputeSafetyScoreInternal(Type aiType, Vector3 worldPos)
+    {
         var grid = GridPathfinder.WorldToGrid(worldPos);
         if (!mSafetyBoards.TryGetValue(aiType, out var board)) return 0;
         if (board.TryGetValue(grid, out int score)) return score;
         return 0;
+    }
+
+    public void ClearCache()
+    {
+        mCache.Clear();
     }
 
     private IEnumerator RebuildAllBoardsIncremental()
