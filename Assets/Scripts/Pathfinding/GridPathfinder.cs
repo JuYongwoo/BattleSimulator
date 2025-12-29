@@ -355,4 +355,38 @@ public static class GridPathfinder
         }
         return pathWorld;
     }
+
+    // Compute path distance (A* grid path length) between two world positions.
+    // Heuristic with wall-awareness: Octile distance + penalty if a wall blocks straight segment.
+    public static float ComputePathDistance(Vector3 sourcePosition, Vector3 targetPosition)
+    {
+        // Project to XZ plane for grid logic
+        Vector3 src = new Vector3(sourcePosition.x, 0f, sourcePosition.z);
+        Vector3 dst = new Vector3(targetPosition.x, 0f, targetPosition.z);
+        if ((src - dst).sqrMagnitude < 0.0001f) return 0f;
+
+        // Convert to grid coordinates
+        var a = WorldToGrid(src);
+        var b = WorldToGrid(dst);
+        int dx = Mathf.Abs(a.x - b.x);
+        int dz = Mathf.Abs(a.y - b.y);
+        int dMin = Mathf.Min(dx, dz);
+        int dMax = Mathf.Max(dx, dz);
+
+        // Octile distance in world units (cell size ~1): diagonal cost = sqrt(2), straight cost = 1
+        const float diag = 1.41421356f;
+        float heuristic = dMin * diag + (dMax - dMin) * 1.0f;
+
+        // If the direct segment between src and dst is blocked by an obstacle, inflate cost
+        // to prefer routes not requiring wall crossing.
+        bool blocked = IsSegmentBlocked(src, dst);
+        if (blocked)
+        {
+            // Penalty proportional to distance to avoid always picking near but blocked targets
+            float penalty = Mathf.Max(heuristic, 1f) * 2.0f + 5.0f; // tuneable
+            heuristic += penalty;
+        }
+
+        return Mathf.Max(heuristic, 0.001f);
+    }
 }
