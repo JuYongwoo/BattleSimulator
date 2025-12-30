@@ -255,7 +255,10 @@ public class ObjectBase_AIBase : ObjectBase
         }
 
         int lSearchItemNumber = -1;
-            switch (pSearchType)
+        var meGO = ObjectManager.mAll_Of_Game_Objects[pID];
+        Vector3 myPos = meGO.transform.position;
+        
+        switch (pSearchType)
             {
                 case GameData.SearchType.Visible: // 타입에 맞는 보이는 ObjectBase를 자식으로 가진 GameObject 탐색
                     Collider lMyCollider = ObjectManager.mAll_Of_Game_Objects[pID].GetComponent<Collider>();
@@ -274,17 +277,17 @@ public class ObjectBase_AIBase : ObjectBase
                         lSearchItemNumber = hit.collider.GetComponent<ObjectBase>().mID;
                     }
                     break;
-                case GameData.SearchType.Closest: // 타입에 맞는 가까운 ObjectBase를 자식으로 가진 GameObject 탐색
-                    float lClosestDistance = float.MaxValue;
-
-                    foreach (var obj in lIsSearchable)
+                case GameData.SearchType.Closest: // 유클리드 거리만으로 비교
                     {
-                        float distance = Vector3.Distance(ObjectManager.mAll_Of_Game_Objects[pID].transform.position, obj.gameObject.transform.position);
-
-                        if (distance < lClosestDistance)
+                        float best = float.MaxValue;
+                        foreach (var obj in lIsSearchable)
                         {
-                            lSearchItemNumber = obj.mID;
-                            lClosestDistance = distance;
+                            float d = Vector3.Distance(myPos, obj.gameObject.transform.position);
+                            if (d < best)
+                            {
+                                best = d;
+                                lSearchItemNumber = obj.mID;
+                            }
                         }
                     }
                     break;
@@ -303,7 +306,7 @@ public class ObjectBase_AIBase : ObjectBase
                     }
                     break;
 
-                case GameData.SearchType.Safe: // 타입에 맞는 적과 멀리 떨어지고 나와 가까운 ObjectBase를 자식으로 가진 GameObject 탐색
+                case GameData.SearchType.Safe: // 기존 로직 유지
                     int lVisibleEnemy = searchItemNumber(pID, GameData.SearchType.Visible, GameData.ObjectType.AI, GameData.TeamType.Enemy);
                     if (lVisibleEnemy == -1) return -1; //내가 볼 수있는 적이 있어야 한다.
 
@@ -388,8 +391,6 @@ public class ObjectBase_AIBase : ObjectBase
 
         int lSearchItemNumber = -1;
         var meGO = ObjectManager.mAll_Of_Game_Objects[pID];
-        var meAI = meGO.GetComponent<ObjectBase_AIBase>();
-        System.Type myType = meAI.GetType();
         Vector3 myPos = meGO.transform.position;
 
         switch (pSearchType)
@@ -397,29 +398,30 @@ public class ObjectBase_AIBase : ObjectBase
             case GameData.SearchType.Safe:
             case GameData.SearchType.Closest:
                 {
-                    float bestScore = float.NegativeInfinity;
+                    // SafetyScore 하위 50% 생략, 상위 50%만 고려 (사전 계산된 캐시 사용)
+                    var scored = new List<(int safety, float euclid, ObjectBase obj)>(lIsSearchable.Count);
                     foreach (var obj in lIsSearchable)
                     {
-                        int safety = SafetyScoreManager.Instance.GetSafetyScore(myType, obj.gameObject.transform.position);
-                        if (safety < SAFETY_THRESHOLD) continue; // 안전도 낮으면 계산 생략
-                        // 실제 경로 기반 거리
-                        var path = GridPathfinder.FindPath(myPos, obj.gameObject.transform.position, 64, 8000);
-                        if (path == null || path.Count == 0) continue;
-                        Vector3 last = path[path.Count - 1];
-                        if (Vector3.Distance(last, obj.gameObject.transform.position) > 0.75f) continue;
-                        float dist = 0f;
-                        Vector3 prev = myPos;
-                        for (int i = 0; i < path.Count; i++)
+                        int safety = SafetyScoreManager.Instance.GetSafetyScore(pID, obj.gameObject.transform.position);
+                        float euclid = Vector3.Distance(myPos, obj.gameObject.transform.position);
+                        scored.Add((safety, euclid, obj));
+                    }
+                    if (scored.Count == 0) break;
+                    scored.Sort((a, b) => a.safety.CompareTo(b.safety));
+                    int start = scored.Count / 2;
+                    float best = float.NegativeInfinity;
+                    for (int i = start; i < scored.Count; i++)
+                    {
+                        float score = scored[i].safety - scored[i].euclid;
+                        if (score > best)
                         {
-                            dist += Vector3.Distance(prev, path[i]);
-                            prev = path[i];
+                            best = score;
+                            lSearchItemNumber = scored[i].obj.mID;
                         }
-                        float score = safety - dist;
-                        if (score > bestScore)
-                        {
-                            bestScore = score;
-                            lSearchItemNumber = obj.mID;
-                        }
+                    }
+                    if (lSearchItemNumber == -1)
+                    {
+                        return searchItemNumber(pID, GameData.SearchType.Closest, pObjectType, pTeamType);
                     }
                     break;
                 }
@@ -443,20 +445,9 @@ public class ObjectBase_AIBase : ObjectBase
                     float lFarthestScore = float.NegativeInfinity;
                     foreach (var obj in lIsSearchable)
                     {
-                        int safety = SafetyScoreManager.Instance.GetSafetyScore(myType, obj.gameObject.transform.position);
-                        if (safety < SAFETY_THRESHOLD) continue;
-                        var path = GridPathfinder.FindPath(myPos, obj.gameObject.transform.position, 64, 8000);
-                        if (path == null || path.Count == 0) continue;
-                        Vector3 last = path[path.Count - 1];
-                        if (Vector3.Distance(last, obj.gameObject.transform.position) > 0.75f) continue;
-                        float dist = 0f;
-                        Vector3 prev = myPos;
-                        for (int i = 0; i < path.Count; i++)
-                        {
-                            dist += Vector3.Distance(prev, path[i]);
-                            prev = path[i];
-                        }
-                        float score = dist + (safety * 0.01f);
+                        int safety = SafetyScoreManager.Instance.GetSafetyScore(pID, obj.gameObject.transform.position);
+                        float euclid = Vector3.Distance(myPos, obj.gameObject.transform.position);
+                        float score = euclid + (safety * 0.01f);
                         if (score > lFarthestScore)
                         {
                             lFarthestScore = score;

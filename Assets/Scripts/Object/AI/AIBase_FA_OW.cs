@@ -19,23 +19,14 @@ public class AIBase_FA_OW : ObjectBase_AIBase
         if (!sBenchLogged)
         {
             sBenchCounter++;
-            if (sBenchCounter >= 10)
+            if (sBenchCounter >= 600)
             {
                 // Warmup calls (not timed)
                 _ = searchItemNumberWithSafetyScore(mID, GameData.SearchType.Closest, GameData.ObjectType.Heal);
                 _ = searchItemNumber(mID, GameData.SearchType.Closest, GameData.ObjectType.Heal);
 
-                var swSafety = new Stopwatch();
                 var swBase = new Stopwatch();
-
-                // Measure safety-score searches (repeat to stabilize)
-                swSafety.Start();
-                for (int i = 0; i < 200; i++)
-                {
-                    _ = searchItemNumberWithSafetyScore(mID, GameData.SearchType.Closest, GameData.ObjectType.Heal);
-                    _ = searchItemNumberWithSafetyScore(mID, GameData.SearchType.Closest, GameData.ObjectType.Ammo);
-                }
-                swSafety.Stop();
+                var swSafety = new Stopwatch();
 
                 // Measure baseline searches (repeat to stabilize)
                 swBase.Start();
@@ -46,6 +37,16 @@ public class AIBase_FA_OW : ObjectBase_AIBase
                 }
                 swBase.Stop();
 
+                // Measure safety-score searches (repeat to stabilize)
+                swSafety.Start();
+                for (int i = 0; i < 200; i++)
+                {
+                    _ = searchItemNumberWithSafetyScore(mID, GameData.SearchType.Closest, GameData.ObjectType.Heal);
+                    _ = searchItemNumberWithSafetyScore(mID, GameData.SearchType.Closest, GameData.ObjectType.Ammo);
+                }
+                swSafety.Stop();
+
+
                 double tickNs = 1_000_000_000.0 / Stopwatch.Frequency;
                 double safetyNs = swSafety.ElapsedTicks * tickNs;
                 double baseNs = swBase.ElapsedTicks * tickNs;
@@ -55,12 +56,12 @@ public class AIBase_FA_OW : ObjectBase_AIBase
             }
         }
 
-        mVisibleAI = searchItemNumber(mID, GameData.SearchType.Visible, GameData.ObjectType.AI, GameData.TeamType.Enemy);
-        mClosestHeal = searchItemNumber(mID, GameData.SearchType.Closest, GameData.ObjectType.Heal);
-        mClosestAmmo = searchItemNumber(mID, GameData.SearchType.Closest, GameData.ObjectType.Ammo);
-        mClosestTeammate = searchItemNumber(mID, GameData.SearchType.Closest, GameData.ObjectType.AI, GameData.TeamType.Teammate);
-        mClosestOccupy = searchItemNumber(mID, GameData.SearchType.Closest, GameData.ObjectType.OccupyPlace);
-        mClosestEnemy = searchItemNumber(mID, GameData.SearchType.Closest, GameData.ObjectType.AI, GameData.TeamType.Enemy);
+        mVisibleAI = searchItemNumberWithSafetyScore(mID, GameData.SearchType.Visible, GameData.ObjectType.AI, GameData.TeamType.Enemy);
+        mClosestHeal = searchItemNumberWithSafetyScore(mID, GameData.SearchType.Closest, GameData.ObjectType.Heal);
+        mClosestAmmo = searchItemNumberWithSafetyScore(mID, GameData.SearchType.Closest, GameData.ObjectType.Ammo);
+        mClosestTeammate = searchItemNumberWithSafetyScore(mID, GameData.SearchType.Closest, GameData.ObjectType.AI, GameData.TeamType.Teammate);
+        mClosestOccupy = searchItemNumberWithSafetyScore(mID, GameData.SearchType.Closest, GameData.ObjectType.OccupyPlace);
+        mClosestEnemy = searchItemNumberWithSafetyScore(mID, GameData.SearchType.Closest, GameData.ObjectType.AI, GameData.TeamType.Enemy);
 
         //공격
         if (mVisibleAI != -1) // 적이 보이면

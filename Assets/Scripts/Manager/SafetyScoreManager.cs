@@ -5,9 +5,8 @@ using UnityEngine;
 
 public class SafetyScoreManager : Singleton<SafetyScoreManager>
 {
+    // Precomputed safety boards per AI type (grid cell -> score)
     private readonly Dictionary<Type, Dictionary<Vector2Int, int>> mSafetyBoards = new Dictionary<Type, Dictionary<Vector2Int, int>>();
-
-    private readonly Dictionary<Type, Dictionary<Vector2Int, int>> mCache = new Dictionary<Type, Dictionary<Vector2Int, int>>();
 
     private float mNextUpdateTime = 0f;
     private const float UPDATE_INTERVAL = 10f;
@@ -27,8 +26,14 @@ public class SafetyScoreManager : Singleton<SafetyScoreManager>
     private bool mIsRebuilding = false;
     private const int NODES_PER_FRAME = 2000;
 
-    private int mTotalCachedEntries = 0;
-    public bool IsReady => mTotalCachedEntries >= 50; // threshold can be tuned
+    // Ready when boards exist for all current AI types
+    public bool IsReady { get; private set; } = false;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        IsReady = false;
+    }
 
     public void Update()
     {
@@ -38,55 +43,35 @@ public class SafetyScoreManager : Singleton<SafetyScoreManager>
         StartCoroutine(RebuildAllBoardsIncremental());
     }
 
-    public int GetSafetyScore(Type aiType, Vector3 worldPos)
+    // Query precomputed score: determine requester AI type by pID and return board value.
+    public int GetSafetyScore(int pID, Vector3 worldPos)
     {
+        // Find requester type
+        if (!ObjectManager.mAll_Of_Game_Objects.TryGetValue(pID, out var me)) return 50;
+        var ai = me.GetComponent<ObjectBase_AIBase>();
+        if (ai == null) return 50;
+        Type aiType = ai.GetType();
         Vector2Int cell = GridPathfinder.WorldToGrid(worldPos);
-        if (!mCache.TryGetValue(aiType, out var map))
+        if (mSafetyBoards.TryGetValue(aiType, out var board))
         {
-            map = new Dictionary<Vector2Int, int>(256);
-            mCache[aiType] = map;
+            if (board.TryGetValue(cell, out int score)) return score;
+            // If cell missing, approximate by nearest known neighbor (simple fallback)
+            // Find closest enemy distance heuristic as minimal fallback cost
+            return 50; // neutral fallback
         }
-        if (map.TryGetValue(cell, out int val))
-        {
-            return val;
-        }
-        int score = ComputeSafetyScoreInternal(aiType, worldPos);
-        map[cell] = score;
-        mTotalCachedEntries++;
-        return score;
+        return 50; // not ready fallback
     }
 
-    private int ComputeSafetyScoreInternal(Type aiType, Vector3 worldPos)
+    public void ClearBoards()
     {
-        // Placeholder: should be replaced by real computation
-        // For now, use a simple distance-from-enemies heuristic if available
-        int baseScore = 50;
-        // If ObjectManager has enemies, boost score by distance to nearest enemy
-        float minEnemyDist = float.MaxValue;
-        foreach (var id in ObjectManager.mAIIds)
-        {
-            var go = ObjectManager.mAll_Of_Game_Objects[id];
-            if (!go.activeSelf) continue;
-            if (go.GetComponent(aiType) != null) continue; // same team
-            float d = Vector3.Distance(go.transform.position, worldPos);
-            if (d < minEnemyDist) minEnemyDist = d;
-        }
-        if (minEnemyDist < float.MaxValue)
-        {
-            baseScore += Mathf.Clamp((int)minEnemyDist, 0, 100);
-        }
-        return Mathf.Clamp(baseScore, 0, 100);
-    }
-
-    public void ClearCache()
-    {
-        mCache.Clear();
-        mTotalCachedEntries = 0;
+        mSafetyBoards.Clear();
+        IsReady = false;
     }
 
     private IEnumerator RebuildAllBoardsIncremental()
     {
         mIsRebuilding = true;
+        IsReady = false;
         var types = new HashSet<Type>();
         foreach (var pair in ObjectManager.mAll_Of_Game_Objects)
         {
@@ -98,13 +83,14 @@ public class SafetyScoreManager : Singleton<SafetyScoreManager>
         {
             yield return BuildBoardForTypeIncremental(t);
         }
+        IsReady = true;
         mIsRebuilding = false;
     }
 
     private IEnumerator BuildBoardForTypeIncremental(Type aiType)
     {
-        var board = new Dictionary<Vector2Int, int>();
-        var enemyCells = new List<Vector2Int>();
+        var board = new Dictionary<Vector2Int, int>(4096);
+        var enemyCells = new List<Vector2Int>(256);
         float yRef = 0f;
         int minX = int.MaxValue, maxX = int.MinValue, minY = int.MaxValue, maxY = int.MinValue;
         foreach (var pair in ObjectManager.mAll_Of_Game_Objects)
@@ -129,7 +115,7 @@ public class SafetyScoreManager : Singleton<SafetyScoreManager>
             mSafetyBoards[aiType] = board;
             yield break;
         }
-        var q = new Queue<Vector2Int>();
+        var q = new Queue<Vector2Int>(enemyCells.Count * 8);
         var visited = new HashSet<Vector2Int>();
         foreach (var c in enemyCells)
         {
@@ -158,6 +144,11 @@ public class SafetyScoreManager : Singleton<SafetyScoreManager>
                 processedThisFrame = 0;
                 yield return null;
             }
+        }
+        // Convert distance to score (higher is safer). Clamp 0-100.
+        foreach (var kv in new List<KeyValuePair<Vector2Int,int>>(board))
+        {
+            board[kv.Key] = Mathf.Clamp(kv.Value, 0, 100);
         }
         mSafetyBoards[aiType] = board;
     }
