@@ -6,6 +6,20 @@ public class GameDataSaver
 {
     private static readonly string programStartTime = System.DateTime.Now.ToString("yyyyMMdd_HHmmss");
 
+    public static void SaveCalcTimeResultsToCSV(double pStandardNanoTime, double pSafetyScoreNanoTime)
+    {
+
+        string fileName = $"CalcTime_{programStartTime}.csv";
+
+        string filePath = Application.dataPath + "/" + fileName;
+
+        // 파일에 저장할 문자열 생성
+        string data = $"StandardCalcNanoSec,{pStandardNanoTime},SafetyScoreCalcNanoSec,{pSafetyScoreNanoTime}\n";
+
+        // 파일에 데이터 추가
+        File.AppendAllText(filePath, data);
+    }
+
     public static void SaveKillDeathResultsToCSV(string pKillerAIName, string pKilledAiName)
     {
 

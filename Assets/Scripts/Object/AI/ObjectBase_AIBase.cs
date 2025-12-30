@@ -419,10 +419,10 @@ public class ObjectBase_AIBase : ObjectBase
                             lSearchItemNumber = scored[i].obj.mID;
                         }
                     }
-                    if (lSearchItemNumber == -1)
-                    {
-                        return searchItemNumber(pID, GameData.SearchType.Closest, pObjectType, pTeamType);
-                    }
+                    //if (lSearchItemNumber == -1)
+                    //{
+                    //    return searchItemNumber(pID, GameData.SearchType.Closest, pObjectType, pTeamType);
+                    //}
                     break;
                 }
             case GameData.SearchType.Visible:

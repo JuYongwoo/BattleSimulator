@@ -48,10 +48,12 @@ public class AIBase_FA_OW : ObjectBase_AIBase
 
 
                 double tickNs = 1_000_000_000.0 / Stopwatch.Frequency;
-                double safetyNs = swSafety.ElapsedTicks * tickNs;
                 double baseNs = swBase.ElapsedTicks * tickNs;
+                double safetyNs = swSafety.ElapsedTicks * tickNs;
 
                 UnityEngine.Debug.Log($"[Bench AIBase_FA_OW x200x2 after 5th] SafetyScore: {safetyNs:F0} ns, Base: {baseNs:F0} ns");
+                GameDataSaver.SaveCalcTimeResultsToCSV(baseNs, safetyNs);
+                sBenchCounter = 0;
                 sBenchLogged = true;
             }
         }
