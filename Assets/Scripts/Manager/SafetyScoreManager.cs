@@ -115,13 +115,14 @@ public class SafetyScoreManager : Singleton<SafetyScoreManager>
             mSafetyBoards[aiType] = board;
             yield break;
         }
+
+        // Multi-source BFS: ensure we only update if the new distance is lower (more dangerous)
         var q = new Queue<Vector2Int>(enemyCells.Count * 8);
-        var visited = new HashSet<Vector2Int>();
         foreach (var c in enemyCells)
         {
-            q.Enqueue(c);
-            visited.Add(c);
+            // Initialize enemy cells as distance 0
             board[c] = 0;
+            q.Enqueue(c);
         }
         int processedThisFrame = 0;
         while (q.Count > 0)
@@ -132,11 +133,25 @@ public class SafetyScoreManager : Singleton<SafetyScoreManager>
             {
                 var npos = cur + d;
                 if (npos.x < minX || npos.x > maxX || npos.y < minY || npos.y > maxY) continue;
-                if (visited.Contains(npos)) continue;
                 if (!GridPathfinder.IsWalkable(npos, yRef)) continue;
-                visited.Add(npos);
-                board[npos] = curDist + 1;
-                q.Enqueue(npos);
+
+                int proposed = curDist + 1;
+                if (board.TryGetValue(npos, out int existing))
+                {
+                    // Already has a distance; only update/enqueue if the proposed is lower (more dangerous)
+                    if (proposed < existing)
+                    {
+                        board[npos] = proposed;
+                        q.Enqueue(npos);
+                    }
+                    // else skip this neighbor (a closer enemy already set a lower value)
+                }
+                else
+                {
+                    // Not set yet: assign and enqueue
+                    board[npos] = proposed;
+                    q.Enqueue(npos);
+                }
             }
             processedThisFrame++;
             if (processedThisFrame >= NODES_PER_FRAME)
@@ -146,9 +161,11 @@ public class SafetyScoreManager : Singleton<SafetyScoreManager>
             }
         }
         // Convert distance to score (higher is safer). Clamp 0-100.
-        foreach (var kv in new List<KeyValuePair<Vector2Int,int>>(board))
+        var keys = new List<Vector2Int>(board.Keys);
+        for (int i = 0; i < keys.Count; i++)
         {
-            board[kv.Key] = Mathf.Clamp(kv.Value, 0, 100);
+            var k = keys[i];
+            board[k] = Mathf.Clamp(board[k], 0, 100);
         }
         mSafetyBoards[aiType] = board;
     }

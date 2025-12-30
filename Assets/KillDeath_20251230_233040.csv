@@ -10,3 +10,525 @@ Enemy_Xonotic (2),Killed,Enemy_OW (2),20251230_233127
 Enemy_OW (1),Killed,Enemy_Xonotic (1),20251230_233136
 Enemy_AssaultCube (1),Killed,Enemy_Xonotic,20251230_233136
 Enemy_CS,Killed,Enemy_AssaultCube,20251230_233141
+Enemy_AssaultCube (2),Killed,Enemy_CS,20251230_233146
+Enemy_CS (1),Killed,Enemy_AssaultCube (2),20251230_233147
+Enemy_CS (1),Killed,Enemy_AssaultCube (1),20251230_233148
+Enemy_Xonotic,Killed,Enemy_CS (2),20251230_233205
+Enemy_Xonotic (2),Killed,Enemy_CS (1),20251230_233227
+Enemy_AssaultCube (1),Killed,Enemy_CS,20251230_233229
+Enemy_Xonotic (2),Killed,Enemy_AssaultCube (1),20251230_233232
+Enemy_AssaultCube (2),Killed,Enemy_CS (2),20251230_233236
+Enemy_Xonotic (2),Killed,Enemy_AssaultCube (2),20251230_233238
+Enemy_AssaultCube,Killed,Enemy_Xonotic (2),20251230_233239
+Enemy_OW (1),Killed,Enemy_Xonotic (1),20251230_233247
+Enemy_OW,Killed,Enemy_AssaultCube,20251230_233259
+Enemy_OW (2),Killed,Enemy_CS (1),20251230_233302
+Enemy_CS,Killed,Enemy_OW (2),20251230_233312
+Enemy_OW,Killed,Enemy_CS,20251230_233318
+Enemy_Xonotic (1),Killed,Enemy_OW (1),20251230_233326
+Enemy_OW,Killed,Enemy_Xonotic (1),20251230_233327
+Enemy_Xonotic,Killed,Enemy_OW,20251230_233330
+Enemy_AssaultCube (2),Killed,Enemy_Xonotic (2),20251230_233332
+Enemy_CS (2),Killed,Enemy_Xonotic,20251230_233341
+Enemy_CS (2),Killed,Enemy_AssaultCube (1),20251230_233353
+Enemy_Xonotic (1),Killed,Enemy_CS (1),20251230_233355
+Enemy_Xonotic (2),Killed,Enemy_CS (2),20251230_233359
+Enemy_OW (1),Killed,Enemy_CS,20251230_233406
+Enemy_OW (2),Killed,Enemy_AssaultCube (2),20251230_233411
+Enemy_OW (1),Killed,Enemy_AssaultCube,20251230_233414
+Enemy_Xonotic,Killed,Enemy_OW (2),20251230_233414
+Enemy_OW,Killed,Enemy_Xonotic,20251230_233418
+Enemy_Xonotic (2),Killed,Enemy_AssaultCube (1),20251230_233436
+Enemy_CS,Killed,Enemy_Xonotic (2),20251230_233437
+Enemy_Xonotic,Killed,Enemy_CS (1),20251230_233445
+Enemy_Xonotic (1),Killed,Enemy_CS (2),20251230_233452
+Enemy_CS,Killed,Enemy_AssaultCube (2),20251230_233452
+Enemy_Xonotic (1),Killed,Enemy_CS,20251230_233457
+Enemy_AssaultCube,Killed,Enemy_Xonotic,20251230_233507
+Enemy_CS (1),Killed,Enemy_Xonotic (1),20251230_233519
+Enemy_AssaultCube (1),Killed,Enemy_OW (2),20251230_233523
+Enemy_OW (1),Killed,Enemy_AssaultCube (1),20251230_233528
+Enemy_CS,Killed,Enemy_AssaultCube,20251230_233535
+Enemy_Xonotic,Killed,Enemy_OW,20251230_233538
+Enemy_CS (2),Killed,Enemy_AssaultCube (2),20251230_233539
+Enemy_Xonotic (2),Killed,Enemy_OW (1),20251230_233540
+Enemy_Xonotic,Killed,Enemy_CS (2),20251230_233611
+Enemy_Xonotic (2),Killed,Enemy_CS (1),20251230_233613
+Enemy_Xonotic (2),Killed,Enemy_CS,20251230_233613
+Enemy_AssaultCube (1),Killed,Enemy_OW (2),20251230_233617
+Enemy_OW,Killed,Enemy_AssaultCube (1),20251230_233617
+Enemy_AssaultCube,Killed,Enemy_Xonotic (2),20251230_233618
+Enemy_Xonotic,Killed,Enemy_AssaultCube,20251230_233618
+Enemy_AssaultCube (2),Killed,Enemy_Xonotic,20251230_233622
+Enemy_Xonotic (1),Killed,Enemy_AssaultCube (2),20251230_233622
+Enemy_CS (2),Killed,Enemy_Xonotic (1),20251230_233647
+Enemy_Xonotic (2),Killed,Enemy_CS (1),20251230_233657
+Enemy_CS (2),Killed,Enemy_Xonotic (2),20251230_233658
+Enemy_CS,Killed,Enemy_AssaultCube,20251230_233659
+Enemy_AssaultCube (2),Killed,Enemy_CS (2),20251230_233700
+Enemy_Xonotic,Killed,Enemy_CS,20251230_233700
+Enemy_Xonotic,Killed,Enemy_AssaultCube (1),20251230_233703
+Enemy_AssaultCube (2),Killed,Enemy_Xonotic,20251230_233703
+Enemy_OW (2),Killed,Enemy_Xonotic (1),20251230_233717
+Enemy_OW (1),Killed,Enemy_AssaultCube (2),20251230_233718
+Enemy_CS,Killed,Enemy_AssaultCube,20251230_233735
+Enemy_Xonotic,Killed,Enemy_CS (1),20251230_233743
+Enemy_AssaultCube (1),Killed,Enemy_Xonotic,20251230_233744
+Enemy_CS (2),Killed,Enemy_AssaultCube (1),20251230_233746
+Enemy_CS (2),Killed,Enemy_Xonotic (2),20251230_233746
+Enemy_AssaultCube (2),Killed,Enemy_CS (2),20251230_233756
+Enemy_Xonotic (1),Killed,Enemy_CS,20251230_233759
+Enemy_Xonotic (1),Killed,Enemy_AssaultCube (2),20251230_233808
+Enemy_AssaultCube (1),Killed,Enemy_OW,20251230_233821
+Enemy_Xonotic,Killed,Enemy_OW (2),20251230_233822
+Enemy_OW (1),Killed,Enemy_AssaultCube (1),20251230_233823
+Enemy_Xonotic,Killed,Enemy_OW (1),20251230_233827
+Enemy_Xonotic (2),Killed,Enemy_AssaultCube,20251230_233827
+Enemy_CS (1),Killed,Enemy_Xonotic,20251230_233834
+Enemy_CS (1),Killed,Enemy_Xonotic (2),20251230_233850
+Enemy_CS (1),Killed,Enemy_AssaultCube (2),20251230_233852
+Enemy_OW (2),Killed,Enemy_CS (2),20251230_233858
+Enemy_OW (2),Killed,Enemy_CS (1),20251230_233905
+Enemy_AssaultCube (1),Killed,Enemy_Xonotic,20251230_233907
+Enemy_OW,Killed,Enemy_AssaultCube (1),20251230_233909
+Enemy_Xonotic (1),Killed,Enemy_AssaultCube,20251230_233910
+Enemy_OW (2),Killed,Enemy_CS,20251230_233912
+Enemy_OW (2),Killed,Enemy_Xonotic (1),20251230_233922
+Enemy_OW (1),Killed,Enemy_AssaultCube (2),20251230_233924
+Enemy_OW,Killed,Enemy_Xonotic,20251230_233939
+Enemy_CS (2),Killed,Enemy_Xonotic (2),20251230_233946
+Enemy_AssaultCube,Killed,Enemy_CS (2),20251230_233951
+Enemy_CS,Killed,Enemy_AssaultCube (1),20251230_234007
+Enemy_Xonotic,Killed,Enemy_CS,20251230_234007
+Enemy_Xonotic,Killed,Enemy_CS (1),20251230_234009
+Enemy_AssaultCube (2),Killed,Enemy_Xonotic (2),20251230_234019
+Enemy_AssaultCube,Killed,Enemy_OW (1),20251230_234035
+Enemy_AssaultCube (2),Killed,Enemy_Xonotic,20251230_234045
+Enemy_CS (2),Killed,Enemy_AssaultCube (2),20251230_234046
+Enemy_OW,Killed,Enemy_AssaultCube,20251230_234056
+Enemy_Xonotic (2),Killed,Enemy_CS (2),20251230_234056
+Enemy_CS,Killed,Enemy_OW,20251230_234104
+Enemy_CS (1),Killed,Enemy_OW (2),20251230_234105
+Enemy_Xonotic (1),Killed,Enemy_CS,20251230_234107
+Enemy_OW (1),Killed,Enemy_CS (1),20251230_234110
+Enemy_AssaultCube (1),Killed,Enemy_Xonotic (1),20251230_234118
+Enemy_AssaultCube,Killed,Enemy_CS (2),20251230_234145
+Enemy_CS,Killed,Enemy_AssaultCube,20251230_234147
+Enemy_AssaultCube (2),Killed,Enemy_CS,20251230_234148
+Enemy_CS (1),Killed,Enemy_AssaultCube (2),20251230_234149
+Enemy_CS (1),Killed,Enemy_Xonotic (2),20251230_234158
+Enemy_Xonotic (1),Killed,Enemy_AssaultCube (1),20251230_234208
+Enemy_CS,Killed,Enemy_AssaultCube (2),20251230_234216
+Enemy_OW (1),Killed,Enemy_CS (2),20251230_234226
+Enemy_OW,Killed,Enemy_CS (1),20251230_234233
+Enemy_OW (1),Killed,Enemy_Xonotic,20251230_234238
+Enemy_Xonotic (1),Killed,Enemy_OW,20251230_234238
+Enemy_AssaultCube (2),Killed,Enemy_CS,20251230_234252
+Enemy_AssaultCube,Killed,Enemy_Xonotic (1),20251230_234300
+Enemy_CS (2),Killed,Enemy_AssaultCube (1),20251230_234300
+Enemy_AssaultCube (2),Killed,Enemy_CS (2),20251230_234303
+Enemy_CS (1),Killed,Enemy_Xonotic (2),20251230_234318
+Enemy_CS,Killed,Enemy_Xonotic,20251230_234332
+Enemy_AssaultCube (1),Killed,Enemy_CS,20251230_234337
+Enemy_Xonotic (2),Killed,Enemy_AssaultCube,20251230_234347
+Enemy_OW,Killed,Enemy_AssaultCube (1),20251230_234351
+Enemy_OW (2),Killed,Enemy_AssaultCube (2),20251230_234358
+Enemy_CS (2),Killed,Enemy_OW (2),20251230_234418
+Enemy_OW (1),Killed,Enemy_CS (2),20251230_234418
+Enemy_AssaultCube,Killed,Enemy_Xonotic (1),20251230_234427
+Enemy_Xonotic (2),Killed,Enemy_CS (1),20251230_234430
+Enemy_CS,Killed,Enemy_AssaultCube (2),20251230_234438
+Enemy_Xonotic,Killed,Enemy_AssaultCube,20251230_234444
+Enemy_AssaultCube (1),Killed,Enemy_Xonotic,20251230_234444
+Enemy_Xonotic (1),Killed,Enemy_AssaultCube (1),20251230_234459
+Enemy_Xonotic (2),Killed,Enemy_CS,20251230_234503
+Enemy_CS (2),Killed,Enemy_Xonotic (1),20251230_234510
+Enemy_Xonotic (2),Killed,Enemy_CS (2),20251230_234512
+Enemy_AssaultCube (2),Killed,Enemy_CS (1),20251230_234519
+Enemy_Xonotic (2),Killed,Enemy_AssaultCube (2),20251230_234522
+Enemy_OW (2),Killed,Enemy_Xonotic (2),20251230_234529
+Enemy_AssaultCube,Killed,Enemy_OW,20251230_234538
+Enemy_OW (2),Killed,Enemy_AssaultCube,20251230_234539
+Enemy_CS (2),Killed,Enemy_AssaultCube (1),20251230_234551
+Enemy_Xonotic,Killed,Enemy_CS,20251230_234554
+Enemy_Xonotic (1),Killed,Enemy_AssaultCube (2),20251230_234606
+Enemy_AssaultCube,Killed,Enemy_Xonotic (1),20251230_234607
+Enemy_CS (2),Killed,Enemy_Xonotic (2),20251230_234608
+Enemy_AssaultCube (1),Killed,Enemy_Xonotic,20251230_234619
+Enemy_CS (1),Killed,Enemy_OW (1),20251230_234624
+Enemy_CS,Killed,Enemy_AssaultCube,20251230_234626
+Enemy_OW,Killed,Enemy_CS (2),20251230_234628
+Enemy_OW,Killed,Enemy_CS (1),20251230_234629
+Enemy_AssaultCube (2),Killed,Enemy_CS,20251230_234638
+Enemy_Xonotic (1),Killed,Enemy_OW (2),20251230_234651
+Enemy_OW,Killed,Enemy_Xonotic (1),20251230_234651
+Enemy_OW (1),Killed,Enemy_Xonotic,20251230_234657
+Enemy_Xonotic (2),Killed,Enemy_OW (1),20251230_234703
+Enemy_CS (2),Killed,Enemy_AssaultCube (1),20251230_234704
+Enemy_AssaultCube,Killed,Enemy_CS (1),20251230_234705
+Enemy_CS (2),Killed,Enemy_AssaultCube,20251230_234705
+Enemy_AssaultCube (2),Killed,Enemy_Xonotic (2),20251230_234706
+Enemy_AssaultCube (2),Killed,Enemy_OW,20251230_234713
+Enemy_Xonotic,Killed,Enemy_OW (2),20251230_234726
+Enemy_CS,Killed,Enemy_AssaultCube (2),20251230_234726
+Enemy_CS,Killed,Enemy_Xonotic (1),20251230_234735
+Enemy_CS (2),Killed,Enemy_Xonotic (2),20251230_234742
+Enemy_AssaultCube (1),Killed,Enemy_CS,20251230_234747
+Enemy_CS (2),Killed,Enemy_AssaultCube (1),20251230_234748
+Enemy_OW (1),Killed,Enemy_CS (1),20251230_234801
+Enemy_Xonotic,Killed,Enemy_OW (1),20251230_234803
+Enemy_OW,Killed,Enemy_CS (2),20251230_234803
+Enemy_OW,Killed,Enemy_Xonotic,20251230_234805
+Enemy_OW (2),Killed,Enemy_AssaultCube (2),20251230_234810
+Enemy_AssaultCube,Killed,Enemy_Xonotic (1),20251230_234811
+Enemy_OW (2),Killed,Enemy_AssaultCube,20251230_234813
+Enemy_Xonotic (2),Killed,Enemy_OW (2),20251230_234816
+Enemy_OW (1),Killed,Enemy_Xonotic (2),20251230_234833
+Enemy_Xonotic,Killed,Enemy_OW (1),20251230_234834
+Enemy_CS,Killed,Enemy_OW,20251230_234839
+Enemy_Xonotic (1),Killed,Enemy_CS,20251230_234848
+Enemy_CS (1),Killed,Enemy_Xonotic (1),20251230_234849
+Enemy_CS (2),Killed,Enemy_Xonotic (2),20251230_234856
+Enemy_Xonotic,Killed,Enemy_CS (2),20251230_234909
+Enemy_Xonotic,Killed,Enemy_CS (1),20251230_234912
+Enemy_AssaultCube (1),Killed,Enemy_OW,20251230_234914
+Enemy_OW (2),Killed,Enemy_AssaultCube (2),20251230_234914
+Enemy_OW (2),Killed,Enemy_AssaultCube (1),20251230_234916
+Enemy_CS,Killed,Enemy_AssaultCube,20251230_234935
+Enemy_OW,Killed,Enemy_Xonotic (2),20251230_234942
+Enemy_AssaultCube (2),Killed,Enemy_CS (2),20251230_234955
+Enemy_CS,Killed,Enemy_AssaultCube (2),20251230_234956
+Enemy_AssaultCube (1),Killed,Enemy_CS,20251230_234956
+Enemy_Xonotic,Killed,Enemy_AssaultCube (1),20251230_234958
+Enemy_CS (1),Killed,Enemy_Xonotic,20251230_234959
+Enemy_AssaultCube,Killed,Enemy_Xonotic (1),20251230_235018
+Enemy_OW (1),Killed,Enemy_AssaultCube,20251230_235031
+Enemy_CS (1),Killed,Enemy_OW (1),20251230_235031
+Enemy_OW (2),Killed,Enemy_CS (1),20251230_235032
+Enemy_Xonotic,Killed,Enemy_OW,20251230_235032
+Enemy_Xonotic,Killed,Enemy_OW (2),20251230_235033
+Enemy_AssaultCube (2),Killed,Enemy_Xonotic,20251230_235039
+Enemy_AssaultCube (2),Killed,Enemy_CS (2),20251230_235040
+Enemy_Xonotic (2),Killed,Enemy_AssaultCube (2),20251230_235054
+Enemy_Xonotic (2),Killed,Enemy_AssaultCube (1),20251230_235100
+Enemy_AssaultCube,Killed,Enemy_CS (1),20251230_235101
+Enemy_OW,Killed,Enemy_Xonotic (2),20251230_235104
+Enemy_AssaultCube (1),Killed,Enemy_OW (1),20251230_235129
+Enemy_OW (2),Killed,Enemy_AssaultCube (2),20251230_235131
+Enemy_CS,Killed,Enemy_OW,20251230_235132
+Enemy_OW (2),Killed,Enemy_AssaultCube,20251230_235140
+Enemy_Xonotic (1),Killed,Enemy_CS,20251230_235143
+Enemy_CS (2),Killed,Enemy_Xonotic (1),20251230_235143
+Enemy_CS (2),Killed,Enemy_Xonotic (2),20251230_235148
+Enemy_CS (2),Killed,Enemy_Xonotic,20251230_235154
+Enemy_OW (1),Killed,Enemy_CS (2),20251230_235202
+Enemy_Xonotic (1),Killed,Enemy_CS (1),20251230_235210
+Enemy_AssaultCube (1),Killed,Enemy_OW (2),20251230_235210
+Enemy_CS,Killed,Enemy_AssaultCube (1),20251230_235211
+Enemy_AssaultCube (2),Killed,Enemy_CS,20251230_235212
+Enemy_AssaultCube,Killed,Enemy_OW (1),20251230_235217
+Enemy_OW,Killed,Enemy_AssaultCube (2),20251230_235218
+Enemy_OW,Killed,Enemy_AssaultCube,20251230_235225
+Enemy_OW (2),Killed,Enemy_Xonotic (1),20251230_235246
+Enemy_Xonotic,Killed,Enemy_OW (2),20251230_235250
+Enemy_Xonotic,Killed,Enemy_OW,20251230_235251
+Enemy_OW (1),Killed,Enemy_Xonotic,20251230_235251
+Enemy_CS (2),Killed,Enemy_OW (1),20251230_235256
+Enemy_CS (1),Killed,Enemy_Xonotic (2),20251230_235258
+Enemy_CS (2),Killed,Enemy_AssaultCube (2),20251230_235259
+Enemy_AssaultCube,Killed,Enemy_CS (2),20251230_235308
+Enemy_Xonotic (1),Killed,Enemy_CS,20251230_235308
+Enemy_Xonotic,Killed,Enemy_CS (1),20251230_235317
+Enemy_OW (2),Killed,Enemy_AssaultCube,20251230_235320
+Enemy_OW,Killed,Enemy_AssaultCube (1),20251230_235332
+Enemy_Xonotic (2),Killed,Enemy_OW (2),20251230_235341
+Enemy_Xonotic (2),Killed,Enemy_OW,20251230_235342
+Enemy_OW (1),Killed,Enemy_Xonotic (1),20251230_235343
+Enemy_OW (1),Killed,Enemy_Xonotic (2),20251230_235343
+Enemy_AssaultCube (2),Killed,Enemy_OW (1),20251230_235344
+Enemy_CS (2),Killed,Enemy_Xonotic,20251230_235353
+Enemy_CS (1),Killed,Enemy_AssaultCube (2),20251230_235358
+Enemy_Xonotic (1),Killed,Enemy_CS,20251230_235406
+Enemy_Xonotic (1),Killed,Enemy_CS (2),20251230_235407
+Enemy_AssaultCube (1),Killed,Enemy_CS (1),20251230_235422
+Enemy_OW (2),Killed,Enemy_Xonotic (2),20251230_235432
+Enemy_OW (1),Killed,Enemy_AssaultCube,20251230_235433
+Enemy_AssaultCube (1),Killed,Enemy_OW (1),20251230_235433
+Enemy_OW (2),Killed,Enemy_AssaultCube (1),20251230_235435
+Enemy_CS (2),Killed,Enemy_AssaultCube (2),20251230_235439
+Enemy_OW,Killed,Enemy_CS,20251230_235445
+Enemy_Xonotic,Killed,Enemy_OW,20251230_235452
+Enemy_CS (2),Killed,Enemy_Xonotic,20251230_235457
+Enemy_CS (1),Killed,Enemy_Xonotic (1),20251230_235458
+Enemy_Xonotic (2),Killed,Enemy_OW (1),20251230_235503
+Enemy_OW (2),Killed,Enemy_Xonotic (2),20251230_235503
+Enemy_OW (2),Killed,Enemy_CS (2),20251230_235507
+Enemy_AssaultCube,Killed,Enemy_CS (1),20251230_235512
+Enemy_AssaultCube (1),Killed,Enemy_Xonotic (1),20251230_235526
+Enemy_Xonotic (2),Killed,Enemy_AssaultCube (1),20251230_235528
+Enemy_AssaultCube (2),Killed,Enemy_Xonotic,20251230_235529
+Enemy_OW (2),Killed,Enemy_AssaultCube (2),20251230_235541
+Enemy_CS (2),Killed,Enemy_OW,20251230_235547
+Enemy_OW (1),Killed,Enemy_CS,20251230_235548
+Enemy_OW (1),Killed,Enemy_CS (2),20251230_235549
+Enemy_CS (1),Killed,Enemy_OW (2),20251230_235551
+Enemy_CS (1),Killed,Enemy_OW (1),20251230_235552
+Enemy_Xonotic (2),Killed,Enemy_AssaultCube,20251230_235554
+Enemy_Xonotic (2),Killed,Enemy_AssaultCube (1),20251230_235615
+Enemy_AssaultCube (2),Killed,Enemy_Xonotic (2),20251230_235620
+Enemy_AssaultCube (2),Killed,Enemy_Xonotic,20251230_235634
+Enemy_OW (2),Killed,Enemy_CS (1),20251230_235635
+Enemy_OW,Killed,Enemy_CS,20251230_235638
+Enemy_OW,Killed,Enemy_AssaultCube (2),20251230_235640
+Enemy_CS (2),Killed,Enemy_OW,20251230_235641
+Enemy_OW (2),Killed,Enemy_CS (2),20251230_235642
+Enemy_Xonotic (2),Killed,Enemy_AssaultCube,20251230_235656
+Enemy_AssaultCube (1),Killed,Enemy_Xonotic (1),20251230_235705
+Enemy_AssaultCube (1),Killed,Enemy_Xonotic (2),20251230_235705
+Enemy_CS (2),Killed,Enemy_AssaultCube (2),20251230_235715
+Enemy_CS (1),Killed,Enemy_AssaultCube (1),20251230_235716
+Enemy_Xonotic,Killed,Enemy_CS (1),20251230_235724
+Enemy_CS,Killed,Enemy_Xonotic,20251230_235728
+Enemy_CS (2),Killed,Enemy_AssaultCube,20251230_235732
+Enemy_CS,Killed,Enemy_OW (2),20251230_235733
+Enemy_OW,Killed,Enemy_CS,20251230_235739
+Enemy_AssaultCube (2),Killed,Enemy_CS (2),20251230_235747
+Enemy_Xonotic,Killed,Enemy_OW,20251230_235759
+Enemy_OW (1),Killed,Enemy_Xonotic (1),20251230_235802
+Enemy_OW (2),Killed,Enemy_Xonotic (2),20251230_235807
+Enemy_CS (1),Killed,Enemy_AssaultCube,20251230_235810
+Enemy_AssaultCube (2),Killed,Enemy_OW (1),20251230_235814
+Enemy_CS,Killed,Enemy_AssaultCube (1),20251230_235833
+Enemy_OW,Killed,Enemy_Xonotic (1),20251230_235836
+Enemy_OW,Killed,Enemy_AssaultCube (2),20251230_235837
+Enemy_AssaultCube,Killed,Enemy_Xonotic (2),20251230_235854
+Enemy_OW (1),Killed,Enemy_CS (1),20251230_235901
+Enemy_OW,Killed,Enemy_CS,20251230_235902
+Enemy_AssaultCube,Killed,Enemy_CS (2),20251230_235905
+Enemy_OW,Killed,Enemy_AssaultCube,20251230_235912
+Enemy_Xonotic (1),Killed,Enemy_OW (2),20251230_235914
+Enemy_Xonotic,Killed,Enemy_OW,20251230_235919
+Enemy_OW (1),Killed,Enemy_Xonotic,20251230_235930
+Enemy_AssaultCube (2),Killed,Enemy_OW (1),20251230_235936
+Enemy_CS,Killed,Enemy_AssaultCube (1),20251230_235941
+Enemy_OW (2),Killed,Enemy_AssaultCube (2),20251230_235944
+Enemy_CS (1),Killed,Enemy_Xonotic (1),20251230_235947
+Enemy_AssaultCube,Killed,Enemy_Xonotic (2),20251230_235954
+Enemy_Xonotic (1),Killed,Enemy_CS (1),20251231_000005
+Enemy_CS (2),Killed,Enemy_Xonotic (1),20251231_000011
+Enemy_Xonotic (1),Killed,Enemy_CS (2),20251231_000031
+Enemy_OW (2),Killed,Enemy_AssaultCube (2),20251231_000031
+Enemy_Xonotic (1),Killed,Enemy_CS,20251231_000031
+Enemy_AssaultCube,Killed,Enemy_OW (2),20251231_000037
+Enemy_OW (1),Killed,Enemy_AssaultCube,20251231_000037
+Enemy_AssaultCube (1),Killed,Enemy_Xonotic,20251231_000045
+Enemy_Xonotic (1),Killed,Enemy_AssaultCube (1),20251231_000045
+Enemy_CS,Killed,Enemy_Xonotic (1),20251231_000102
+Enemy_CS (2),Killed,Enemy_Xonotic (2),20251231_000114
+Enemy_AssaultCube,Killed,Enemy_CS,20251231_000118
+Enemy_OW (2),Killed,Enemy_AssaultCube (2),20251231_000122
+Enemy_OW (2),Killed,Enemy_AssaultCube,20251231_000123
+Enemy_OW (1),Killed,Enemy_CS (2),20251231_000123
+Enemy_Xonotic (1),Killed,Enemy_OW (2),20251231_000134
+Enemy_AssaultCube (1),Killed,Enemy_OW,20251231_000141
+Enemy_Xonotic (2),Killed,Enemy_AssaultCube (1),20251231_000146
+Enemy_CS (1),Killed,Enemy_Xonotic (2),20251231_000200
+Enemy_Xonotic,Killed,Enemy_CS (1),20251231_000205
+Enemy_CS,Killed,Enemy_Xonotic,20251231_000206
+Enemy_OW (1),Killed,Enemy_CS,20251231_000217
+Enemy_OW,Killed,Enemy_CS (2),20251231_000223
+Enemy_OW (1),Killed,Enemy_AssaultCube (1),20251231_000225
+Enemy_Xonotic (2),Killed,Enemy_OW (2),20251231_000233
+Enemy_Xonotic (1),Killed,Enemy_AssaultCube (2),20251231_000239
+Enemy_OW (1),Killed,Enemy_Xonotic (1),20251231_000247
+Enemy_Xonotic,Killed,Enemy_OW,20251231_000248
+Enemy_Xonotic,Killed,Enemy_OW (1),20251231_000248
+Enemy_CS (1),Killed,Enemy_Xonotic (2),20251231_000257
+Enemy_CS (2),Killed,Enemy_AssaultCube,20251231_000300
+Enemy_Xonotic,Killed,Enemy_CS (1),20251231_000303
+Enemy_CS,Killed,Enemy_AssaultCube (1),20251231_000308
+Enemy_OW,Killed,Enemy_Xonotic (1),20251231_000319
+Enemy_AssaultCube (2),Killed,Enemy_Xonotic,20251231_000322
+Enemy_Xonotic (2),Killed,Enemy_CS (2),20251231_000328
+Enemy_AssaultCube (2),Killed,Enemy_CS,20251231_000328
+Enemy_OW (1),Killed,Enemy_AssaultCube (1),20251231_000343
+Enemy_AssaultCube,Killed,Enemy_OW,20251231_000343
+Enemy_OW (1),Killed,Enemy_AssaultCube,20251231_000343
+Enemy_Xonotic (2),Killed,Enemy_AssaultCube (2),20251231_000354
+Enemy_CS (1),Killed,Enemy_OW (1),20251231_000357
+Enemy_CS (2),Killed,Enemy_Xonotic (1),20251231_000414
+Enemy_Xonotic (2),Killed,Enemy_CS,20251231_000419
+Enemy_Xonotic,Killed,Enemy_AssaultCube (2),20251231_000422
+Enemy_CS (2),Killed,Enemy_Xonotic (2),20251231_000422
+Enemy_OW (1),Killed,Enemy_CS (2),20251231_000437
+Enemy_CS (1),Killed,Enemy_OW,20251231_000440
+Enemy_OW (1),Killed,Enemy_CS (1),20251231_000440
+Enemy_OW (2),Killed,Enemy_Xonotic,20251231_000441
+Enemy_AssaultCube,Killed,Enemy_OW (2),20251231_000443
+Enemy_Xonotic (1),Killed,Enemy_OW (1),20251231_000455
+Enemy_Xonotic (2),Killed,Enemy_CS (2),20251231_000510
+Enemy_CS (1),Killed,Enemy_Xonotic (1),20251231_000512
+Enemy_AssaultCube,Killed,Enemy_CS,20251231_000513
+Enemy_OW,Killed,Enemy_CS (1),20251231_000520
+Enemy_AssaultCube (1),Killed,Enemy_Xonotic (2),20251231_000522
+Enemy_AssaultCube (1),Killed,Enemy_Xonotic,20251231_000526
+Enemy_OW (1),Killed,Enemy_AssaultCube (2),20251231_000542
+Enemy_CS (2),Killed,Enemy_AssaultCube,20251231_000603
+Enemy_CS,Killed,Enemy_AssaultCube (1),20251231_000610
+Enemy_OW,Killed,Enemy_CS (2),20251231_000623
+Enemy_OW (2),Killed,Enemy_CS,20251231_000627
+Enemy_OW (1),Killed,Enemy_CS (1),20251231_000630
+Enemy_AssaultCube (2),Killed,Enemy_OW (2),20251231_000634
+Enemy_AssaultCube (2),Killed,Enemy_OW (1),20251231_000635
+Enemy_Xonotic (1),Killed,Enemy_AssaultCube (2),20251231_000640
+Enemy_AssaultCube,Killed,Enemy_Xonotic (1),20251231_000642
+Enemy_Xonotic,Killed,Enemy_AssaultCube,20251231_000646
+Enemy_Xonotic (2),Killed,Enemy_AssaultCube (1),20251231_000653
+Enemy_CS (1),Killed,Enemy_Xonotic (2),20251231_000700
+Enemy_AssaultCube (2),Killed,Enemy_Xonotic,20251231_000710
+Enemy_CS,Killed,Enemy_OW,20251231_000715
+Enemy_OW (2),Killed,Enemy_CS,20251231_000715
+Enemy_CS (1),Killed,Enemy_AssaultCube (2),20251231_000718
+Enemy_AssaultCube (1),Killed,Enemy_CS (1),20251231_000721
+Enemy_AssaultCube (1),Killed,Enemy_CS (2),20251231_000721
+Enemy_OW (1),Killed,Enemy_Xonotic (1),20251231_000729
+Enemy_OW (2),Killed,Enemy_AssaultCube (1),20251231_000732
+Enemy_Xonotic (2),Killed,Enemy_OW (2),20251231_000739
+Enemy_AssaultCube,Killed,Enemy_OW (1),20251231_000743
+Enemy_CS,Killed,Enemy_Xonotic (2),20251231_000750
+Enemy_CS (2),Killed,Enemy_AssaultCube,20251231_000759
+Enemy_CS,Killed,Enemy_Xonotic,20251231_000807
+Enemy_Xonotic (1),Killed,Enemy_CS,20251231_000807
+Enemy_Xonotic (1),Killed,Enemy_CS (1),20251231_000809
+Enemy_CS (2),Killed,Enemy_Xonotic (1),20251231_000809
+Enemy_OW (2),Killed,Enemy_CS (2),20251231_000815
+Enemy_AssaultCube (2),Killed,Enemy_OW,20251231_000819
+Enemy_Xonotic (2),Killed,Enemy_OW (2),20251231_000823
+Enemy_OW (1),Killed,Enemy_AssaultCube (1),20251231_000827
+Enemy_Xonotic,Killed,Enemy_OW (1),20251231_000835
+Enemy_Xonotic (1),Killed,Enemy_CS,20251231_000855
+Enemy_CS (1),Killed,Enemy_Xonotic (1),20251231_000855
+Enemy_OW,Killed,Enemy_AssaultCube,20251231_000858
+Enemy_Xonotic (2),Killed,Enemy_AssaultCube (2),20251231_000859
+Enemy_Xonotic (2),Killed,Enemy_OW,20251231_000914
+Enemy_AssaultCube (1),Killed,Enemy_CS (2),20251231_000915
+Enemy_OW (1),Killed,Enemy_Xonotic (2),20251231_000915
+Enemy_OW (1),Killed,Enemy_CS (1),20251231_000915
+Enemy_Xonotic,Killed,Enemy_OW (2),20251231_000920
+Enemy_AssaultCube (1),Killed,Enemy_Xonotic,20251231_000923
+Enemy_OW (1),Killed,Enemy_AssaultCube (1),20251231_000932
+Enemy_CS,Killed,Enemy_AssaultCube,20251231_000951
+Enemy_AssaultCube (2),Killed,Enemy_CS,20251231_000952
+Enemy_CS (1),Killed,Enemy_AssaultCube (2),20251231_000954
+Enemy_CS (2),Killed,Enemy_Xonotic,20251231_001002
+Enemy_AssaultCube (1),Killed,Enemy_CS (2),20251231_001021
+Enemy_Xonotic (1),Killed,Enemy_AssaultCube (1),20251231_001023
+Enemy_AssaultCube,Killed,Enemy_CS (1),20251231_001027
+Enemy_CS,Killed,Enemy_AssaultCube,20251231_001029
+Enemy_OW (2),Killed,Enemy_Xonotic (1),20251231_001029
+Enemy_Xonotic (2),Killed,Enemy_OW,20251231_001030
+Enemy_OW (2),Killed,Enemy_Xonotic (2),20251231_001034
+Enemy_AssaultCube (2),Killed,Enemy_OW (2),20251231_001052
+Enemy_AssaultCube (2),Killed,Enemy_CS,20251231_001058
+Enemy_OW,Killed,Enemy_AssaultCube (2),20251231_001059
+Enemy_Xonotic (1),Killed,Enemy_OW (1),20251231_001100
+Enemy_Xonotic (2),Killed,Enemy_OW,20251231_001101
+Enemy_AssaultCube (1),Killed,Enemy_CS (1),20251231_001114
+Enemy_AssaultCube,Killed,Enemy_Xonotic (1),20251231_001121
+Enemy_AssaultCube (2),Killed,Enemy_CS (2),20251231_001131
+Enemy_Xonotic,Killed,Enemy_AssaultCube (1),20251231_001138
+Enemy_OW (2),Killed,Enemy_AssaultCube,20251231_001144
+Enemy_CS,Killed,Enemy_Xonotic,20251231_001146
+Enemy_CS,Killed,Enemy_Xonotic (2),20251231_001201
+Enemy_Xonotic (1),Killed,Enemy_CS (2),20251231_001204
+Enemy_OW,Killed,Enemy_CS (1),20251231_001206
+Enemy_Xonotic (1),Killed,Enemy_CS,20251231_001208
+Enemy_AssaultCube (2),Killed,Enemy_Xonotic (1),20251231_001217
+Enemy_AssaultCube (1),Killed,Enemy_Xonotic,20251231_001231
+Enemy_Xonotic (2),Killed,Enemy_AssaultCube,20251231_001233
+Enemy_AssaultCube (2),Killed,Enemy_Xonotic (2),20251231_001233
+Enemy_Xonotic (2),Killed,Enemy_AssaultCube (2),20251231_001251
+Enemy_CS (2),Killed,Enemy_OW (1),20251231_001258
+Enemy_Xonotic,Killed,Enemy_AssaultCube (1),20251231_001259
+Enemy_CS,Killed,Enemy_OW (2),20251231_001302
+Enemy_CS,Killed,Enemy_Xonotic,20251231_001309
+Enemy_Xonotic (2),Killed,Enemy_CS,20251231_001309
+Enemy_CS (1),Killed,Enemy_Xonotic (2),20251231_001310
+Enemy_AssaultCube,Killed,Enemy_CS (1),20251231_001315
+Enemy_AssaultCube,Killed,Enemy_CS (2),20251231_001322
+Enemy_OW (2),Killed,Enemy_AssaultCube (2),20251231_001347
+Enemy_OW (2),Killed,Enemy_Xonotic (1),20251231_001349
+Enemy_CS (1),Killed,Enemy_AssaultCube,20251231_001356
+Enemy_AssaultCube (1),Killed,Enemy_OW (2),20251231_001400
+Enemy_OW (1),Killed,Enemy_AssaultCube (1),20251231_001402
+Enemy_CS (2),Killed,Enemy_OW,20251231_001404
+Enemy_CS (2),Killed,Enemy_Xonotic (2),20251231_001412
+Enemy_Xonotic (1),Killed,Enemy_CS (1),20251231_001414
+Enemy_AssaultCube,Killed,Enemy_Xonotic,20251231_001430
+Enemy_AssaultCube (2),Killed,Enemy_CS (2),20251231_001436
+Enemy_AssaultCube (2),Killed,Enemy_CS,20251231_001442
+Enemy_Xonotic (1),Killed,Enemy_OW (1),20251231_001446
+Enemy_AssaultCube (2),Killed,Enemy_OW (2),20251231_001459
+Enemy_AssaultCube (1),Killed,Enemy_Xonotic,20251231_001500
+Enemy_AssaultCube,Killed,Enemy_OW,20251231_001502
+Enemy_CS (1),Killed,Enemy_AssaultCube,20251231_001515
+Enemy_CS (2),Killed,Enemy_AssaultCube (1),20251231_001516
+Enemy_OW (1),Killed,Enemy_CS (1),20251231_001531
+Enemy_OW (1),Killed,Enemy_CS,20251231_001538
+Enemy_OW (2),Killed,Enemy_CS (2),20251231_001539
+Enemy_AssaultCube,Killed,Enemy_Xonotic (1),20251231_001544
+Enemy_AssaultCube (1),Killed,Enemy_Xonotic (2),20251231_001611
+Enemy_OW (2),Killed,Enemy_AssaultCube (2),20251231_001620
+Enemy_AssaultCube (1),Killed,Enemy_Xonotic,20251231_001620
+Enemy_Xonotic (1),Killed,Enemy_CS (1),20251231_001623
+Enemy_CS,Killed,Enemy_AssaultCube (1),20251231_001625
+Enemy_CS (2),Killed,Enemy_OW (1),20251231_001646
+Enemy_Xonotic,Killed,Enemy_OW (2),20251231_001647
+Enemy_CS (2),Killed,Enemy_OW,20251231_001647
+Enemy_OW (1),Killed,Enemy_CS (2),20251231_001656
+Enemy_OW (2),Killed,Enemy_CS,20251231_001658
+Enemy_Xonotic (1),Killed,Enemy_AssaultCube,20251231_001700
+Enemy_CS (1),Killed,Enemy_Xonotic (1),20251231_001702
+Enemy_Xonotic (2),Killed,Enemy_CS (1),20251231_001705
+Enemy_AssaultCube (2),Killed,Enemy_Xonotic (2),20251231_001714
+Enemy_OW,Killed,Enemy_Xonotic,20251231_001727
+Enemy_OW (1),Killed,Enemy_AssaultCube (2),20251231_001732
+Enemy_OW (2),Killed,Enemy_Xonotic (1),20251231_001736
+Enemy_CS (2),Killed,Enemy_OW (2),20251231_001738
+Enemy_CS (2),Killed,Enemy_OW,20251231_001739
+Enemy_CS (1),Killed,Enemy_AssaultCube,20251231_001740
+Enemy_CS (2),Killed,Enemy_OW (1),20251231_001741
+Enemy_Xonotic,Killed,Enemy_CS (1),20251231_001800
+Enemy_Xonotic (2),Killed,Enemy_AssaultCube (1),20251231_001801
+Enemy_CS (2),Killed,Enemy_OW,20251231_001803
+Enemy_OW (2),Killed,Enemy_CS,20251231_001804
+Enemy_OW (2),Killed,Enemy_CS (2),20251231_001805
+Enemy_AssaultCube (2),Killed,Enemy_Xonotic (2),20251231_001810
+Enemy_Xonotic (1),Killed,Enemy_AssaultCube (2),20251231_001822
+Enemy_AssaultCube,Killed,Enemy_Xonotic (1),20251231_001826
+Enemy_Xonotic (2),Killed,Enemy_OW (2),20251231_001838
+Enemy_OW (1),Killed,Enemy_Xonotic,20251231_001844
+Enemy_OW (1),Killed,Enemy_CS (1),20251231_001847
+Enemy_OW (1),Killed,Enemy_CS,20251231_001850
+Enemy_CS (2),Killed,Enemy_OW,20251231_001850
+Enemy_CS (2),Killed,Enemy_OW (1),20251231_001850
+Enemy_CS (2),Killed,Enemy_AssaultCube,20251231_001853
+Enemy_Xonotic (1),Killed,Enemy_CS (2),20251231_001916
+Enemy_OW,Killed,Enemy_AssaultCube (2),20251231_001918
+Enemy_Xonotic (1),Killed,Enemy_CS (1),20251231_001925
+Enemy_AssaultCube (1),Killed,Enemy_CS,20251231_001928
+Enemy_Xonotic (1),Killed,Enemy_AssaultCube,20251231_001935
+Enemy_AssaultCube (1),Killed,Enemy_Xonotic (2),20251231_001937
+Enemy_AssaultCube (2),Killed,Enemy_Xonotic (1),20251231_001942
+Enemy_OW,Killed,Enemy_CS (2),20251231_002007
+Enemy_CS (1),Killed,Enemy_OW (2),20251231_002009
+Enemy_OW (1),Killed,Enemy_CS (1),20251231_002009
+Enemy_CS,Killed,Enemy_OW,20251231_002009
+Enemy_CS,Killed,Enemy_OW (1),20251231_002011
+Enemy_Xonotic (1),Killed,Enemy_CS,20251231_002020
+Enemy_Xonotic (2),Killed,Enemy_AssaultCube (1),20251231_002023
+Enemy_AssaultCube,Killed,Enemy_Xonotic (1),20251231_002026
+Enemy_Xonotic,Killed,Enemy_AssaultCube (2),20251231_002027
+Enemy_AssaultCube,Killed,Enemy_Xonotic,20251231_002027
+Enemy_OW,Killed,Enemy_Xonotic (2),20251231_002042
+Enemy_CS (2),Killed,Enemy_AssaultCube,20251231_002053
