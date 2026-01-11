@@ -64,7 +64,12 @@ public class OccupyScoreManager : Singleton<OccupyScoreManager>
             if ((pos - op).sqrMagnitude <= range * range)
             {
                 var aiType = aiBase.GetType();
-                if (teamScores.ContainsKey(aiType)) teamScores[aiType] += Time.deltaTime;
+                if (teamScores.ContainsKey(aiType))
+                {
+                    teamScores[aiType] += Time.deltaTime;
+                    // Aggregate occupy time per AI type
+                    StatsAggregator.Instance.AddOccupyTime(aiType.Name, Time.deltaTime);
+                }
             }
         }
 

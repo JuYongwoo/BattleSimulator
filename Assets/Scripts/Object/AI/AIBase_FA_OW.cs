@@ -10,52 +10,64 @@ public class AIBase_FA_OW : ObjectBase_AIBase
     private int mClosestOccupy = -1;
     private int mClosestEnemy = -1;
 
-    private static bool sBenchLogged = false;
     private static int sBenchCounter = 0;
+    private static int sBenchRuns = 0;
+    private static double sSumBaseNs = 0.0;
+    private static double sSumSafetyNs = 0.0;
 
     override public void think()
     {
-        // One-time benchmark after a few frames (reduce JIT/initialization noise)
-        if (!sBenchLogged)
+        // Periodic benchmark every ~600 frames; accumulate averages
+        sBenchCounter++;
+        if (sBenchCounter >= 600)
         {
-            sBenchCounter++;
-            if (sBenchCounter >= 600)
+            sBenchCounter = 0; // reset for next window
+
+            // Warmup calls (not timed)
+            _ = searchItemNumberWithSafetyScore(mID, GameData.SearchType.Closest, GameData.ObjectType.Heal);
+            _ = searchItemNumber(mID, GameData.SearchType.Closest, GameData.ObjectType.Heal);
+
+            var swBase = new Stopwatch();
+            var swSafety = new Stopwatch();
+
+            // Measure baseline searches (repeat to stabilize)
+            swBase.Start();
+            for (int i = 0; i < 200; i++)
             {
-                // Warmup calls (not timed)
-                _ = searchItemNumberWithSafetyScore(mID, GameData.SearchType.Closest, GameData.ObjectType.Heal);
                 _ = searchItemNumber(mID, GameData.SearchType.Closest, GameData.ObjectType.Heal);
-
-                var swBase = new Stopwatch();
-                var swSafety = new Stopwatch();
-
-                // Measure baseline searches (repeat to stabilize)
-                swBase.Start();
-                for (int i = 0; i < 200; i++)
-                {
-                    _ = searchItemNumber(mID, GameData.SearchType.Closest, GameData.ObjectType.Heal);
-                    _ = searchItemNumber(mID, GameData.SearchType.Closest, GameData.ObjectType.Ammo);
-                }
-                swBase.Stop();
-
-                // Measure safety-score searches (repeat to stabilize)
-                swSafety.Start();
-                for (int i = 0; i < 200; i++)
-                {
-                    _ = searchItemNumberWithSafetyScore(mID, GameData.SearchType.Closest, GameData.ObjectType.Heal);
-                    _ = searchItemNumberWithSafetyScore(mID, GameData.SearchType.Closest, GameData.ObjectType.Ammo);
-                }
-                swSafety.Stop();
-
-
-                double tickNs = 1_000_000_000.0 / Stopwatch.Frequency;
-                double baseNs = swBase.ElapsedTicks * tickNs;
-                double safetyNs = swSafety.ElapsedTicks * tickNs;
-
-                UnityEngine.Debug.Log($"[Bench AIBase_FA_OW x200x2 after 5th] SafetyScore: {safetyNs:F0} ns, Base: {baseNs:F0} ns");
-                GameDataSaver.SaveCalcTimeResultsToCSV(baseNs, safetyNs);
-                sBenchCounter = 0;
-                sBenchLogged = true;
+                _ = searchItemNumber(mID, GameData.SearchType.Closest, GameData.ObjectType.Ammo);
             }
+            swBase.Stop();
+
+            // Measure safety-score searches (repeat to stabilize)
+            swSafety.Start();
+            for (int i = 0; i < 200; i++)
+            {
+                _ = searchItemNumberWithSafetyScore(mID, GameData.SearchType.Closest, GameData.ObjectType.Heal);
+                _ = searchItemNumberWithSafetyScore(mID, GameData.SearchType.Closest, GameData.ObjectType.Ammo);
+            }
+            swSafety.Stop();
+
+            double tickNs = 1_000_000_000.0 / Stopwatch.Frequency;
+            double baseNs = swBase.ElapsedTicks * tickNs;
+            double safetyNs = swSafety.ElapsedTicks * tickNs;
+
+            sBenchRuns++;
+
+            // Skip the first three records (no logging, no recording)
+            if (sBenchRuns <= 3)
+            {
+                return;
+            }
+
+            sSumBaseNs += baseNs;
+            sSumSafetyNs += safetyNs;
+
+            double avgBaseNs = sSumBaseNs / (sBenchRuns - 3); // average over recorded runs
+            double avgSafetyNs = sSumSafetyNs / (sBenchRuns - 3);
+
+            // No Debug.Log for early runs; only aggregate and store averages
+            StatsAggregator.Instance.RecordBench(nameof(AIBase_FA_OW), avgBaseNs, avgSafetyNs);
         }
 
         mVisibleAI = searchItemNumberWithSafetyScore(mID, GameData.SearchType.Visible, GameData.ObjectType.AI, GameData.TeamType.Enemy);
@@ -72,62 +84,56 @@ public class AIBase_FA_OW : ObjectBase_AIBase
         }
 
         //이동
-
-        if (GetHpPercentage() < 0.25 || GetAmmoPercentage() < 0.25) //상태가 좋지 않다 "필요한 아이템 탐색" //0.25로 한 이유는 웬만해선 붙어다니는 것이 이 게임 AI의 핵심
+        if (GetHpPercentage() < 0.25 || GetAmmoPercentage() < 0.25)
         {
-            if (GetHpPercentage() <= GetAmmoPercentage() && mClosestHeal != -1) //체력이 더 부족
+            if (GetHpPercentage() <= GetAmmoPercentage() && mClosestHeal != -1)
             {
-                MoveTo(mClosestHeal, false, 0); // 체력 아이템으로 이동
-
+                MoveTo(mClosestHeal, false, 0);
             }
-            else if (GetHpPercentage() > GetAmmoPercentage() && mClosestAmmo != -1) //총알이 더 부족
+            else if (GetHpPercentage() > GetAmmoPercentage() && mClosestAmmo != -1)
             {
-                MoveTo(mClosestAmmo, false, 1); // 총알 아이템으로 이동
-
+                MoveTo(mClosestAmmo, false, 1);
             }
-            else //상태가 좋지 않지만 아이템이 존재하지 않을 때
+            else
             {
-                if (mClosestTeammate != -1 && GridPathfinder.GridManhattanDistance(this.gameObject.transform.position, ObjectManager.mAll_Of_Game_Objects[mClosestTeammate].transform.position) > 10) //팀원이 있는데 멀면
+                if (mClosestTeammate != -1 && GridPathfinder.GridManhattanDistance(this.gameObject.transform.position, ObjectManager.mAll_Of_Game_Objects[mClosestTeammate].transform.position) > 10)
                 {
                     MoveTo(mClosestTeammate, false, 2);
                 }
-
             }
         }
-        else //상태가 괜찮을 때
+        else
         {
-            if (mClosestTeammate != -1)  //팀원이 존재하면
+            if (mClosestTeammate != -1)
             {
-                if(GridPathfinder.GridManhattanDistance(this.gameObject.transform.position, ObjectManager.mAll_Of_Game_Objects[mClosestTeammate].transform.position) > 10) //멀면 팀원에게 이동
+                if(GridPathfinder.GridManhattanDistance(this.gameObject.transform.position, ObjectManager.mAll_Of_Game_Objects[mClosestTeammate].transform.position) > 10)
                 {
                     MoveTo(mClosestTeammate, false, 3);
                 }
-                else //모였으면
+                else
                 {
-                    if (mClosestOccupy != -1) //점령전이면
+                    if (mClosestOccupy != -1)
                     {
-                        MoveTo(mClosestOccupy, false, 4); //점령지로 이동
+                        MoveTo(mClosestOccupy, false, 4);
                     }
-                    else //점령전이 아니면
+                    else
                     {
-                        if(mClosestEnemy != -1) MoveTo(mClosestEnemy, false, 5); //가까운 적으로 이동
+                        if(mClosestEnemy != -1) MoveTo(mClosestEnemy, false, 5);
                     }
                 }
 
             }
-            else //팀원이 존재하지 않으면
+            else
             {
-                if (mClosestOccupy != -1) //점령전이면
+                if (mClosestOccupy != -1)
                 {
-                    MoveTo(mClosestOccupy, false, 6); //점령지로 이동
+                    MoveTo(mClosestOccupy, false, 6);
                 }
-                else //점령전이 아니면
+                else
                 {
-                    if (mClosestEnemy != -1)  MoveTo(mClosestEnemy, false, 7); //가까운 적으로 이동 //데스매치에선 점령지가 아닌 상대가 목표
+                    if (mClosestEnemy != -1)  MoveTo(mClosestEnemy, false, 7);
                 }
             }
-            //오버워치에서 힐팩은 최대체력에서 먹어지지 않는다.
-            
         }
     }
 }

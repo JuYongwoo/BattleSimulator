@@ -541,7 +541,10 @@ public class ObjectBase_AIBase : ObjectBase
     public virtual void Killed(int pDeadID) //내가 누군가를 죽였을 때
     {
         ReachedDestination();
-        GameDataSaver.SaveKillDeathResultsToCSV(this.gameObject.name, ObjectManager.mAll_Of_Game_Objects[pDeadID].name);
+        // Use class names for aggregation, not GameObject names
+        string killerType = this.GetType().Name;
+        string deadType = ObjectManager.mAll_Of_Game_Objects[pDeadID].GetComponent<ObjectBase_AIBase>()?.GetType().Name ?? "Unknown";
+        GameDataSaver.SaveKillDeathResultsToCSV(killerType, deadType);
     }
 
     public virtual void killedBy(int pKillerID) //내가 죽었을 때
